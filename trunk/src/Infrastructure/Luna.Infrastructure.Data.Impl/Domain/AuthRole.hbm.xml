@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name ="AuthRole">
+    <id name="Id" column="RoleId">
+      <generator class="guid.comb"/>
+    </id>    
+    <property name="RoleName"/>
+    <bag name="Employees" table="AuthRoleEmployee">
+      <key column="RoleId" foreign-key="FK_Employee_AuthRole"/>
+      <many-to-many class="Employee" column="EmployeeId" foreign-key="FK_AuthRole_Employee"/>
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name ="Campaign">
+    <id name="Id" column="CampaignId">
+      <generator class="guid.comb"/>
+    </id>
+    
+    <property name="Name" type="string" not-null="true" />
+    <set name="Organizations" table="CampaignOrg" cascade="all">
+      <key column="CampaignId" foreign-key="FK_Organization_Campaign"/>
+      <many-to-many column="OrganizationId" class="Organization" foreign-key="FK_Campaign_Organization"/>
+    </set>
+  </class>
+</hibernate-mapping>

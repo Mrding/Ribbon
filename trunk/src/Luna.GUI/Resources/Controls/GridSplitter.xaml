@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+   
+    <LinearGradientBrush x:Key="HLinearGradientBorder" EndPoint="0.17,0.5" MappingMode="RelativeToBoundingBox" StartPoint="0.83,0.5">
+        <GradientStop Color="#FFBFCBDF" Offset="1"/>
+        <GradientStop Color="#FFF0F3F8"/>
+        <GradientStop Color="#FFC9D3E5" Offset="0.616"/>
+        <GradientStop Color="#FFDFE5EF" Offset="0.232"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VLinearGradientBorder" EndPoint="0.5,-0.094" MappingMode="RelativeToBoundingBox" StartPoint="0.5,1.094">
+        <GradientStop Color="#FFBFCBDF" Offset="1"/>
+        <GradientStop Color="#FFF0F3F8"/>
+        <GradientStop Color="#FFC9D3E5" Offset="0.616"/>
+        <GradientStop Color="#FFDFE5EF" Offset="0.232"/>
+    </LinearGradientBrush>
+
+    <Style x:Key="HorizontalGridSplitterStyle" TargetType="{x:Type GridSplitter}">
+        <Setter Property="ShowsPreview" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FrameworkElement.Height" Value="3"/>
+        <!--<Setter Property="TextElement.Foreground" Value="#FF204D89" />-->
+        <!--<Setter Property="Border.BorderBrush" Value="#FF6593CF" />-->
+        <!--<Setter Property="Panel.Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFCCD9EA"/>
+                    <GradientStop Color="AliceBlue" Offset="1"/>
+                    <GradientStop Color="#FFD9E3F0" Offset="0.487"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>-->
+        <Setter Property="Panel.Background" Value="transparent" />
+        <!--<Setter Property="Border.BorderThickness" Value="0,1,0,0" />-->
+        <Setter Property="UIElement.SnapsToDevicePixels" Value="True" />
+        <Setter Property="UIElement.Focusable" Value="False" />
+        <Setter Property="ResizeDirection" Value="Rows"/>
+        <Setter Property="FrameworkElement.Cursor" Value="SizeNS" />
+       
+    </Style>
+
+    <Style x:Key="VerticalGridSplitterStyle" TargetType="{x:Type GridSplitter}">
+        <Setter Property="ShowsPreview" Value="True"/>
+        <Setter Property="FrameworkElement.Width" Value="1"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <!--<Setter Property="TextElement.Foreground" Value="#FF204D89" />-->
+        <!--<Setter Property="Border.BorderBrush" Value="#FF6593CF" />-->
+        <Setter Property="Panel.Background" Value="#FFC5C6C7"/><!--{StaticResource VLinearGradientBorder}-->
+            
+        
+        <!--<Setter Property="Border.BorderThickness" Value="0,1,0,0" />-->
+        <Setter Property="UIElement.SnapsToDevicePixels" Value="True" />
+        <Setter Property="UIElement.Focusable" Value="False" />
+        <Setter Property="ResizeDirection" Value="Columns"/>
+        <Setter Property="FrameworkElement.Cursor" Value="SizeWE" />
+       
+    </Style>
+</ResourceDictionary>

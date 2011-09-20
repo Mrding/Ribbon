@@ -1,0 +1,433 @@
+﻿<Window
+    x:Class="Luna.GUI.Views.Shifts.BatchDispatcherView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+	xmlns:wizard="http://schemas.actiprosoftware.com/winfx/xaml/wizard"
+    xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors" 
+    xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+    xmlns:cal="http://www.caliburnproject.org" 
+    xmlns:inf="http://www.grandsys.com/luna"
+	Width="550" Height="450">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/ListView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type editors:TimeSpanEditBox}">
+                <Setter Property="Format" Value="hh ':' mm "/>
+            </Style>
+
+            <Style x:Key="Label" TargetType="FrameworkElement">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Width" Value="120"/>
+            </Style>
+
+            <Style x:Key="{x:Type ListView}" TargetType="{x:Type ListView}">
+                <Setter Property="SelectionMode" Value="Multiple"/>
+                <!--<Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                        </Style>
+                    </Setter.Value>
+                </Setter>-->
+                <!--<Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <StackPanel></StackPanel>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>-->
+            </Style>
+
+            <inf:ActionItemDataTemplateSelector x:Key="ActionItemDataTemplateSelector"/>
+
+            <DataTemplate x:Key="EqAssignmentType">
+                <DockPanel Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_AssignmentTypeForTuning}" VerticalAlignment="Center" Style="{StaticResource Label}"/>
+                    <ComboBox VerticalAlignment="Center"
+                              DataContext="{Binding DataContext,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type shared:RadioButtonList}}}"
+                              SelectedItem="{Binding QueryType}"
+                              ItemsSource="{Binding Types}" DisplayMemberPath="Name" />
+                </DockPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="EqEventType">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="{inf:Resource Shifts_BatchDispatcher_SubEventTypeForTuning}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}" 
+                              VerticalAlignment="Center" Margin="3 0 4 0" />
+                    <ComboBox VerticalAlignment="Center" Width="150"
+                              DataContext="{Binding Model}"
+                              SelectedValue="{Binding QueryType}"
+                              ItemsSource="{Binding Types}" DisplayMemberPath="Name" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="EqParentType">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="{inf:Resource Shifts_BatchDispatcher_SpecifyParentAssignmentType}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"  
+                              VerticalAlignment="Center" Margin="3 0 4 0" />
+                    <ComboBox VerticalAlignment="Center" Width="150"
+                              DataContext="{Binding Model}" 
+                              SelectedValue="{Binding QueryParentType}"
+                              ItemsSource="{Binding ParentTypes}" DisplayMemberPath="Name" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="EqTermStart">
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{Binding DataContext.Category,StringFormat={inf:Resource Shifts_BatchDispatcher_BeginFrom},RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type shared:RadioButtonList}}}" Style="{StaticResource Label}" />
+                    <editors:DateTimeEditBox DockPanel.Dock="Top" VerticalAlignment="Center" SpinnerVisibility="Visible"
+                                              StringValueConverter="{StaticResource ToMultiplesOfFiveConverter}"
+                                                 inf:EditorServiceBehavior.IntStepLimit="5"
+                                                 Value="{Binding DataContext.SearchDate,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type shared:RadioButtonList}}}" Format="HH : mm" DropDownButtonVisibility="Collapsed"
+                                                 EditableParts="AMPMDesignator, Hour, Minute" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="EqTermEnd">
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{Binding DataContext.Category,StringFormat={inf:Resource Shifts_BatchDispatcher_EndAt},RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type shared:RadioButtonList}}}" Style="{StaticResource Label}" />
+                    <editors:DateTimeEditBox DockPanel.Dock="Top" VerticalAlignment="Center" SpinnerVisibility="Visible"
+                                              StringValueConverter="{StaticResource ToMultiplesOfFiveConverter}"
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding DataContext.SearchDate,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type shared:RadioButtonList}}}" Format="HH : mm" DropDownButtonVisibility="Collapsed"
+                                                 EditableParts="AMPMDesignator, Hour, Minute" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="Any" >
+                <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_AnyAssignmentExist}" Margin="0 5"/>
+            </DataTemplate>
+            <DataTemplate x:Key="InTermRange">
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_ValidSubEventRange}" Style="{StaticResource Label}"/>
+                    <editors:PartEditBox SpinnerVisibility="Visible" VerticalAlignment="Center">
+                        <editors:DateTimePartGroup x:Name="fromDate" 
+                                                   inf:EditorServiceBehavior.IntStepLimit="5"
+                                                   Format="t" EditableParts="Hour, Minute, AMPMDesignator" 
+                                                   Value="{Binding DataContext.SearchDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type shared:RadioButtonList}}}"/>
+                        <editors:TextBlockPartGroup Text="{inf:Resource to}" Margin="2,0" />
+                        <editors:DateTimePartGroup x:Name="toDate" Format="t" EditableParts="Hour, Minute, AMPMDesignator" 
+                                                   inf:EditorServiceBehavior.IntStepLimit="5"
+                                                   Value="{Binding DataContext.End,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type shared:RadioButtonList}}}"/>
+                    </editors:PartEditBox>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SetTermStart">
+                <StackPanel VerticalAlignment="Top" >
+                    <CheckBox x:Name="CheckBox1" 
+                                  IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"
+                                  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 4 0">
+                        <CheckBox.Content>
+                            <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_AlterStartTime}}"/> 
+                        </CheckBox.Content>
+                    </CheckBox>
+                    <shared:RadioButtonList VerticalAlignment="Center" BackgroundDisabled="Transparent"
+                                            SelectedItem="{Binding SelectedItem}"
+                                            ItemsSource="{Binding Options}" ItemTemplateSelector="{StaticResource ActionItemDataTemplateSelector}"
+                                            IsEnabled="{Binding IsChecked, ElementName=CheckBox1}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="SetTermEnd">
+                <StackPanel VerticalAlignment="Top">
+                    <CheckBox x:Name="CheckBox2"  IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"
+                              HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 4 0">
+                        <CheckBox.Content>
+                            <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_AlterEndTime}}"/>
+                        </CheckBox.Content>
+                    </CheckBox>
+                    <shared:RadioButtonList VerticalAlignment="Center" BackgroundDisabled="Transparent"
+                                            SelectedItem="{Binding SelectedItem}"
+                                            ItemsSource="{Binding Options}" ItemTemplateSelector="{StaticResource ActionItemDataTemplateSelector}"                                            
+                                            IsEnabled="{Binding IsChecked, ElementName=CheckBox2}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="LockTerm">
+                <CheckBox Margin="0 5" VerticalAlignment="Top"
+                              IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}">
+                    <CheckBox.Content>
+                        <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_LockSelected}}"/>
+                    </CheckBox.Content>
+                </CheckBox>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DeleteTerm">
+                <CheckBox Margin="0 5" VerticalAlignment="Top"
+                              IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}">
+                    <CheckBox.Content>
+                        <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_Delete}}"/>
+                    </CheckBox.Content>
+                </CheckBox>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ExplicitSetTermStart">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_AllStartFromSameTime}}" VerticalAlignment="Center"/>
+                    <editors:DateTimeEditBox VerticalAlignment="Center" DropDownButtonVisibility="Collapsed" 
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             EditableParts="Hour, Minute" Format="HH ':' mm " SpinnerVisibility="Visible"
+                                             Value="{Binding Model.NewStartTime,Mode=TwoWay}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="ExplicitSetTermEnd">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_AllEndAtSameTime}}" VerticalAlignment="Center"/>
+                    <editors:DateTimeEditBox VerticalAlignment="Center"  DropDownButtonVisibility="Collapsed" SpinnerVisibility="Visible"
+                                             EditableParts="Hour, Minute" Format="HH ':' mm "
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding Model.NewEndTime,Mode=TwoWay}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="MoveTerm">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_AllMovingSpecifyLength}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 4 0" />
+                    <editors:TimeSpanEditBox Format="+ hh ':' mm " SpinnerVisibility="Visible"
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                            Value="{Binding Model.MoveOffSet}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="ResizeTermStart">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_AlterStart}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 4 0" />
+                    <editors:TimeSpanEditBox Format="+ hh ':' mm " SpinnerVisibility="Visible"
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding Model.StartAlterOffSet}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="ResizeTermEnd">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding AlterType,StringFormat={inf:Resource Shifts_BatchDispatcher_AlterEnd}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 4 0" />
+                    <editors:TimeSpanEditBox Format="+ hh ':' mm " SpinnerVisibility="Visible" 
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding Model.EndAlterOffSet}"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="CustomFilterDataTemplate">
+                <ContentPresenter Content="{Binding}" Name="cp" />
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqEventType">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqEventType}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqParentType">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqParentType}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqAssignmentType">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqAssignmentType}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqTermStart">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqTermStart}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqTermEnd">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqTermEnd}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="InTermRange">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource InTermRange}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="Any">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource Any}" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+    <wizard:Wizard WindowTitleBehavior="PageTitle"  HelpButtonVisible="false"
+                 
+                       WindowTitleBaseText="{inf:Resource Shifts_BatchDispatcher_BatchTuningWizard}" PageSequenceType="Normal">
+        <wizard:WizardPage x:Name="Home" PageType="Exterior" Caption="{inf:Resource Shifts_BatchDispatcher_WelcomeToBatchTuningWizard}" Description="{inf:Resource Shifts_BatchDispatcher_ChooseTuningOption}"
+                          NextPage="{Binding SelectedIndex, Converter={StaticResource IndexStartFromConverter},ConverterParameter=1, ElementName=PatternList}" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <shared:RadioButtonList x:Name="PatternList"
+                    Margin="0,10,0,0" SelectedIndex="0" ItemsSource="{Binding Patterns}"
+                                        IsSynchronizedWithCurrentItem="True"
+										BulletVerticalAlignment="Center" BulletMargin="0,0,4,0">
+                    <shared:RadioButtonList.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </shared:RadioButtonList.ItemTemplate>
+                </shared:RadioButtonList>
+                <TextBlock Grid.Row="1" TextWrapping="Wrap"><Run Text=""/></TextBlock>
+            </Grid>
+        </wizard:WizardPage>
+
+        <wizard:WizardPage x:Name="QueryingOfBatchAlterAssignment" PreviousPage="Home" Description=""
+				           Caption="{inf:Resource Shifts_BatchDispatcher_AssignmentFilter}" Title="{Binding SelectedItem.Title, ElementName=PatternList}" NextPage="ActionSetting"
+                          cal:Message.Attach="[Event Unselected] = [Action DispatchAssignment($source)]">
+            <StackPanel DataContext="{Binding AssignmentAlterModel}">
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_TuningTargetDate}" Style="{StaticResource Label}"/>
+                    <editors:DateTimeEditBox  Value="{Binding SearchDate,UpdateSourceTrigger=PropertyChanged}"
+                                              inf:EditorServiceBehavior.IntStepLimit="5"
+                                              Format="yyyy/MM/dd" EditableParts="Date"/>
+                </StackPanel>
+                <shared:RadioButtonList x:Name="AssignmentFilterList" ItemsSource="{Binding Filters}"
+										BulletVerticalAlignment="Center" AutoDisableNonSelectedItemContent="True"
+                                        SelectedValuePath="WhereClause" inf:ItemsElementBehavior.DefaultSelectedIndex="0"                                        
+										BulletMargin="0,0,4,0" ItemTemplate="{StaticResource CustomFilterDataTemplate}"/>
+            </StackPanel>
+        </wizard:WizardPage>
+
+        <wizard:WizardPage x:Name="QueryingOfBatchAlterEvent" PreviousPage="Home" NextPage="ActionSetting" Description=""
+				Title="{Binding SelectedItem.Title, ElementName=PatternList}" Caption="{inf:Resource Shifts_BatchDispatcher_AssignmentFilter}"
+                cal:Message.Attach="[Event Unselected] = [Action DispatchSubEvent($source)]">
+            <StackPanel DataContext="{Binding EventAlterModel}">
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_TuningTargetDate}"  Style="{StaticResource Label}"/>
+                    <editors:DateTimeEditBox  Value="{Binding SearchDate,UpdateSourceTrigger=PropertyChanged}"
+                                              inf:EditorServiceBehavior.IntStepLimit="5"
+                                              Format="yyyy/MM/dd" VerticalAlignment="Center"/>
+                </StackPanel>
+                <shared:RadioButtonList x:Name="EventFilterList"                                        
+                                        ItemsSource="{Binding Filters}" inf:ItemsElementBehavior.DefaultSelectedIndex="0"
+										BulletVerticalAlignment="Center" AutoDisableNonSelectedItemContent="True"
+                                        SelectedValuePath="WhereClause"
+										BulletMargin="0,0,4,0" ItemTemplate="{StaticResource CustomFilterDataTemplate}">
+                </shared:RadioButtonList>
+                <ListBox x:Name="OptionalEventFilterList" Margin="0 5 0 0" ItemsSource="{Binding OptionalFilters}" 
+                         inf:ItemsElementBehavior.HasBindableSelectedItems="True" SelectionMode="Multiple"
+                         ItemTemplate="{StaticResource CustomFilterDataTemplate}"/>
+            </StackPanel>
+        </wizard:WizardPage>
+
+        <wizard:WizardPage Title="{Binding SelectedItem.Title, ElementName=PatternList}" Description="" Caption="{inf:Resource Shifts_BatchDispatcher_AssignmentFilter}" PreviousPage="Home"
+                           FinishButtonEnabled="True" NextButtonVisible="False"
+                           cal:Message.Attach="[Event Finish] = [Action InsertSubEvent(PatternList.SelectedItem, InsertEventLength.Value)]">
+            <UniformGrid DataContext="{Binding AddingEventModel}" Columns="1" VerticalAlignment="Top">
+                <UniformGrid.Resources>
+                    <Style x:Key="ItemContainer" TargetType="StackPanel">
+                        <Setter Property="Orientation" Value="Horizontal"/>
+                    </Style>
+                </UniformGrid.Resources>
+                <StackPanel Style="{StaticResource ItemContainer}" Margin="0 5">
+                    <TextBlock Style="{StaticResource Label}" Text="{inf:Resource Shifts_BatchDispatcher_TuningTargetDate}"/>
+                    <editors:DateTimeEditBox 
+                        inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding SearchDate,UpdateSourceTrigger=PropertyChanged}" Margin="0" Format="yyyy/MM/dd" VerticalAlignment="Center"/>
+                </StackPanel>
+                <DockPanel LastChildFill="True">
+                    <TextBlock Style="{StaticResource Label}" Text="{inf:Resource Shifts_BatchDispatcher_InsertSubEventType}" DockPanel.Dock="Left"/>
+                    <ComboBox ItemsSource="{Binding EventTypes}" VerticalAlignment="Center"
+                              SelectedItem="{Binding SelectedEventType}"
+                              inf:ItemsElementBehavior.DefaultSelectedIndex="0"
+                              IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name"/>
+                </DockPanel>
+                <DockPanel LastChildFill="True">
+                    <TextBlock Style="{StaticResource Label}" Text="{inf:Resource Shifts_BatchDispatcher_AvailableAssignmentType}"/>
+                    <ribbon:PopupButton VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Left"                                        
+                                        inf:PopupButtonBehavior.PopupContent="{Binding ElementName=PART_AssignmentTypeList}">
+                        <ribbon:PopupButton.PopupContent>
+                            <ListBox x:Name="PART_AssignmentTypeList" ItemsSource="{Binding AssignmentTypes}" SelectionMode="Multiple">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}" 
+                                                  Content="{Binding Name}"></CheckBox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </ribbon:PopupButton.PopupContent>
+                    </ribbon:PopupButton>
+                </DockPanel>
+                <StackPanel Style="{StaticResource ItemContainer}">
+                    <TextBlock Style="{StaticResource Label}" Text="{inf:Resource Shifts_BatchDispatcher_SubEventBeginFrom}"/>
+                    <editors:DateTimeEditBox Margin="0" Format="HH ':' mm " VerticalAlignment="Center"
+                                             Value="{Binding SearchDate,UpdateSourceTrigger=PropertyChanged}" 
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             EditableParts="Hour, Minute" DropDownButtonVisibility="Collapsed" SpinnerVisibility="Visible" />
+                </StackPanel>
+                <StackPanel Style="{StaticResource ItemContainer}">
+                    <TextBlock Style="{StaticResource Label}" Text="{inf:Resource Shifts_BatchDispatcher_SubEventDuration}"/>
+                    <editors:TimeSpanEditBox x:Name="InsertEventLength" Margin="0" Format="hh ':' mm " EditableParts="Hours, Minutes" SpinnerVisibility="Visible"
+                                             DataContext="{Binding EventTypes}" VerticalAlignment="Center"
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding TimeRange.Length,Mode=OneWay, Converter={StaticResource IntToTimeSpanConverter}}"/>
+                </StackPanel>
+                <Grid Margin="0 5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_Hint}" Style="{StaticResource Label}" />
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" 
+                             Width="400"
+                             cal:Message.Attach="[Event TextChanged] = [Action Comment($source.Text)]"
+                             TextWrapping="Wrap" ></TextBox>
+                </Grid>
+            </UniformGrid>
+        </wizard:WizardPage>
+
+        <wizard:WizardPage Title="{Binding SelectedItem.Title, ElementName=PatternList}" Description="" Caption="{inf:Resource Shifts_BatchDispatcher_AssignmentFilter}" PreviousPage="Home"
+                           cal:Message.Attach="[Event Finish] = [Action InsertAssignment(PatternList.SelectedItem)]"
+                           FinishButtonEnabled="True"  NextButtonVisible="False">
+            <StackPanel DataContext="{Binding AddingShiftModel}">
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_TuningTargetDate}" Style="{StaticResource Label}"/>
+                    <editors:DateTimeEditBox 
+                        inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding SearchDate,UpdateSourceTrigger=PropertyChanged}" Margin="0" Format="yyyy/MM/dd" VerticalAlignment="Center" EditableParts="Date" />
+                </StackPanel>
+                <DockPanel Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_InsertAssignmentType}" Style="{StaticResource Label}"/>
+                    <ComboBox ItemsSource="{Binding Types}" 
+                              IsSynchronizedWithCurrentItem="True" 
+                              DisplayMemberPath="Name" 
+                              SelectedItem="{Binding SelectedType}"/>
+                </DockPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_AssignmentBeginFrom}" Style="{StaticResource Label}"/>
+                    <editors:DateTimeEditBox DataContext="{Binding Types}"
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                        Value="{Binding TimeRange.StartValue,Mode=OneWay,Converter={StaticResource IntToDateTimeConverter}}" Margin="0" Format="HH ':' mm " VerticalAlignment="Center" 
+                                             EditableParts="None" DropDownButtonVisibility="Collapsed" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_AssignmentDuration}" Style="{StaticResource Label}"/>
+                    <editors:TimeSpanEditBox Margin="0" Format="hh ':' mm " EditableParts="None"
+                                             DataContext="{Binding Types}"
+                                             inf:EditorServiceBehavior.IntStepLimit="5"
+                                             Value="{Binding TimeRange.Length,Mode=OneWay, Converter={StaticResource IntToTimeSpanConverter}}"/>
+                </StackPanel>
+                <Grid Margin="0 5" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_Hint}" Style="{StaticResource Label}" />
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" 
+                             Width="400"
+                             cal:Message.Attach="[Event TextChanged] = [Action Comment($source.Text)]"
+                             TextWrapping="Wrap"></TextBox>
+                </Grid>
+            </StackPanel>
+        </wizard:WizardPage>
+
+        <wizard:WizardPage x:Name="ActionSetting" PreviousPage="{Binding SelectedIndex, Converter={StaticResource IndexStartFromConverter},ConverterParameter=1 , ElementName=PatternList}"
+				Caption="{inf:Resource Shifts_BatchDispatcher_TuningAdjustmentSetup}" Description="{Binding SearchDate, StringFormat={inf:Resource Shifts_BatchDispatcher_TargetDateForTuning}, FallbackValue={x:Null}}"
+				Title="{Binding SelectedItem.Title, ElementName=PatternList}"
+                NextButtonVisible="False" 
+                cal:Message.Attach="[Event Finish] = [Action Apply(PatternList.SelectedItem, ActionList.BindableSelectedItems)]">
+            <StackPanel>
+                <ListBox x:Name="ActionList" inf:ItemsElementBehavior.HasBindableSelectedItems="True" 
+                         Margin="0 0 0 5" inf:ItemsElementBehavior.ForceSingleSelectionModeItemIndex="3"
+                         DataContext="{Binding Patterns}"
+                         ItemsSource="{Binding OptionalActions}" ItemTemplateSelector="{StaticResource ActionItemDataTemplateSelector}"
+                         SelectionMode="Multiple">
+                </ListBox>
+                <DockPanel>
+                    <TextBlock Text="{inf:Resource Shifts_BatchDispatcher_TuningReasonNotes}" VerticalAlignment="Center" Margin="0 0 10 0"/>
+                    <TextBox cal:Message.Attach="[Event TextChanged] = [Action Comment($source.Text)]"/>
+                </DockPanel>
+            </StackPanel>
+        </wizard:WizardPage>
+    </wizard:Wizard>
+
+</Window>

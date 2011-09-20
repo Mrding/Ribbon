@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Statistic.Domain" namespace="Luna.Statistic.Domain">
+
+  <class name="Forecast">
+    <id name="Id" column="ForecastId">
+      <generator class="identity"/>
+    </id>
+    <property name="Name" length="30" not-null="true"/>
+    <property name="Description" length="100"/>
+    <property name="StartAt" not-null="true"/>
+    <property name="EndAt" not-null="true"/>
+    <property name="ServiceSecond"/>
+    <property name="AbandonRate" not-null="true"/>
+    <property name="ServiceLevelGoalId"/>
+    <many-to-one name="ServiceQueue" column="ServiceQueueId" foreign-key="FK_Forecast_ServiceQueue" fetch="join"/>
+
+    <bag name="ForecastTraffics" lazy="false" cascade="all" fetch="join">
+      <key column="ForecastId" foreign-key="FK_ForecastTraffic_Forecast"/>
+      <one-to-many class="ForecastTraffic"/>
+    </bag>
+
+    <bag name="ForecastServiceLevelGoals" lazy="false" cascade="all" fetch="join">
+      <key column="ForecastId" foreign-key="FK_ForecastServiceLevelGoal_Forecast"/>
+      <one-to-many class="ForecastServiceLevelGoal"/>
+    </bag>
+  </class>
+
+  <class name="ForecastTraffic">
+    <id column="ForecastTrafficId" type="int">
+      <generator class="identity"/>
+    </id>
+    <property name="Date" column="TrafficDate" not-null="true"/>
+    
+    <many-to-one name="Forecast" column="ForecastId" foreign-key="FK_ForecastTraffic_Forecast"/>
+    
+    <property name="CV1" type="int" access="field"/>
+    <property name="CV2" type="int" access="field"/>
+    <property name="CV3" type="int" access="field"/>
+    <property name="CV4" type="int" access="field"/>
+    <property name="CV5" type="int" access="field"/>
+    <property name="CV6" type="int" access="field"/>
+    <property name="CV7" type="int" access="field"/>
+    <property name="CV8" type="int" access="field"/>
+    <property name="CV9" type="int" access="field"/>
+    <property name="CV10" type="int" access="field"/>
+    <property name="CV11" type="int" access="field"/>
+    <property name="CV12" type="int" access="field"/>
+    <property name="CV13" type="int" access="field"/>
+    <property name="CV14" type="int" access="field"/>
+    <property name="CV15" type="int" access="field"/>
+    <property name="CV16" type="int" access="field"/>
+    <property name="CV17" type="int" access="field"/>
+    <property name="CV18" type="int" access="field"/>
+    <property name="CV19" type="int" access="field"/>
+    <property name="CV20" type="int" access="field"/>
+    <property name="CV21" type="int" access="field"/>
+    <property name="CV22" type="int" access="field"/>
+    <property name="CV23" type="int" access="field"/>
+    <property name="CV24" type="int" access="field"/>
+    <property name="CV25" type="int" access="field"/>
+    <property name="CV26" type="int" access="field"/>
+    <property name="CV27" type="int" access="field"/>
+    <property name="CV28" type="int" access="field"/>
+    <property name="CV29" type="int" access="field"/>
+    <property name="CV30" type="int" access="field"/>
+    <property name="CV31" type="int" access="field"/>
+    <property name="CV32" type="int" access="field"/>
+    <property name="CV33" type="int" access="field"/>
+    <property name="CV34" type="int" access="field"/>
+    <property name="CV35" type="int" access="field"/>
+    <property name="CV36" type="int" access="field"/>
+    <property name="CV37" type="int" access="field"/>
+    <property name="CV38" type="int" access="field"/>
+    <property name="CV39" type="int" access="field"/>
+    <property name="CV40" type="int" access="field"/>
+    <property name="CV41" type="int" access="field"/>
+    <property name="CV42" type="int" access="field"/>
+    <property name="CV43" type="int" access="field"/>
+    <property name="CV44" type="int" access="field"/>
+    <property name="CV45" type="int" access="field"/>
+    <property name="CV46" type="int" access="field"/>
+    <property name="CV47" type="int" access="field"/>
+    <property name="CV48" type="int" access="field"/>
+    <property name="CV49" type="int" access="field"/>
+    <property name="CV50" type="int" access="field"/>
+    <property name="CV51" type="int" access="field"/>
+    <property name="CV52" type="int" access="field"/>
+    <property name="CV53" type="int" access="field"/>
+    <property name="CV54" type="int" access="field"/>
+    <property name="CV55" type="int" access="field"/>
+    <property name="CV56" type="int" access="field"/>
+    <property name="CV57" type="int" access="field"/>
+    <property name="CV58" type="int" access="field"/>
+    <property name="CV59" type="int" access="field"/>
+    <property name="CV60" type="int" access="field"/>
+    <property name="CV61" type="int" access="field"/>
+    <property name="CV62" type="int" access="field"/>
+    <property name="CV63" type="int" access="field"/>
+    <property name="CV64" type="int" access="field"/>
+    <property name="CV65" type="int" access="field"/>
+    <property name="CV66" type="int" access="field"/>
+    <property name="CV67" type="int" access="field"/>
+    <property name="CV68" type="int" access="field"/>
+    <property name="CV69" type="int" access="field"/>
+    <property name="CV70" type="int" access="field"/>
+    <property name="CV71" type="int" access="field"/>
+    <property name="CV72" type="int" access="field"/>
+    <property name="CV73" type="int" access="field"/>
+    <property name="CV74" type="int" access="field"/>
+    <property name="CV75" type="int" access="field"/>
+    <property name="CV76" type="int" access="field"/>
+    <property name="CV77" type="int" access="field"/>
+    <property name="CV78" type="int" access="field"/>
+    <property name="CV79" type="int" access="field"/>
+    <property name="CV80" type="int" access="field"/>
+    <property name="CV81" type="int" access="field"/>
+    <property name="CV82" type="int" access="field"/>
+    <property name="CV83" type="int" access="field"/>
+    <property name="CV84" type="int" access="field"/>
+    <property name="CV85" type="int" access="field"/>
+    <property name="CV86" type="int" access="field"/>
+    <property name="CV87" type="int" access="field"/>
+    <property name="CV88" type="int" access="field"/>
+    <property name="CV89" type="int" access="field"/>
+    <property name="CV90" type="int" access="field"/>
+    <property name="CV91" type="int" access="field"/>
+    <property name="CV92" type="int" access="field"/>
+    <property name="CV93" type="int" access="field"/>
+    <property name="CV94" type="int" access="field"/>
+    <property name="CV95" type="int" access="field"/>
+    <property name="CV96" type="int" access="field"/>
+    
+    <property name="AHT1" type="int"  access="field"/>
+    <property name="AHT2" type="int"  access="field"/>
+    <property name="AHT3" type="int"  access="field"/>
+    <property name="AHT4" type="int"  access="field"/>
+    <property name="AHT5" type="int"  access="field"/>
+    <property name="AHT6" type="int"  access="field"/>
+    <property name="AHT7" type="int"  access="field"/>
+    <property name="AHT8" type="int"  access="field"/>
+    <property name="AHT9" type="int"  access="field"/>
+    <property name="AHT10" type="int"  access="field"/>
+    <property name="AHT11" type="int"  access="field"/>
+    <property name="AHT12" type="int"  access="field"/>
+    <property name="AHT13" type="int"  access="field"/>
+    <property name="AHT14" type="int"  access="field"/>
+    <property name="AHT15" type="int"  access="field"/>
+    <property name="AHT16" type="int"  access="field"/>
+    <property name="AHT17" type="int"  access="field"/>
+    <property name="AHT18" type="int"  access="field"/>
+    <property name="AHT19" type="int"  access="field"/>
+    <property name="AHT20" type="int"  access="field"/>
+    <property name="AHT21" type="int"  access="field"/>
+    <property name="AHT22" type="int"  access="field"/>
+    <property name="AHT23" type="int"  access="field"/>
+    <property name="AHT24" type="int"  access="field"/>
+    <property name="AHT25" type="int"  access="field"/>
+    <property name="AHT26" type="int"  access="field"/>
+    <property name="AHT27" type="int"  access="field"/>
+    <property name="AHT28" type="int"  access="field"/>
+    <property name="AHT29" type="int"  access="field"/>
+    <property name="AHT30" type="int"  access="field"/>
+    <property name="AHT31" type="int"  access="field"/>
+    <property name="AHT32" type="int"  access="field"/>
+    <property name="AHT33" type="int"  access="field"/>
+    <property name="AHT34" type="int"  access="field"/>
+    <property name="AHT35" type="int"  access="field"/>
+    <property name="AHT36" type="int"  access="field"/>
+    <property name="AHT37" type="int"  access="field"/>
+    <property name="AHT38" type="int"  access="field"/>
+    <property name="AHT39" type="int"  access="field"/>
+    <property name="AHT40" type="int"  access="field"/>
+    <property name="AHT41" type="int"  access="field"/>
+    <property name="AHT42" type="int"  access="field"/>
+    <property name="AHT43" type="int"  access="field"/>
+    <property name="AHT44" type="int"  access="field"/>
+    <property name="AHT45" type="int"  access="field"/>
+    <property name="AHT46" type="int"  access="field"/>
+    <property name="AHT47" type="int"  access="field"/>
+    <property name="AHT48" type="int"  access="field"/>
+    <property name="AHT49" type="int"  access="field"/>
+    <property name="AHT50" type="int"  access="field"/>
+    <property name="AHT51" type="int"  access="field"/>
+    <property name="AHT52" type="int"  access="field"/>
+    <property name="AHT53" type="int"  access="field"/>
+    <property name="AHT54" type="int"  access="field"/>
+    <property name="AHT55" type="int"  access="field"/>
+    <property name="AHT56" type="int"  access="field"/>
+    <property name="AHT57" type="int"  access="field"/>
+    <property name="AHT58" type="int"  access="field"/>
+    <property name="AHT59" type="int"  access="field"/>
+    <property name="AHT60" type="int"  access="field"/>
+    <property name="AHT61" type="int"  access="field"/>
+    <property name="AHT62" type="int"  access="field"/>
+    <property name="AHT63" type="int"  access="field"/>
+    <property name="AHT64" type="int"  access="field"/>
+    <property name="AHT65" type="int"  access="field"/>
+    <property name="AHT66" type="int"  access="field"/>
+    <property name="AHT67" type="int"  access="field"/>
+    <property name="AHT68" type="int"  access="field"/>
+    <property name="AHT69" type="int"  access="field"/>
+    <property name="AHT70" type="int"  access="field"/>
+    <property name="AHT71" type="int"  access="field"/>
+    <property name="AHT72" type="int"  access="field"/>
+    <property name="AHT73" type="int"  access="field"/>
+    <property name="AHT74" type="int"  access="field"/>
+    <property name="AHT75" type="int"  access="field"/>
+    <property name="AHT76" type="int"  access="field"/>
+    <property name="AHT77" type="int"  access="field"/>
+    <property name="AHT78" type="int"  access="field"/>
+    <property name="AHT79" type="int"  access="field"/>
+    <property name="AHT80" type="int"  access="field"/>
+    <property name="AHT81" type="int"  access="field"/>
+    <property name="AHT82" type="int"  access="field"/>
+    <property name="AHT83" type="int"  access="field"/>
+    <property name="AHT84" type="int"  access="field"/>
+    <property name="AHT85" type="int"  access="field"/>
+    <property name="AHT86" type="int"  access="field"/>
+    <property name="AHT87" type="int"  access="field"/>
+    <property name="AHT88" type="int"  access="field"/>
+    <property name="AHT89" type="int"  access="field"/>
+    <property name="AHT90" type="int"  access="field"/>
+    <property name="AHT91" type="int"  access="field"/>
+    <property name="AHT92" type="int"  access="field"/>
+    <property name="AHT93" type="int"  access="field"/>
+    <property name="AHT94" type="int"  access="field"/>
+    <property name="AHT95" type="int"  access="field"/>
+    <property name="AHT96" type="int"  access="field"/>
+  </class>
+
+  <class name="ForecastServiceLevelGoal">
+    <id column="ForecastServiceLevelGoalId" type="int">
+      <generator class="identity"/>
+    </id>
+    <property name="Date" column="ForecastDate" not-null="true"/>
+    
+    <many-to-one name="Forecast" column="ForecastId" foreign-key="FK_ForecastServiceLevelGoal_Forecast"/>
+
+    <property name="SL0" type="int" not-null="true"  access="field"/>
+    <property name="SL1" type="int" not-null="true"  access="field"/>
+    <property name="SL2" type="int" not-null="true"  access="field"/>
+    <property name="SL3" type="int" not-null="true"  access="field"/>
+    <property name="SL4" type="int" not-null="true"  access="field"/>
+    <property name="SL5" type="int" not-null="true"  access="field"/>
+    <property name="SL6" type="int" not-null="true"  access="field"/>
+    <property name="SL7" type="int" not-null="true"  access="field"/>
+    <property name="SL8" type="int" not-null="true"  access="field"/>
+    <property name="SL9" type="int" not-null="true"  access="field"/>
+    <property name="SL10" type="int" not-null="true"  access="field"/>
+    <property name="SL11" type="int" not-null="true"  access="field"/>
+    <property name="SL12" type="int" not-null="true"  access="field"/>
+    <property name="SL13" type="int" not-null="true"  access="field"/>
+    <property name="SL14" type="int" not-null="true"  access="field"/>
+    <property name="SL15" type="int" not-null="true"  access="field"/>
+    <property name="SL16" type="int" not-null="true"  access="field"/>
+    <property name="SL17" type="int" not-null="true"  access="field"/>
+    <property name="SL18" type="int" not-null="true"  access="field"/>
+    <property name="SL19" type="int" not-null="true"  access="field"/>
+    <property name="SL20" type="int" not-null="true"  access="field"/>
+    <property name="SL21" type="int" not-null="true"  access="field"/>
+    <property name="SL22" type="int" not-null="true"  access="field"/>
+    <property name="SL23" type="int" not-null="true"  access="field"/>
+  </class>
+  
+</hibernate-mapping>

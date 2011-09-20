@@ -1,0 +1,957 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7BF4663F-52A3-4069-BC99-F9BABC2D4576}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Luna.GUI</RootNamespace>
+    <AssemblyName>Luna.GUI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Images\WMSLogo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>..\..\output\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>..\..\output\Release\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Luna.GUI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Luna.GUI.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActiproSoftware.Docking.Wpf351, Version=11.1.542.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharedLibs\Actipro\ActiproSoftware.Docking.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Editors.Wpf351, Version=11.1.542.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharedLibs\Actipro\ActiproSoftware.Editors.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Navigation.Wpf351, Version=11.1.542.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharedLibs\Actipro\ActiproSoftware.Navigation.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Ribbon.Wpf351, Version=11.1.542.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharedLibs\Actipro\ActiproSoftware.Ribbon.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Shared.Wpf351, Version=11.1.542.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharedLibs\Actipro\ActiproSoftware.Shared.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Wizard.Wpf351, Version=11.1.542.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharedLibs\Actipro\ActiproSoftware.Wizard.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\output\Debug\Library\Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\output\Debug\Library\Castle.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\output\Debug\Library\Castle.Windsor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender">
+      <HintPath>..\..\output\Debug\Library\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\output\Debug\Library\Iesi.Collections.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Luna.Adapters.Login">
+      <HintPath>..\..\output\Debug\Modules\Luna.Adapters.Login.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\output\Debug\Library\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\output\Debug\Library\NHibernate.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="Remotion.Data.Linq">
+      <HintPath>..\..\output\Debug\Library\Remotion.Data.Linq.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="uNhAddIns">
+      <HintPath>..\..\output\Debug\Library\uNhAddIns.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uNhAddIns.Adapters">
+      <HintPath>..\..\output\Debug\Library\uNhAddIns.Adapters.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharedLibs\WPF\WPFToolkit.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\..\lib\SharedLibs\WPF\WPFToolkit.Extended.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppStartManager.cs" />
+    <Compile Include="UserControls\ActionGrid.xaml.cs">
+      <DependentUpon>ActionGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CheckBoxList.xaml.cs">
+      <DependentUpon>CheckBoxList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DateRangeSelector.xaml.cs">
+      <DependentUpon>DateRangeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HourFormat.xaml.cs" />
+    <Compile Include="UserControls\MasterControl.xaml.cs">
+      <DependentUpon>MasterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OrderingItemsButtons.xaml.cs">
+      <DependentUpon>OrderingItemsButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RangeEditBox.xaml.cs">
+      <DependentUpon>RangeEditBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SelectableProperty.xaml.cs">
+      <DependentUpon>SelectableProperty.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TimeRangePicker.xaml.cs">
+      <DependentUpon>TimeRangePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TimeSpanEditor.xaml.cs">
+      <DependentUpon>TimeSpanEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ZoomSlider.xaml.cs">
+      <DependentUpon>ZoomSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BlankView.xaml.cs">
+      <DependentUpon>BlankView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\CalendarEventImportView.xaml.cs">
+      <DependentUpon>CalendarEventImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\CalendarEventView.xaml.cs">
+      <DependentUpon>CalendarEventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\DeleteCalendarEventDialog.xaml.cs">
+      <DependentUpon>DeleteCalendarEventDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\NewCalendarEventDialog.xaml.cs">
+      <DependentUpon>NewCalendarEventDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\AssignmentTypeDetailView.xaml.cs">
+      <DependentUpon>AssignmentTypeDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\AssignmentTypeMasterView.xaml.cs">
+      <DependentUpon>AssignmentTypeMasterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\NewAssignmentTypeDialog.xaml.cs">
+      <DependentUpon>NewAssignmentTypeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\DimensionConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Shifts\IsAgentStatusTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Shifts\OccupationMaskConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Shifts\RecentScheduleManagerView.xaml.cs">
+      <DependentUpon>RecentScheduleManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\RtsaStatisticView.xaml.cs">
+      <DependentUpon>RtsaStatisticView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\IAgentFinderView.cs">
+      <DependentUpon>LaborRuleManageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\DayOffRuleView.xaml.cs">
+      <DependentUpon>DayOffRuleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\GroupByShiftView.xaml.cs">
+      <DependentUpon>GroupByShiftView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\LaborRuleDetailView.xaml.cs">
+      <DependentUpon>LaborRuleDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\LaborRuleManageView.xaml.cs">
+      <DependentUpon>LaborRuleManageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Infrastructure\AgentFinderView.xaml.cs">
+      <DependentUpon>AgentFinderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DialogBoxView.xaml.cs">
+      <DependentUpon>DialogBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QuestionView.xaml.cs">
+      <DependentUpon>QuestionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\ScheduleInfomationView.xaml.cs">
+      <DependentUpon>ScheduleInfomationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\ShiftComposerView.xaml.cs">
+      <DependentUpon>ShiftComposerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\AddingEventView.xaml.cs">
+      <DependentUpon>AddingEventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\AddingShiftView.xaml.cs">
+      <DependentUpon>AddingShiftView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\BatchDispatcherView.xaml.cs">
+      <DependentUpon>BatchDispatcherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\ShiftDispatcherView.xaml.cs">
+      <DependentUpon>ShiftDispatcherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\ShiftImportView.xaml.cs">
+      <DependentUpon>ShiftImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\ShiftView.xaml.cs" />
+    <Compile Include="Views\Shifts\SubEventTypeDetailDialog.xaml.cs">
+      <DependentUpon>SubEventTypeDetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shifts\SubEventTypeMasterView.xaml.cs">
+      <DependentUpon>SubEventTypeMasterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Statistic\StaffingCalculatorView.xaml.cs">
+      <DependentUpon>StaffingCalculatorView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Presenters\DockSitePresenter.cs" />
+    <Compile Include="Presenters\DialogBoxPresenter.cs" />
+    <Compile Include="Presenters\QuestionPresenter.cs" />
+    <Compile Include="Presenters\ShellPresenter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Resource Include="Resources\Images\Rest32.png" />
+    <Resource Include="Resources\Images\RefreshRed16.png" />
+    <Resource Include="Resources\Images\Rocket.png" />
+    <Resource Include="Resources\Images\PinChecked.png" />
+    <Resource Include="Resources\Images\PinUnChecked.png" />
+    <Resource Include="Resources\Images\New24Right.png" />
+    <Resource Include="Resources\Images\Over6.png" />
+    <Resource Include="Resources\Images\Under6.png" />
+    <Resource Include="Resources\Images\sun.png" />
+    <Resource Include="Resources\Images\Maximize216.png" />
+    <Resource Include="Resources\Images\Restore216.png" />
+    <Resource Include="Resources\Images\Minimize216.png" />
+    <Resource Include="Resources\Images\Add16.png" />
+    <Resource Include="Resources\Images\Remove16.png" />
+    <Resource Include="Resources\Images\Rank22.png" />
+    <Resource Include="Resources\Images\OtSticker.png" />
+    <Resource Include="Resources\Images\Undo16.png" />
+    <Resource Include="Resources\Images\RefreshBlue16.png" />
+    <Resource Include="Resources\Images\Stamp16.png" />
+    <Resource Include="Resources\Images\RightLine25.png" />
+    <Resource Include="Resources\Images\Avg16.png" />
+    <Resource Include="Resources\Images\Sum16.png" />
+    <Resource Include="Resources\Images\Show16.png" />
+    <Resource Include="Resources\Images\wood-bg.jpg" />
+    <Resource Include="Resources\Images\WFMlogo.png" />
+    <Resource Include="Resources\Images\Start16.png" />
+    <Resource Include="Resources\Images\SL16.png" />
+    <Resource Include="Resources\Images\WorkingHours16.png" />
+    <Resource Include="Resources\Images\Recycle16.png" />
+    <Resource Include="Resources\Images\Staffing32.png" />
+    <Resource Include="Resources\Images\Absent16.png" />
+    <Resource Include="Resources\Images\PartialAbsent16.png" />
+    <Resource Include="Resources\Images\PartialAbsent32.png" />
+    <Resource Include="Resources\Images\RTAAStatistic32.png" />
+    <Resource Include="Resources\Images\RTAAPrefix32.png" />
+    <Resource Include="Resources\Images\Restore16.png" />
+    <Resource Include="Resources\Images\Maximize16.png" />
+    <Resource Include="Resources\Images\Minimize16.png" />
+    <Resource Include="Resources\Images\TermToSeat32.png" />
+    <Resource Include="Resources\Images\Search16.png" />
+    <Resource Include="Resources\Images\RTAA32.png" />
+    <Resource Include="Resources\Images\Timer32.png" />
+    <Resource Include="Resources\Images\Sort32.png" />
+    <Resource Include="Resources\Images\Sort16.png" />
+    <Resource Include="Resources\Images\Open16.png" />
+    <Resource Include="Resources\Images\SaveAs16.png" />
+    <Resource Include="Resources\Images\Options16.png" />
+    <Resource Include="Resources\Images\ScrollbarCenterPoints.png" />
+    <Resource Include="Resources\Images\SubmitCancel.png" />
+    <Resource Include="Resources\Images\SubmitOk.png" />
+    <Resource Include="Resources\Images\partialRefresh.png" />
+    <Resource Include="Resources\Images\Refresh16.png" />
+    <Resource Include="Resources\Images\nameTitle3.png" />
+    <Resource Include="Resources\Images\policyMiddle.png" />
+    <Resource Include="Resources\Images\policyBottom.png" />
+    <Resource Include="Resources\Images\policyTop.png" />
+    <Resource Include="Resources\Images\policy.png" />
+    <Resource Include="Resources\Images\ok.png" />
+    <Resource Include="Resources\Images\down1.png" />
+    <Resource Include="Resources\Images\up1.png" />
+    <Resource Include="Resources\Images\down.png" />
+    <Resource Include="Resources\Images\up.png" />
+    <Resource Include="Resources\Images\StickyNoteRed.png" />
+    <Resource Include="Resources\Images\StickyNoteGreen.png" />
+    <Resource Include="Resources\Images\tooltip.png" />
+    <Resource Include="Resources\Images\NameSort.png" />
+    <Resource Include="Resources\Images\timeSort2.png" />
+    <Resource Include="Resources\Images\Sort.png" />
+    <Resource Include="Resources\Images\RtaaPrefix.png" />
+    <Resource Include="Resources\Images\WMSLogo.ico" />
+    <Resource Include="Resources\Images\smileyAgent.gif" />
+    <Resource Include="Resources\Images\New16.png" />
+    <Resource Include="Resources\Images\Save16.png" />
+    <EmbeddedResource Include="Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EnterpriseLibrary.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="log4net.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mapping.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ApplicationResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Page Include="Resources\ApplicationStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Controls\Border.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\CheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Controls\ComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\BrickControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Controls\DataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\FrameworkElement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\GridSplitter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Controls\GroupItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\ListBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\ScrollBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Controls\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\ToggleButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Controls\ToolTip.Agent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>ToolTip.xaml</DependentUpon>
+    </Page>
+    <Page Include="Resources\Controls\ToolTip.Block.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>ToolTip.xaml</DependentUpon>
+    </Page>
+    <Page Include="Resources\Controls\ToolTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Converters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\CosmopolitanTheme\Brushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\CosmopolitanTheme\CoreStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\CosmopolitanTheme\Fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\CosmopolitanTheme\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DesignTimeResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DomainResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Resources\Cursors\CanDragHand.cur" />
+    <Resource Include="Resources\Cursors\DraggingHand.cur" />
+    <Content Include="Resources\GenericResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\en-US.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\zh-CN.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\zh-TW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Page Include="UserControls\ActionGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CheckBoxList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DateRangeSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MasterControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\OrderingItemsButtons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\RangeEditBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SelectableProperty.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\TimeRangePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\TimeSpanEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ZoomSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BlankView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Infrastructure\CalendarEventImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Infrastructure\CalendarEventView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Infrastructure\DeleteCalendarEventDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Infrastructure\NewCalendarEventDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shifts\AssignmentTypeDetailView.Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>AssignmentTypeDetailView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Shifts\AssignmentTypeDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\AssignmentTypeMasterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\NewAssignmentTypeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shifts\RecentScheduleManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shifts\RtsaStatisticView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Infrastructure\DayOffRuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>LaborRuleManageView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Infrastructure\GroupByShiftView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>LaborRuleManageView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Infrastructure\LaborRuleDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>LaborRuleManageView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Infrastructure\LaborRuleManageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Infrastructure\AgentFinderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DialogBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\QuestionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\ScheduleInfomationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shifts\ShiftComposerView.Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>ShiftComposerView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Shifts\ShiftComposerView.ScheduleGrid.Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>ShiftComposerView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Shifts\ShiftComposerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shifts\ShiftDispatcherView.Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>ShiftDispatcherView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\ShellView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\AddingEventView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\AddingShiftView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\BatchDispatcherView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\ShiftDispatcherView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\ShiftImportView.Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>ShiftImportView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Shifts\ShiftImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shifts\SubEventTypeDetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shifts\SubEventTypeMasterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Statistic\StaffingCalculatorView.Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>StaffingCalculatorView.xaml</DependentUpon>
+    </Page>
+    <Page Include="Views\Statistic\StaffingCalculatorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\1CreateCS.gif" />
+    <Resource Include="Resources\Images\2EditCS.gif" />
+    <Resource Include="Resources\Images\3.gif" />
+    <Resource Include="Resources\Images\4refresh.gif" />
+    <Resource Include="Resources\Images\5ViewSchedule.gif" />
+    <Resource Include="Resources\Images\6SeatArrange.gif" />
+    <Resource Include="Resources\Images\7SeatFinder.gif" />
+    <Resource Include="Resources\Images\AddSeatEvent.gif" />
+    <Resource Include="Resources\Images\Delete16.png" />
+    <Resource Include="Resources\Images\FontColor16.png" />
+    <Resource Include="Resources\Images\icon_search.png" />
+    <Resource Include="Resources\Images\icon_search_cancel.png" />
+    <Resource Include="Resources\Images\Login.png" />
+    <Resource Include="Resources\Images\exception.png" />
+    <Resource Include="Resources\Images\A8sort.png" />
+    <Resource Include="Resources\Images\add.png" />
+    <Resource Include="Resources\Images\delete3.png" />
+    <Resource Include="Resources\Images\calendar2.png" />
+    <Resource Include="Resources\Images\calendar.png" />
+    <Resource Include="Resources\Images\iCal.png" />
+    <Resource Include="Resources\Images\disabledOK.png" />
+    <Resource Include="Resources\Images\filter.png" />
+    <Resource Include="Resources\Images\iCal7.png" />
+    <Resource Include="Resources\Images\leave.png" />
+    <Resource Include="Resources\Images\join.png" />
+    <Resource Include="Resources\Images\delete2.png" />
+    <Resource Include="Resources\Images\allRefresh.png" />
+    <Resource Include="Resources\Images\CloseTab16.png" />
+    <Resource Include="Resources\Images\Close16.png" />
+    <Resource Include="Resources\Images\Find16.png" />
+    <Resource Include="Resources\Images\clock.png" />
+    <Resource Include="Resources\Images\CustomGroup32.png" />
+    <Resource Include="Resources\Images\Exception16.png" />
+    <Resource Include="Resources\Images\Exception32.png" />
+    <Resource Include="Resources\Images\AddingSubEvent32.png" />
+    <Resource Include="Resources\Images\Batch32.png" />
+    <Resource Include="Resources\Images\Clock32.png" />
+    <Resource Include="Resources\Images\Clipboard.png" />
+    <Resource Include="Resources\Images\Calendar32.png" />
+    <Resource Include="Resources\Images\CloseButton16.png" />
+    <Resource Include="Resources\Images\Absent32.png" />
+    <Resource Include="Resources\Images\chart_curve5.png" />
+    <Resource Include="Resources\Images\Composor32.png" />
+    <Resource Include="Resources\Images\dialog.png" />
+    <Resource Include="Resources\Images\Agents16.png" />
+    <Resource Include="Resources\Images\Date16.png" />
+    <Resource Include="Resources\Images\Calendar16.png" />
+    <Resource Include="Resources\Images\Combine.png" />
+    <Resource Include="Resources\Images\Individual.png" />
+    <Resource Include="Resources\Images\Calculator32.png" />
+    <Resource Include="Resources\Images\ExcelExport16.png" />
+    <Resource Include="Resources\Images\Uid16.png" />
+    <Resource Include="Resources\Images\bck_body.jpg" />
+    <Resource Include="Resources\Images\Hide16.png" />
+    <Resource Include="Resources\Images\Clock16.png" />
+    <Resource Include="Resources\Images\CellColumnBg.png" />
+    <Resource Include="Resources\Images\GrayBgShadow25x6.png" />
+    <Resource Include="Resources\Cursors\Brush.cur" />
+    <Resource Include="Resources\Images\Bricks32.png" />
+    <Resource Include="Resources\Images\Copy16.png" />
+    <Resource Include="Resources\Images\Shifts32.png" />
+    <Resource Include="Resources\Images\CmpSticker.png" />
+    <Resource Include="Resources\Images\AdjSticker.png" />
+    <Resource Include="Resources\Images\Gear16.png" />
+    <Resource Include="Resources\Images\CalendarEvent32.png" />
+    <Resource Include="Resources\Images\ImportErrorSort32.png" />
+    <Resource Include="Resources\Images\ImportSort32.png" />
+    <Resource Include="Resources\Images\BlockMode.png" />
+    <Resource Include="Resources\Images\CellMode.png" />
+    <Resource Include="Resources\Images\ClockOt16.png" />
+    <Content Include="Resources\Images\loading.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\Images\Lock32.png" />
+    <Resource Include="Resources\Images\Lock16.png" />
+    <Resource Include="Resources\Images\LoginBG1.png" />
+    <Resource Include="Resources\Images\Pwd16.png" />
+    <Resource Include="Resources\Images\Login16.png" />
+    <Content Include="Resources\Images\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\Images\locker_icon.gif" />
+    <Resource Include="Resources\Images\login-1.png" />
+    <Resource Include="Resources\Images\login-2.png" />
+    <Resource Include="Resources\Images\UpDown.png" />
+    <Resource Include="Resources\Images\ViewSeatEvent1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Brushes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\lib\SharedSources\Caliburn\Caliburn.Castle\Caliburn.Castle.csproj">
+      <Project>{FA1F1485-A318-45EC-9910-C6E6255249E4}</Project>
+      <Name>Caliburn.Castle</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lib\SharedSources\Caliburn\Caliburn.Core\Caliburn.Core.csproj">
+      <Project>{96ECAC8B-D61E-405E-A5D7-F6CC0F62CF2C}</Project>
+      <Name>Caliburn.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lib\SharedSources\Caliburn\Caliburn.PresentationFramework\Caliburn.PresentationFramework.csproj">
+      <Project>{209BCE75-E88D-43AA-946A-A09EE4A12F20}</Project>
+      <Name>Caliburn.PresentationFramework</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Luna.Common\Luna.Common.csproj">
+      <Project>{5942E530-CF35-4A36-AB21-F6A4634D0C97}</Project>
+      <Name>Luna.Common</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Luna.Core\Luna.Core.csproj">
+      <Project>{FEF376B8-9DAF-4A00-BBEF-DFCE2C11971C}</Project>
+      <Name>Luna.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Luna.Globalization\Luna.Globalization.csproj">
+      <Project>{5118575A-1266-4A84-B999-CB3EADC6C933}</Project>
+      <Name>Luna.Globalization</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Luna.WPF.ApplicationFramework\Luna.WPF.ApplicationFramework.csproj">
+      <Project>{659B3C5B-C97C-426A-9EAB-808F94C050C6}</Project>
+      <Name>Luna.WPF.ApplicationFramework</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\GuyWire\Luna.Basic.GuyWire\Luna.Basic.GuyWire.csproj">
+      <Project>{89A25BE3-33EB-4DAB-ABC0-9065F6F13693}</Project>
+      <Name>Luna.Basic.GuyWire</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\GuyWire\Luna.WPF.GuyWire\Luna.WPF.GuyWire.csproj">
+      <Project>{21A9C560-5D9B-481D-A17A-5C5FE441F748}</Project>
+      <Name>Luna.WPF.GuyWire</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Luna.Infrastructure.Domain\Luna.Infrastructure.Domain.csproj">
+      <Project>{9D02C5C8-274F-416E-93EC-866052DEB5B3}</Project>
+      <Name>Luna.Infrastructure.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Luna.Infrastructure\Luna.Infrastructure.csproj">
+      <Project>{7ED34326-65F8-47C2-8EF0-67D39A947256}</Project>
+      <Name>Luna.Infrastructure</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Shifts\Luna.Shifts.Domain\Luna.Shifts.Domain.csproj">
+      <Project>{3A1B68B4-1CE3-4560-9BE6-0A631103CB27}</Project>
+      <Name>Luna.Shifts.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Shifts\Luna.Shifts\Luna.Shifts.csproj">
+      <Project>{BA44BB5A-0F8A-42C4-9D87-92E6802B6847}</Project>
+      <Name>Luna.Shifts</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

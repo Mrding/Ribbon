@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name ="CalendarEvent">
+    <id type="int">
+      <generator class="hilo"/>
+    </id>
+    
+    <discriminator column="CalendarEventType"/>
+
+    <property name="EventName" column="EventName"/>
+    <property name="Start" column ="StartDate" not-null="true"/>
+    <property name="End" column="EndDate" not-null="true" />
+
+    <subclass name="Holiday" discriminator-value="Holiday">
+      <property name="Country"/>
+    </subclass>
+
+    <subclass name="DaylightSavingTime" discriminator-value="DST">
+      <property access="field.camelcase-underscore"  name="TimeZone" column="TimeZoneId"/>
+    </subclass>
+    
+  </class>
+</hibernate-mapping>

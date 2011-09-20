@@ -1,0 +1,268 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:cal="http://www.caliburnproject.org"
+                    xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking" 
+                    xmlns:local="clr-namespace:Luna.GUI.Views.Shifts"
+                    xmlns:inf="http://www.grandsys.com/luna"
+                    xmlns:cell="http://www.grandsys.com/luna/cell"
+                    xmlns:brick="http://www.grandsys.com/luna/brick"
+                     xmlns:Converters="clr-namespace:Luna.WPF.ApplicationFramework.Converters;assembly=Luna.WPF.ApplicationFramework"
+                    xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/BrickControl.xaml"/>
+        <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/ToolTip.Agent.xaml"/>
+        <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/ToolTip.Block.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Converters:TodayToBrushConverter x:Key="TodayToBrushConverter"/>
+    <!--<brick:OperationToVisibilityConverter x:Key="OperationToVisibilityConverter"/>-->
+    <DataTemplate x:Key="DateTimeNumberLineDefaultTemplate">
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock FontSize="11">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource DateTimeToDayConverter}" >                                   
+                        <Binding Path="ZoomValue">
+                            <Binding.RelativeSource>
+                                <RelativeSource Mode="FindAncestor" AncestorType="{x:Type inf:ScheduleGrid}"/>
+                            </Binding.RelativeSource>
+                         </Binding>
+                         <Binding />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock FontSize="9" Margin="2 0">                            
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource ZoomToTimeConverter}" >                                   
+                        <Binding Path="ZoomValue">
+                            <Binding.RelativeSource>
+                                <RelativeSource Mode="FindAncestor" AncestorType="{x:Type inf:ScheduleGrid}"/>
+                            </Binding.RelativeSource>
+                         </Binding>
+                         <Binding />
+                    </MultiBinding>
+                </TextBlock.Text>
+                <TextBlock.ToolTip>
+                    <TextBlock Text="{Binding}" />
+                </TextBlock.ToolTip>
+            </TextBlock>
+        </StackPanel>
+    </DataTemplate>   
+
+    <!--<local:OccupationMaskConverter x:Key="OccupationMaskConverter"/>-->
+    
+    <Style TargetType="{x:Type inf:GanttBar}">
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="38"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <brick:ZoomToTimeConverter x:Key="zoomToTimeConverter"/>
+    <brick:DateTimeToDayConverter x:Key="dateTimeToDayConverter" />
+
+    <Style TargetType="{x:Type inf:ScheduleGrid}" BasedOn="{StaticResource CommonScheduleGridStyle}"
+           x:Shared="false">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type inf:ScheduleGrid}">
+                    <DockPanel>
+                        <ContentPresenter DockPanel.Dock="Top"
+                                          cal:View.Context="StaffingCalculatorView"
+                                          cal:Message.Attach="[Event Loaded] = [Action RegisterRunStaffingChart($source)]" />
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding Path=LeftWidth,RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=105,Mode=TwoWay}" MinWidth="105" MaxWidth="170"/>
+
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto"/>
+                                <!--(inf:ScheduleGridService.LeftWidth)-->
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.ColumnSpan="4" Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="{Binding  Path=LeftWidth,RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=105,Mode=TwoWay}" MaxWidth="170"/>
+
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Grid.Column="1" 
+                                                  Content="{Binding Path=(inf:ScheduleGridLayout.TopContent),RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            </Grid>
+                            <inf:BackgroundColor Grid.Row="1" Grid.Column="1" DateTimeConverter="{StaticResource TodayToBrushConverter}"  />
+                            <inf:SelectedRowControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                            <inf:RowLineControl Grid.Row="1" Grid.ColumnSpan="3">
+                                <inf:RowLineControl.LinePen>
+                                    <Pen Brush="{StaticResource RowLineColor}"/>
+                                </inf:RowLineControl.LinePen>
+                            </inf:RowLineControl>
+                            
+                            <!--LeftContent-->
+                            <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" 
+                                              Content="{Binding Path=(inf:ScheduleGridLayout.LeftContent),RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+
+                            <GridSplitter Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Right"
+                                          Style="{StaticResource VerticalGridSplitterStyle}"/>
+                            
+                            <ContentPresenter Grid.Row="1" Grid.Column="1"  
+                                                  x:Name="PART_ScrollContentPresenter" Content="{TemplateBinding Content}" />
+
+                            <ScrollBar Grid.Row="1" Grid.Column="2" x:Name="PART_VerticalScrollBar"  
+                                            AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow"  
+                                            Maximum="{TemplateBinding ScrollableHeight}" Minimum="0"  
+                                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                            ViewportSize="{TemplateBinding ViewportHeight}"/>
+
+                            <Border Grid.ColumnSpan="4" BorderBrush="#FFC3CEE1" BorderThickness="0 0 0 1"/>
+
+                            <DockPanel Grid.Row="1" Grid.Column="1" DataContext="{Binding DataContext,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftDispatcherView}}}"
+                                       Background="#FFFFE598" Opacity="0.9" VerticalAlignment="Bottom" 
+                                       IsEnabled="{Binding IsDirty,Mode=OneWay}" Style="{StaticResource VisibleElement}">
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="{inf:Resource SubmitAllChange}" Margin="10 0" VerticalAlignment="Center"/>
+                                    <Button Margin="5 0 10 0" cal:Message.Attach="[Event Click] = [Action SubmitChanges('false')]">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Image Source="/Resources/Images/SubmitOK.png" Width="16"/>
+                                            <TextBlock Text="{inf:Resource OK}" Margin="3 0 0 0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button cal:Message.Attach="[Event Click] = [Action SubmitChanges('true')]"
+                                        Margin="5 0 10 0">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Image Source="/Resources/Images/SubmitCancel.png" Width="16"/>
+                                            <TextBlock Text="{inf:Resource Cancel}" Margin="3 0 0 0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                                <!--<inf:Interaction.Triggers>
+                                    <inf:EventTrigger SourceObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type docking:DockSite}}}" EventName="WindowClosing" CancelArgName="Cancel">
+                                        <inf:EventTrigger.Conditions>
+                                            <inf:Condition Binding="{Binding IsDirty}" Value="True"/>
+                                            <inf:Condition ArgName="Window.Content.GetType()" SetUIDataContext="True" ConvertToString="False" Value="{x:Type local:ShiftDispatcherView}"/>
+                                        </inf:EventTrigger.Conditions>
+                                        <inf:BeginStoryboardAction>
+                                            <Storyboard  TargetProperty="Background.Color">
+                                                <ColorAnimation To="Red" RepeatBehavior="0:0:3" Duration="0:0:0.5" AutoReverse="True" FillBehavior="Stop"/>
+                                            </Storyboard>
+                                        </inf:BeginStoryboardAction>
+                                    </inf:EventTrigger>
+                                </inf:Interaction.Triggers>-->
+                            </DockPanel>
+
+                            <ScrollBar  Grid.Row="2" Grid.Column="1" x:Name="PART_HorizontalScrollBar" VerticalAlignment="Bottom"
+                                           AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" 
+                                           Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"  
+                                           Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal"   
+                                           Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                           ViewportSize="{TemplateBinding ViewportWidth}"/>
+                            <Border Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                            DataContext="{Binding DataContext,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftDispatcherView}}}">
+                                    <Button cal:Message.Attach="[Event Click] = [Action SelectAll('true')]" Margin="6 0 0 0" Padding="2" VerticalAlignment="Center">
+                                        <Border BorderBrush="{DynamicResource {ComponentResourceKey ResourceId=CheckBoxOuterBorderNormalBrushKey, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}" 
+                                                    BorderThickness="1" Height="13" Width="13" 
+                                                    SnapsToDevicePixels="True">
+                                            <Border BorderBrush="{DynamicResource {ComponentResourceKey ResourceId=CheckBoxInnerBorderNormalBrushKey, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}" 
+                                                        BorderThickness="1" Background="{DynamicResource {ComponentResourceKey ResourceId=CheckBoxInnerBackgroundNormalBrushKey, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}" Margin="1" SnapsToDevicePixels="True">
+                                                <Path Data="M0.5,6.5L3.5,9.5 4.5,9.5 7.5,1.5 6,0.5 3.5,7 1.5,5z"
+                                                            Fill="{DynamicResource {ComponentResourceKey ResourceId=CheckBoxForegroundBrushKey, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}"
+                                                            HorizontalAlignment="Center" Margin="-1,0,-1,-1.25" SnapsToDevicePixels="False"
+                                                            Visibility="Visible" VerticalAlignment="Bottom"/>
+                                            </Border>
+                                        </Border>
+                                    </Button>
+                                    <Button cal:Message.Attach="[Event Click] = [Action SelectAll('false')]" Padding="2" Margin="5 0"  VerticalAlignment="Center">
+                                        <Border BorderBrush="{DynamicResource {ComponentResourceKey ResourceId=CheckBoxOuterBorderNormalBrushKey, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}" 
+                                                    BorderThickness="1" Height="13" Width="13" 
+                                                    SnapsToDevicePixels="True">
+                                            <Border BorderBrush="{DynamicResource {ComponentResourceKey ResourceId=CheckBoxInnerBorderNormalBrushKey, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}"
+                                                        BorderThickness="1" Background="{DynamicResource {ComponentResourceKey ResourceId=CheckBoxInnerBackgroundNormalBrushKey, TypeInTargetAssembly={x:Type ribbon:Ribbon}}}" Margin="1" SnapsToDevicePixels="True"/>
+                                        </Border>
+                                    </Button>
+                                    <Button HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="2"  Margin="0"
+                                        cal:Message.AvailabilityEffect="Collapse" cal:Message.Attach="[Action ReloadAgents(null, null)]">
+                                        <Image Source="/Resources/Images/Refresh16.png"/>
+                                    </Button>
+                                    <Button HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="2"  Margin="0"
+                                            Visibility="{Binding SeatDispatcherOpened,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            cal:Message.AvailabilityEffect="Collapse"
+                                            cal:Message.Attach="HideOccupationMask">
+                                        <Path Width="15" Height="15.3" Stretch="Fill" HorizontalAlignment="Left" Fill="#FF3E3C3B" Data="F1 M 525.417,331.574L 525.417,331.585L 527.278,336.696L 525.037,337.512L 523.725,333.907L 516.136,333.907L 516.136,333.898L 516.12,333.904L 513.079,325.548L 514.284,325.109C 512.938,324.986 511.884,323.854 511.884,322.476C 511.884,321.016 513.068,319.832 514.529,319.832C 515.989,319.832 517.173,321.016 517.173,322.476C 517.173,323.201 516.882,323.858 516.409,324.336L 516.948,324.14L 519.654,331.574L 525.417,331.574 Z "/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </DockPanel>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="AgentItemTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="12"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Margin="5 0 0 0" FocusVisualStyle="{x:Null}" Focusable="False" Content="{Binding Name}" Foreground="Black" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                                               DataContext="{Binding Profile}" ToolTip="{StaticResource EmployeeProfileToolTip}"
+                                              IsChecked="{Binding IsSelected,Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                          ToolTipService.ShowDuration="{DynamicResource ToolTipShowDuration}">
+            </CheckBox>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2 0 5 0"  
+                                                       Grid.RowSpan="2" Text="{Binding CurrentSeat.Number, FallbackValue='',NotifyOnSourceUpdated=True}" 
+                                                       Visibility="{Binding DataContext.EnableRtaa,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type inf:ElementListBox}},Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            </TextBlock>
+            <TextBlock Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Margin="2 0 5 0" FontWeight="Bold"  Text="!" Foreground="Red" 
+                                                   Visibility="{Binding OperationFail,TargetNullValue=Collapsed,Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            </TextBlock>
+            <Path ToolTipService.ShowDuration="{DynamicResource ToolTipShowDuration}" Stretch="Fill" Grid.Column="3" 
+                      ToolTip="{StaticResource LabourRuleSummaryToolTip}"
+                      VerticalAlignment="Top" Data="M6,6 L8,6 8,8 z">
+                <Path.Style>
+                    <Style TargetType="{x:Type Path}">
+                        <Setter Property="Fill" Value="LightGray"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding LaborRule.HasError}" Value="true">
+                                <Setter Property="Fill" Value="#FFFBC5B1"/>
+                            </DataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver,RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding LaborRule.HasError}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Fill" Value="Coral"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

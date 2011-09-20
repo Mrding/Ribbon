@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name ="TermLog" lazy="false">
+    <id type="Int64">
+      <generator class ="hilo"/>
+    </id>
+    <timestamp name="Timestamp" column="AlterAt"/>
+    <property name="SourceId"/>
+    <property name="AlterEmployeeId"/>
+    <property name ="EmployeeId"/>
+    <property name ="Action" />
+    <property name="Type"/>
+      <property name="Name"/>
+      <property name="Category"/>
+      <property name="OldTime"/>
+      <property name="NewTime"/>
+      <property name="Remark"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Luna.GUI.UserControls.DateRangeSelector"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:inf="http://www.grandsys.com/luna"
+    xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors"
+             x:Name="Self"
+    xmlns:Converters="clr-namespace:Luna.WPF.ApplicationFramework.Converters;assembly=Luna.WPF.ApplicationFramework"
+   >
+    <UserControl.Resources>
+        <Converters:RangeInervalToBooleanConverter x:Key="RangeInervalToBooleanConverter"/>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding ElementName=Self}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <ToggleButton Content="{inf:Resource UserControls_DateRangeSelector_D}"  IsChecked="{Binding Interval, Converter={StaticResource RangeInervalToBooleanConverter}, ConverterParameter='Day'}"/>
+            <ToggleButton Content="{inf:Resource UserControls_DateRangeSelector_W}" IsChecked="{Binding Interval, Converter={StaticResource RangeInervalToBooleanConverter}, ConverterParameter='Week'}"/>
+            <ToggleButton Content="{inf:Resource UserControls_DateRangeSelector_M}"  IsChecked="{Binding Interval, Converter={StaticResource RangeInervalToBooleanConverter}, ConverterParameter='Month'}"/>
+            <ToggleButton Content="{inf:Resource UserControls_DateRangeSelector_Y}"  IsChecked="{Binding Interval, Converter={StaticResource RangeInervalToBooleanConverter}, ConverterParameter='Year'}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <Button Name="Back" Content="&lt;" Padding="5,0,5,0" Click="Backward" Margin="5 0" />
+            <editors:DateTimeEditBox Value="{Binding DateFrom, UpdateSourceTrigger=PropertyChanged}" Format="yyyy/MM/dd" />
+            <TextBlock Text="~" Margin="5,0,5,0"/>
+            <editors:DateTimeEditBox
+                
+                Value="{Binding DateTo, UpdateSourceTrigger=PropertyChanged}" Format="yyyy/MM/dd" />
+            <Button Name="Next" Content="&gt;" Padding="5,0,5,0" Click="Forward" Margin="5 0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,146 @@
+﻿<local:ShiftView x:Class="Luna.GUI.Views.Shifts.ShiftDispatcherView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Behaviors="clr-namespace:Luna.WPF.ApplicationFramework.Behaviors;assembly=Luna.WPF.ApplicationFramework" xmlns:brick="http://www.grandsys.com/luna/brick" xmlns:cal="http://www.caliburnproject.org" xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking" xmlns:domain="http://www.grandsys.com/luna/domain" xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:inf="http://www.grandsys.com/luna" xmlns:local="clr-namespace:Luna.GUI.Views.Shifts" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:uc="clr-namespace:Luna.GUI.UserControls">
+    <inf:DockingWindowMetadata.Instance>
+        <inf:DockingWindowMetadata>
+            <inf:DockingWindowMetadata.Title>
+                <Binding Path="Schedule.Name" StringFormat="{inf:Resource Shifts_ShiftDispatcher_Title}" />
+            </inf:DockingWindowMetadata.Title>
+        </inf:DockingWindowMetadata>
+    </inf:DockingWindowMetadata.Instance>
+    <local:ShiftView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/BrickControl.xaml" />
+                <ResourceDictionary Source="/Luna.GUI;Component/Views/Shifts/ShiftDispatcherView.Resource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </local:ShiftView.Resources>
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0" MaxHeight="300" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <!--inf:ScheduleGridDropBehavior.CanDrop="True"
+        cal:Message.Attach="[AttachedEvent ScheduleGridDropBehavior.ItemDroped] = [Action AddSubEvent($eventArgs.DropTime, $eventArgs.DropData, $eventArgs.RowIndex)]"
+        
+        inf:ScheduleGridService.TimeLineSynchronousHost="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftDispatcherView}}}"
+        -->
+
+        <inf:ScheduleGrid x:Name="scheduleGrid" ClickTime="{Binding ClickTime,Mode=OneWayToSource}" 
+                          EndTime="{Binding Schedule.End,Mode=OneTime,Converter={StaticResource RedeemDateTimeConverter},ConverterParameter=24}" 
+                          LeftWidth="{Binding HeaderWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftDispatcherView}},Mode=TwoWay}" 
+                          RowCount="{Binding BindableAgents.Count}" 
+                          ScreenEnd="{Binding ScreenEnd,Mode=OneWayToSource}" 
+                          ScreenStart="{Binding Path=DataContext.WatchPoint,Mode=TwoWay,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type docking:DockSite}}}" 
+                          SelectedRowIndex="{Binding CurrentIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                          StartTime="{Binding Schedule.Start,Mode=OneTime}" 
+                          ZoomValue="{Binding ZoomValue, Mode=OneWayToSource}">
+            <!--<inf:ScheduleGridDropBehavior.DragItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding StringFormat=\{0:MM/dd HH:mm\}}" >
+                           <TextBlock.BitmapEffect>
+                                <OuterGlowBitmapEffect GlowColor="AliceBlue" GlowSize="12" />
+                           </TextBlock.BitmapEffect>
+                    </TextBlock>
+                </DataTemplate>
+            </inf:ScheduleGridDropBehavior.DragItemTemplate>-->
+            <!--<inf:MaskAttach.Content>
+                <inf:MaskAttach Open="{Binding IsLoading,Mode=OneWay}">
+                    <inf:MaskAttach.Template>
+                        <DataTemplate>
+                            <Border Opacity="0.8" Background="Silver">
+                                <TextBlock FontSize="16" VerticalAlignment="Center"  Foreground="SteelBlue" Text="{inf:Resource Shifts_ShiftDispatcher_Reading}" HorizontalAlignment="Center" />
+                            </Border>
+                        </DataTemplate>
+                    </inf:MaskAttach.Template>
+                </inf:MaskAttach>
+            </inf:MaskAttach.Content>-->
+
+            <inf:ScheduleGridLayout.TopContent>
+                <Grid Height="40">
+                    <Rectangle Fill="Transparent" />
+                    <brick:DateTimeNumberLine ItemTemplate="{StaticResource DateTimeNumberLineDefaultTemplate}" />
+                    <brick:DateTimeLine BlockLine="{Binding SelectedTerm}" TimeDrawConverter="{Binding BlockConverter}" />
+                    <brick:DateTimeTip x:Name="DateTimeIndicateLayerTip" SelectedTime="{Binding MonitoringPoint,Mode=TwoWay}" cal:Message.Attach="[Event MouseRightButtonDown] = [Action RedirectToScreenStart('true')];                                                            [Event MouseLeftButtonDown] = [Action RedirectToScreenStart('false')]">
+                        <Label Padding="3" Background="LightGoldenrodYellow" Content="{Binding WatchTime,Mode=OneWay}" ContentStringFormat="{}{0:MM/dd HH:mm}" HorizontalContentAlignment="Center" Opacity="0.7" />
+                    </brick:DateTimeTip>
+                </Grid>
+            </inf:ScheduleGridLayout.TopContent>
+            <inf:ScheduleGridLayout.LeftContent>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border>
+                        <editors:DateTimeEditBox Margin="5 0 0 0" Background="Transparent" BorderThickness="0" DataContext="{Binding DataContext,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Grid}}}" EditableParts="None" Format="MM/dd(ddd)" HorizontalAlignment="Left" IsNullContentVisible="True" Maximum="{Binding Schedule.End,Converter={StaticResource RedeemDateTimeConverter},ConverterParameter=1}" Minimum="{Binding Schedule.Start}" Value="{Binding Path=DataContext.WatchPoint,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type docking:DockSite}}}" VerticalAlignment="Center" />
+
+                    </Border>
+                    <inf:ElementListBox Grid.Row="1" ItemsSource="{Binding BindableAgents}" ItemTemplate="{StaticResource AgentItemTemplate}" RowHeight="{StaticResource RowHeight}" inf:ScheduleGrid.VerticalMain="True" />
+                </Grid>
+            </inf:ScheduleGridLayout.LeftContent>
+            <Grid>
+                <!--MainBlockGrid-->
+                <inf:BlockGridLayerContainer x:Name="Element_BlockGridLayerContainer" ToolTipService.ShowDuration="{DynamicResource ToolTipShowDuration}" ToolTip="{StaticResource TermTooltip}"
+                                             BlockConverter="{Binding BlockConverter}" Interval="{StaticResource RowHeight}" 
+                                             ItemsSource="{Binding BindableAgents,Mode=OneWay}" Tag="{Binding ElementName=scheduleGrid}" 
+                                             cal:Message.Attach="[Event MouseDown] = [Action SetSelectTermClickCount($eventArgs)];[Event MouseUp] = [Action NavigateToSeatLocation()];                                               [Event AfterMouseUp] = [Action SetNewTime($eventArgs)]">
+                    <Grid inf:ScheduleGrid.HorizontalMain="True">
+                        <Rectangle Fill="Transparent" />
+                        <inf:BlockGrid >
+                            <Behaviors:ElementDrawBehavior.ElementDraws>
+                                <brick:BlockGridDraw />
+                            </Behaviors:ElementDrawBehavior.ElementDraws>
+                        </inf:BlockGrid>
+                        <brick:ScaleSelectedItemLayer>
+                            <Behaviors:ElementDrawBehavior.ElementDraws>
+                                <brick:TimeRangeLineLayerDraw />
+                                <brick:BlockTimeDisplayLayerDraw />
+                            </Behaviors:ElementDrawBehavior.ElementDraws>
+                        </brick:ScaleSelectedItemLayer>
+                        <brick:MoveSelectedItemsLayer>
+                            <Behaviors:ElementDrawBehavior.ElementDraws>
+                                <brick:MoveSelectedItemsLayerDraw />
+                                <brick:TimeRangeLineLayerDraw />
+                                <brick:BlockTimeDisplayLayerDraw />
+                            </Behaviors:ElementDrawBehavior.ElementDraws>
+                        </brick:MoveSelectedItemsLayer>
+                        <brick:SelectedBlocksLayer />
+                        <!--Seat Occupation-->
+                        <!--<inf:BlockGrid AlwaysRefresh="True"  Visibility="{Binding ShowOccupationMask,Converter={StaticResource BoolToVisibilityHiddenConverter}}"
+                            ItemsSource="{Binding AgentOccupations}" BlockConverter="{StaticResource OccupationMaskConverter}">
+                            <inf:ElementDrawBehavior.ElementDraws>
+                                <brick:BlockGridDraw/>
+                            </inf:ElementDrawBehavior.ElementDraws>
+                        </inf:BlockGrid>-->
+                    </Grid>
+                </inf:BlockGridLayerContainer>
+                <!--in rtaa xaml part.txt-->
+            </Grid>
+        </inf:ScheduleGrid>
+
+        <!--<ContentControl x:Name="Element_SeatDispatcher" Grid.Row="1" Tag="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Grid}}}" cal:Message.Attach="[Event Loaded] = [Action RegisterRunSeatDispatcher($source, $source.Tag, 1)]" />-->
+        <!--<GridSplitter Style="{StaticResource HorizontalGridSplitterStyle}" Grid.Row="1" Width="Auto" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" />-->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Margin="8 0 0 0" VerticalAlignment="Center">
+                                            <TextBlock.Text>
+                                              <MultiBinding StringFormat="{inf:Resource Shifts_ShiftDispatcher_FindCount}">
+                                                    <Binding FallbackValue="0" Mode="OneWay" Path="AttendancesCount" />
+                                                    <Binding FallbackValue="0" Mode="OneWay" Path="BindableAgents.Count" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                            <TextBlock.BitmapEffect>
+                                                <OuterGlowBitmapEffect GlowColor="LightBlue" GlowSize="2.0" Opacity="0.7" />
+                                            </TextBlock.BitmapEffect>
+            </TextBlock>
+            <uc:ZoomSlider Grid.Column="2" Margin="0 2 4 2" HorizontalAlignment="Right" />
+        </Grid>
+    </Grid>
+
+</local:ShiftView>

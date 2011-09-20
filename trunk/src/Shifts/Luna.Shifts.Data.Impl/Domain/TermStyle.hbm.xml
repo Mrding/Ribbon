@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name ="TermStyle" dynamic-update="true">
+    <id name="Id" column="TermStyleId">
+      <generator class ="guid.comb"/>
+    </id>
+    <discriminator column="ChildClassType" type="string" not-null="true"/>
+
+    <property name ="Occupied" type="Boolean" not-null="true" />
+    <property name ="OnService" type="Boolean" not-null="true" />
+    <property name ="AsARest" type="Boolean" />
+    <property name ="InUse" type="Boolean" />
+
+    <component name="TimeRange" class="Luna.Common.TimeValueRange, Luna.Common">
+      <property name="StartValue" column ="StartValue" type="int" not-null="true" />
+      <property name ="EndValue" column="EndValue" type="int" not-null="true" />
+    </component>
+    <property name="Background" type="string"/>
+    <property name="Foreground" type="string"/>
+    <property name="Name" column="Name" type="string"/>
+    <property name="Type" type="Type"/>
+    <property name="Tag" column="Label" type="string"/>
+
+    <subclass name="BasicAssignmentType" discriminator-value="basicAssignmentType" dynamic-update="true">
+      <property name="AsAWork" type="Boolean" />
+      <property name="GapGuaranteed" type="Boolean" />
+      <property name="IgnoreAdherence" type="Boolean" />
+      <bag name="SubEventInsertRules" fetch="subselect">
+        <cache usage="read-write"/>
+        <key column="ParentId" foreign-key="FK_SubEventInsertRule_TermStyle"/>
+        <composite-element class="SubEventInsertRule">
+          <nested-composite-element name="TimeRange" class="Luna.Common.TimeValueRange, Luna.Common">
+            <property name="StartValue" column ="StartValue" type="int" not-null="true" />
+            <property name ="EndValue" column="EndValue" type="int" not-null="true" />
+          </nested-composite-element>
+          <many-to-one name="SubEvent" class="TermStyle" foreign-key="FK_SubEventInsertRule_TermStyleId" fetch="join"/>
+          <property name="SubEventLength" type="Int32"/>
+          <property name="OccurScale" type="Int32"/>
+        </composite-element>
+      </bag>
+      <subclass name="AssignmentType" discriminator-value="assignmentType" dynamic-update="true">
+        <property name="Country"/>
+        <property name="TimeZoneInfoId" column="TimeZoneId"/>
+        <property name="CustomTag" type="string"/>
+        <many-to-one name="ServiceQueue" class="Luna.Infrastructure.Domain.ServiceQueue, Luna.Infrastructure.Domain" column="ServiceQueueId"/>
+        <property name="EstimationPriority"/>
+        <many-to-one name="Template1" class="BasicAssignmentType" fetch="join" column="Template1Id"/>
+        <many-to-one name="Template2" class="BasicAssignmentType" fetch="join" column="Template2Id"/>
+        <many-to-one name="Template3" class="BasicAssignmentType" fetch="join" column="Template3Id"/>
+        <component name="WorkingDayMask" class="Luna.Infrastructure.Domain.MaskOfDay,Luna.Infrastructure.Domain">
+          <property name="Weekdays"  column="ValidWorkingWeekdayFromSun2Sat"/>
+          <property name="Weekdays2" column="ValidDayOffWeekdayFromSun2Sat"/>
+          <property name ="Monthdays" column="ValidDayOffMonthday"/>
+        </component>
+      </subclass>
+    </subclass>
+  </class>
+
+  <class entity-name="AssignmentTypeDailyCounter" name="Luna.Common.Domain.DailyCounter`1[[AssignmentType]], Luna.Common" table="AssignmentTypeDailyCounter">
+    <!--<cache usage="read-write"/>-->
+    <id column="AssignmentTypeDailyCounterId" type="Int64">
+      <generator class ="hilo"/>
+    </id>
+    <many-to-one name="Kind" class="AssignmentType" column="AssignmentTypeId" update="false" lazy="false"/>
+    <property name="Max"/>
+    <property name="Date" not-null="true"/>
+  </class>
+</hibernate-mapping>

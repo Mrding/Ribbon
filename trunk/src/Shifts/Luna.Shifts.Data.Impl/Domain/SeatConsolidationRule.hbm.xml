@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name="SeatConsolidationRule" table="SeatConsolidationRule" dynamic-update="true">
+    <id name="Id" column="SeatConsolidationRuleId">
+      <generator class="hilo"/>
+    </id>
+    <property name="Title"/>
+    <property name="StartValue" column="StartValue"/>
+    <property name="EndValue" column="EndValue"/>
+    <property name="Index" column="Priority"/>
+
+
+    <many-to-one class="Seat" name="TargetSeat" lazy="false" foreign-key="FK_SeatConsolidationRule_Seat" />
+    <many-to-one class="Site" name="Site" lazy="false"  foreign-key="FK_SeatConsolidationRule_Site"/>
+
+    <property name="MaxRank"/>
+    <property name="MinRank"/>
+
+
+    <property name="MatchWholeSkills"/>
+
+    <property name="Methodology" type="ArrangeSeatMethodologyEnumType" />
+
+    <property name="AppliedDayOfWeeks" type="Luna.Data.MultiBoolType, Luna.Data">
+      <column name="Su"/>
+      <column name="Mo"/>
+      <column name="Tu"/>
+      <column name="We"/>
+      <column name="Th"/>
+      <column name="Fr"/>
+      <column name="Sa"/>
+    </property>
+
+    <set name="Organizations" table="SeatConsolidationOrganizations" lazy="false">
+      <key column="SeatConsolidationRuleId" foreign-key="FK_Organization_SeatConsolidationRule"/>
+      <many-to-many class="Luna.Infrastructure.Domain.Organization, Luna.Infrastructure.Domain" column="OrganizationId" foreign-key="FK_SeatConsolidationRule_Organization"/>
+    </set>
+
+    <set name="Skills" table="SeatConsolidationSkills" lazy="false">
+      <key column="SeatConsolidationRuleId" foreign-key="FK_Skill_SeatConsolidationRule"/>
+      <many-to-many class="Luna.Infrastructure.Domain.Skill, Luna.Infrastructure.Domain" column="SkillId" foreign-key="FK_SeatConsolidationRule_Skill"/>
+    </set>
+
+    <set name="AssignmentTypes" table="SeatConsolidationAssignmentTypes" lazy="false">
+      <key column="SeatConsolidationRuleId" foreign-key="FK_AssignmentType_SeatConsolidationRule"/>
+      <many-to-many class="AssignmentType" column="AssignmentTypeId" foreign-key="FK_SeatConsolidationRule_AssignmentType"/>
+    </set>
+    
+  </class>
+</hibernate-mapping>

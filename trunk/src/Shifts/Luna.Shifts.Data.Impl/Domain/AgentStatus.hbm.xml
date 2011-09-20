@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <import class="LightweightAgentStatus"/>
+  <class name="AgentStatus" mutable="true" >
+    <id name="Id" column="AgentStatusId">
+      <generator class="identity"/>
+    </id>
+    <property name="SplitId"/>
+    <property name="AgentAcdid" length="16" column="AgentACDId"/>
+    <property name="ExtNo" length="8"/>
+    <property name="TimeStamp"/>
+    <many-to-one name="AgentStatusType" class="Luna.Infrastructure.Domain.AgentStatusType, Luna.Infrastructure.Domain" column="AgentStatusTypeCode" not-null="true" foreign-key="FK_AgentStatus_AgentStatusType"/>
+  </class>
+</hibernate-mapping>

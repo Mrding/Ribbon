@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name="OrganizationSeatingArea" table="OrganizationSeatingArea">
+    <id column="OrganizationSeatingAreaId" type="Int32">
+      <generator class ="hilo"/>
+    </id>
+
+    <many-to-one name="Area" class="Area" column="AreaId" unique-key="UQ_CPK" foreign-key="FK_OrganizationSeatingArea_Area" />
+    <many-to-one name="Object" class="Luna.Infrastructure.Domain.Organization, Luna.Infrastructure.Domain" column="OrganizationId" unique-key="UQ_CPK" foreign-key="FK_OrganizationSeatingArea_Organization"/>
+    
+    <property name="Index" column="Priority"/>
+    <property name="IsSelected" />
+    <many-to-one name="TargetSeat" class="Seat" foreign-key="FK_OrganizationSeatingArea_Seat"/>
+    <property name="Methodology" type="ArrangeSeatMethodologyEnumType" />
+
+  </class>
+</hibernate-mapping>

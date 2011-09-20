@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name="AgentStatusAlertTime" dynamic-update="true" dynamic-insert="true">
+    <id name="Id" column="AgentStatusAlertTimeId">
+      <generator class="hilo"/>
+    </id>
+    <property name="AlertTimeOutSecond" not-null="true"/>
+    <property name="AlertTimeOutSecond2" not-null="true"/>
+    <many-to-one name="Type" class="AgentStatusType" update="false" column="AgentStatusTypeCode" not-null="true" foreign-key="FK_AgentStatusAlertTime_AgentStatusType"/>
+    <many-to-one name="Area" class="Luna.Shifts.Domain.Area, Luna.Shifts.Domain" column="AreaId" update="false" not-null="true" foreign-key="FK_AgentStatusAlertTime_Area"/>
+  </class>
+</hibernate-mapping>

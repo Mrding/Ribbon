@@ -1,0 +1,174 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:inf="http://www.grandsys.com/luna"
+    xmlns:core="clr-namespace:System;assembly=System.Core"
+    xmlns:cal="http://www.caliburnproject.org">
+    <!--Important: Please do not change the Key and the Type
+           重要：不要改变Key的内容，不要改变Type的内容-->
+    <!--LoginEmployee: 表示当前登录用户-->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Luna.GUI;Component/Resources/GenericResource.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <x:Array x:Key="EmployeeType1List" Type="sys:String">
+        <sys:String>正職人員</sys:String>
+        <sys:String>委外人員</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="EmployeeType2List" Type="sys:String">
+        <sys:String>富邦</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="EmployeeType3List" Type="sys:String">
+        <sys:String>二線客服</sys:String>
+        <sys:String>一線客服-VIP</sys:String>
+        <sys:String>二線客服-VIP</sys:String>
+        <sys:String>一線客服-一般</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="SeatEventTypeList" Type="sys:String">
+        <sys:String>消毒清潔</sys:String>
+        <sys:String>外撥</sys:String>
+        <sys:String>系統維護</sys:String>
+        <sys:String>臨時班表</sys:String>
+        <sys:String>1999大夜座位</sys:String>
+        <sys:String>其他</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="AgentInfoColumnList" Type="sys:String">
+        <sys:String>姓名</sys:String>
+        <sys:String>花名</sys:String>
+        <sys:String>員工ACDID</sys:String>
+        <sys:String>員工編號</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="SeatInfoColumnList" Type="sys:String">
+        <sys:String>分機號碼</sys:String>
+        <sys:String>席位代號</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="EmployeePropertyList" Type="sys:String">
+        <sys:String>Name1</sys:String>
+        <sys:String>AgentAcdid</sys:String>
+        <sys:String>AgentId</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="SeatMonitoringRefreshIntervalsList" Type="sys:Int32">
+        <sys:Int32>5</sys:Int32>
+        <sys:Int32>10</sys:Int32>
+        <sys:Int32>15</sys:Int32>
+        <sys:Int32>30</sys:Int32>
+        <sys:Int32>60</sys:Int32>
+    </x:Array>
+
+    <x:Array x:Key="DayWeek" Type="sys:String">
+        <sys:String>星期日</sys:String>
+        <sys:String>星期一</sys:String>
+        <sys:String>星期二</sys:String>
+        <sys:String>星期三</sys:String>
+        <sys:String>星期四</sys:String>
+        <sys:String>星期五</sys:String>
+        <sys:String>星期六</sys:String>
+    </x:Array>
+
+    
+    <x:Array x:Key="TermStyleColors" Type="sys:String">
+        <sys:String>BurlyWood</sys:String>
+        <sys:String>CadetBlue</sys:String>
+        <sys:String>Chocolate</sys:String>
+        <sys:String>CornflowerBlue</sys:String>
+        <sys:String>DarkGray</sys:String>
+        <sys:String>DarkKhaki</sys:String>
+        <sys:String>DarkOrange</sys:String>
+        <sys:String>DarkSalmon</sys:String>
+        <sys:String>DarkSeaGreen</sys:String>
+        <sys:String>LightPink</sys:String>
+        <sys:String>LightSalmon</sys:String>
+        <sys:String>LightSkyBlue</sys:String>
+        <sys:String>MediumPurple</sys:String>
+        <sys:String>Orchid</sys:String>
+        <sys:String>YellowGreen</sys:String>
+
+    </x:Array>
+    
+    
+    
+     <ObjectDataProvider x:Key="WeekDays"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="sys:DayOfWeek" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider MethodName="GetType" ObjectType="{x:Type sys:Type}" x:Key="colorsTypeOdp">
+        <ObjectDataProvider.MethodParameters>
+            <sys:String>System.Windows.Media.Colors, PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</sys:String>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    <ObjectDataProvider ObjectInstance="{StaticResource colorsTypeOdp}" MethodName="GetProperties" x:Key="colorPropertiesOdp">
+    </ObjectDataProvider>
+
+    <ObjectDataProvider ObjectType="{x:Type core:TimeZoneInfo}" MethodName="GetSystemTimeZones" x:Key="TimeZoneInfoOdp"/>
+    
+
+
+
+
+    <!--人力計算曲綫顏色-->
+
+    <SolidColorBrush x:Key="ActualCallVolumeLineColor" Color="#FF22B14C"/>
+
+    <SolidColorBrush x:Key="ActualMaxStaffingLineColor" Color="#FFA349A4"/>
+
+
+    <SolidColorBrush x:Key="ForecastStaffingLineColor" Color="#FF3F48CC"/>
+    <SolidColorBrush x:Key="AssignedStaffingLineColor" Color="#FF00A2E8"/>
+    <SolidColorBrush x:Key="AssignedServiceLevelLineColor" Color="#FFFFAEC9"/>
+    <SolidColorBrush x:Key="AssignedMaxStaffingLineColor" Color="#FFD82BFF"/>
+    <SolidColorBrush x:Key="ServiceLevelGoalLineColor" Color="#FFED1C24"/>
+
+    <SolidColorBrush x:Key="ForecastCallVolumeLineColor" Color="#FFB5E61D"/>
+    <SolidColorBrush x:Key="ForecastAverageHandlingTimeLineColor" Color="Orange"/>
+    
+    <!--<SolidColorBrush x:Key="OverStaffLineColor" Color="#FF99DA9D"/>-->
+    <SolidColorBrush x:Key="StaffingDifferenceLineColor" Color="#FFFBA53C"/>
+
+
+    <DataTemplate x:Key="AgentSeatBottomPanel">
+        <TextBlock FontSize="9"  Text="{Binding SeatInfo}" HorizontalAlignment="Center" />
+        <!--<Button FontSize="9" Content="{Binding SeatInfo}" Margin="0 1 0 4"                
+                cal:Message.Attach="OpenExternalCommand($this.Content)" 
+                Style="{StaticResource LinkButton}" HorizontalAlignment="Center"/>-->
+    </DataTemplate>
+
+    <sys:Int32 x:Key="ToolTipShowDuration">15000</sys:Int32>
+
+    <sys:Boolean x:Key="EnableProfiler">true</sys:Boolean>
+
+    <sys:Double x:Key="RtaaAutoRefreshInterval">30</sys:Double>
+
+    <sys:String x:Key="BrickFontName">Calibri (Body)</sys:String>
+    
+    <x:Array x:Key="CountryList" Type="sys:String">
+        <sys:String>zh-tw</sys:String>
+        <sys:String>en-us</sys:String>
+    </x:Array>
+
+    <x:Array x:Key="zh-tw" Type="sys:String">
+        <sys:String>Taipei Standard Time</sys:String>
+    </x:Array>
+
+
+
+    <x:Array x:Key="en-us" Type="sys:String">
+        <sys:String>Alaskan Standard Time</sys:String>
+        <sys:String>Eastern Standard Time</sys:String>
+        <sys:String>Central America Standard Time</sys:String>
+    </x:Array>
+
+    <CollectionViewSource x:Key="Countries" Source="{Binding Source={StaticResource CountryList},Converter={StaticResource CultureCountryConverter}}"/>
+
+   
+</ResourceDictionary>

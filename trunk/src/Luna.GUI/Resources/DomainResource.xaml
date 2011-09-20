@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:inf="http://www.grandsys.com/luna"
+                     xmlns:domain="http://www.grandsys.com/luna/domain"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <ObjectDataProvider x:Key="ArrangeSeatMethodologies" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="domain:ArrangeSeatMethodology"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <CollectionViewSource Source="{DynamicResource EmployeeType1List}" x:Key="EmployeeType1ListCollectionView" x:Shared="false"/>
+    <CollectionViewSource Source="{DynamicResource EmployeeType2List}" x:Key="EmployeeType2ListCollectionView" x:Shared="false"/>
+    <CollectionViewSource Source="{DynamicResource EmployeeType3List}" x:Key="EmployeeType3ListCollectionView" x:Shared="false"/>
+    <CollectionViewSource Source="{DynamicResource EmployeePropertyList}" x:Key="EmployeePropertyListCollectionView" x:Shared="false"/>
+    <CollectionViewSource Source="{DynamicResource SeatEventTypeList}" x:Key="SeatEventTypeListListCollectionView" x:Shared="false"/>
+    <CollectionViewSource Source="{DynamicResource SeatMonitoringRefreshIntervalsList}" x:Key="SeatMonitoringRefreshIntervalsListCollectionView" x:Shared="false"/>
+
+
+    <CollectionViewSource x:Key="SubeventTypes" x:Shared="false">
+        <CollectionViewSource.Source>
+            <inf:TypedDictionary>
+                <sys:String x:Key="{x:Type domain:RegularSubEvent}">一般薪</sys:String>
+                <sys:String x:Key="{x:Type domain:UnlaboredSubEvent}">不給薪</sys:String>
+                <sys:String x:Key="{x:Type domain:OvertimeSubEvent}">加班薪</sys:String>
+                <sys:String x:Key="{x:Type domain:AbsentEvent}">假別</sys:String>
+                <sys:String x:Key="{x:Type domain:Shrink}">减班</sys:String>
+            </inf:TypedDictionary>
+        </CollectionViewSource.Source>
+    </CollectionViewSource>
+
+
+    
+
+    <!--<inf:TypedDictionary x:Key="SubeventTypes" x:Shared="false">
+        <sys:String x:Key="{x:Type domain:OvertimeAssignment}">一般薪</sys:String>
+        <sys:String x:Key="{x:Type domain:Assignment}">不給薪</sys:String>
+      
+    </inf:TypedDictionary>-->
+
+    <!--<x:Array x:Key="AssignmentTypeCategories" Type="x:Type">
+        <x:Type TypeName="domain:BasicAssignmentType"/>
+        <x:Type TypeName="domain:AssignmentType"/>
+    </x:Array>-->
+
+</ResourceDictionary>

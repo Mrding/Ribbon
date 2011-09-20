@@ -1,0 +1,615 @@
+﻿<UserControl x:Class="Luna.GUI.Views.Shifts.AssignmentTypeDetailView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:uc="clr-namespace:Luna.GUI.UserControls"
+    xmlns:inf="http://www.grandsys.com/luna"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    xmlns:dropShadow="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
+    xmlns:local="clr-namespace:Luna.GUI.Views.Shifts"
+
+    xmlns:ui="clr-namespace:Luna.Shifts.Presenters.Interfaces;assembly=Luna.Shifts"
+    xmlns:brick="http://www.grandsys.com/luna/brick"
+    xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+    xmlns:domain="http://www.grandsys.com/luna/domain" 
+    xmlns:cell="http://www.grandsys.com/luna/cell"
+    xmlns:Behaviors="clr-namespace:Luna.WPF.ApplicationFramework.Behaviors;assembly=Luna.WPF.ApplicationFramework"
+    Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="AssignmentTypeDetailView.Resource.xaml"/>
+                <inf:BlendMergedDictionary Source="pack://application:,,,/Resources/ApplicationResource.xaml"/>
+                <inf:BlendMergedDictionary Source="/Luna.GUI;Component/Resources/ApplicationStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="Countries" Source="{Binding Source={StaticResource CountryList},Converter={StaticResource CultureCountryConverter}}"/>
+        </ResourceDictionary>
+        <!--<DataTemplate DataType="{x:Type domain:TermStyle}" x:Key="SubeventType">
+            <GroupBox Header="InsertRule Detail">
+                <StackPanel HorizontalAlignment="Left" >
+                    <Label Content="{Binding Name}"/>
+                    <Label Content="{Binding Length}" ContentStringFormat="{}L:{0}" Foreground="Blue"/>
+                    <Label Content="{Binding Type,Converter={StaticResource ResourceConverter}}"/>
+                    <Label Content="" ContentStringFormat="{}Occupied:{0}"/>
+                    <Label Content=""/>
+                    <Label Content=""/>
+                </StackPanel>
+            </GroupBox>
+        </DataTemplate>-->
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--<ContentControl Content="{Binding CollectionView/Entity.Type.Name}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ContentControl.ContentTemplate>
+                <DataTemplate>
+                    <Image x:Name="PART_Sticker" Stretch="None"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}"  Value="OvertimeAssignment">
+                            <Setter TargetName="PART_Sticker" Property="Source" Value="/Resources/Images/OtSticker.png" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}"  Value="Assignment">
+                            <Setter TargetName="PART_Sticker" Property="Source" Value="/Resources/Images/CmpSticker.png" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ContentControl.ContentTemplate>
+        </ContentControl>-->
+
+        <Expander x:Name="Legend" IsExpanded="{Binding CollectionView/IsInDesignMode,Mode=OneWayToSource}">
+            <Expander.Style>
+                <Style TargetType="{x:Type Expander}">
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Expander}">
+                                <DockPanel>
+                                    <Grid  x:Name="HeaderSite" DockPanel.Dock="Top" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <ToggleButton Grid.Row="0" Content="Design" Style="{DynamicResource DefaultToggleButtonStyle}"      
+										HorizontalAlignment="Right" VerticalAlignment="Top"
+										IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        <ContentControl Grid.Row="1" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                    </Grid>
+
+                                    <ContentPresenter x:Name="ExpandSite" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </DockPanel>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsExpanded" Value="true">
+                                        <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                                        <!--<Setter Property="Background" TargetName="HeaderSite" Value="#FF686565"/>-->
+                                        <Setter Property="Height" TargetName="HeaderSite" Value="150"/>
+                                    </Trigger>
+                                    <Trigger Property="IsExpanded" Value="false">
+                                        <Setter Property="Height" TargetName="HeaderSite" Value="150"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Expander.Style>
+            <Expander.Header>
+                <inf:ScheduleGrid RowHeight="90" HorizontalScrollBarVisibility="Visible" Grid.Row="1"
+                                                inf:ScrollViewerUtilities.HorizontalOffset="0"
+                                        RowCount="1" StartTime="1999/12/31 12:00 PM" EndTime="2000/1/3" x:Name="PART_ScheduleGrid"
+                                            ScreenStart="{Binding CollectionView/ShowupPoint,Mode=TwoWay}">
+                    <inf:BlockGridLayerContainer x:Name="blockGridLayerContainer" AllowDrop="True"
+                                             Interval="90" BlockConverter="{Binding BlockConverter}"
+                                             ItemsSource="{Binding CollectionView/SingleEntityList,Mode=OneWay}"
+                                         cal:Action.TargetWithoutContext="{Binding CollectionView/}"                                                        
+                                         cal:Message.Attach="[Event Prevent] = [Action CanAlter($eventArgs)]; [Event AfterMouseUp] = [Action SetNewTime($eventArgs)]; [Event Drop] = [Action AddInsertRule($eventArgs)]">
+                        <Grid inf:ScheduleGrid.HorizontalMain="True" 
+                              inf:ScheduleGrid.VerticalMain="True" >
+
+                            <Rectangle Fill="Transparent"/>
+
+                            <inf:BlockGrid>
+                                <Behaviors:ElementDrawBehavior.ElementDraws>
+                                    <brick:BlockGridDraw/>
+                                </Behaviors:ElementDrawBehavior.ElementDraws>
+                            </inf:BlockGrid>
+                            <brick:SelectedBlocksLayer x:Name="SelectedBlocksLayer" SelectedBlock="{Binding CollectionView/SelectedBlock,Mode=TwoWay}"/>
+
+
+
+                            <brick:ScaleSelectedItemLayer LayoutClipY="-100" >
+                                <Behaviors:ElementDrawBehavior.ElementDraws>
+                                    <brick:TimeRangeLineLayerDraw/>
+                                    <brick:BlockTimeDisplayLayerDraw TextVerticalAlignment="Top"/>
+                                </Behaviors:ElementDrawBehavior.ElementDraws>
+                            </brick:ScaleSelectedItemLayer>
+                            <brick:MoveSelectedItemsLayer LayoutClipY="-100">
+                                <Behaviors:ElementDrawBehavior.ElementDraws>
+                                    <brick:MoveSelectedItemsLayerDraw/>
+                                    <brick:TimeRangeLineLayerDraw/>
+                                    <brick:BlockTimeDisplayLayerDraw TextVerticalAlignment="Top"/>
+                                </Behaviors:ElementDrawBehavior.ElementDraws>
+                            </brick:MoveSelectedItemsLayer>
+                            <brick:MoveDargItemsLayer LayoutClipY="-100" 
+                                                      cal:Action.TargetWithoutContext="{Binding Path=CollectionView/}"
+                                                      cal:Message.Attach="[AttachedEvent MoveDargItemsLayer.Dragging] = [Action DraggingNewSubEventInsertRule($eventArgs)]">
+                                <Behaviors:ElementDrawBehavior.ElementDraws>
+                                    <brick:TimeRangeLineLayerDraw/>
+                                    <brick:BlockTimeDisplayLayerDraw TextVerticalAlignment="Top"/>
+                                    <brick:DragItemLayerDraw/>
+                                </Behaviors:ElementDrawBehavior.ElementDraws>
+                            </brick:MoveDargItemsLayer>
+                            <inf:EditControlLayer cal:Message.Attach="[AttachedEvent EditControlLayer.EndEdit] = [Action RemoveInsertRule()]" CellMode="False"/>
+                        </Grid>
+                    </inf:BlockGridLayerContainer>
+                    <inf:ScheduleGridLayout.BottomContent>
+                        <ContentPresenter HorizontalAlignment="Left" 
+                                              Visibility="{Binding IsExpanded,ElementName=Legend,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                              Content="{Binding Path=SelectedBlock,ElementName=SelectedBlocksLayer,Mode=OneWay}">
+                            <ContentPresenter.Resources>
+                                <DataTemplate DataType="{x:Type domain:TermStyle}"/>
+                                <DataTemplate DataType="{x:Type domain:SubEventInsertRule}">
+                                    <Grid Margin="0" x:Name="AccurScalSlider">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <!--<ColumnDefinition Width="auto"/>-->
+                                        </Grid.ColumnDefinitions>
+
+                                        <Slider x:Name="PART_Slider" Grid.Column="1" Margin="5 0 0 3" Width="200" Style="{StaticResource SimpleMetroSliderStyle}" VerticalAlignment="Bottom"
+                                                Maximum="{Binding MaxOccurScale,Mode=TwoWay}" Minimum="0" SmallChange="5" LargeChange="5" IsSnapToTickEnabled="true" 
+                                                 TickFrequency="5" Value="{Binding OccurScale,Mode=TwoWay}"/>
+                                        <TextBlock IsHitTestVisible="False" Margin="-2 -9 0 0" VerticalAlignment="Bottom">
+                                            <AccessText Text="OccurScale " FontSize="24" Foreground="#FFEDEDED" />                                            
+                                            <AccessText Text="{Binding OccurScale,Mode=OneWay}" Foreground="Gray" FontSize="24" VerticalAlignment="Bottom"/>
+                                        </TextBlock>
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding MaxOccurScale}" Value="0">
+                                            <Setter TargetName="AccurScalSlider"  Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type domain:BasicAssignmentType}">
+                                    <Grid Margin="0 0 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock  Text="Color" IsHitTestVisible="False" Foreground="#FFEDEDED" FontSize="24" Margin="-2 -9 0 0" VerticalAlignment="Bottom"/>
+                                        <ListBox Margin="5 0 0 3" Grid.Column="1" VerticalAlignment="Bottom" 
+                                         SelectedValue="{Binding Background}" Background="Transparent" ItemsSource="{Binding Source={StaticResource TermStyleColors}}"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                              HorizontalAlignment="Left" BorderThickness="0">
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="ListBoxItem">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ListBoxItem">
+                                                                <ContentControl x:Name="contentControl" Cursor="Hand"  Foreground="{TemplateBinding Foreground}">
+                                                                    <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                                                  VerticalAlignment="Bottom" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                                                </ContentControl>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+                                            <ListBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Rows="1"/>
+                                                </ItemsPanelTemplate>
+                                            </ListBox.ItemsPanel>
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <shared:PixelSnapper>
+                                                        <Border x:Name="PART_Color_Border" BorderBrush="{Binding}" BorderThickness="0,0,0,3" Margin="2 0">
+                                                            <Rectangle x:Name="PART_Color" Height="12" Width="12" Fill="Transparent" Stroke="Transparent" StrokeThickness="0" Margin="0"/>
+                                                        </Border>
+                                                    </shared:PixelSnapper>
+                                                    <DataTemplate.Triggers>
+                                                        <!--<DataTrigger Binding="{Binding IsSelected,RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="true">
+                                                    <Setter TargetName="PART_Color" Property="Height" Value="16"/>
+                                                    <Setter TargetName="PART_Color" Property="Fill" Value="{Binding}"/>
+                                                    <Setter TargetName="PART_Color_Border" Property="BorderBrush" Value="#FFEDEDED"/>
+                                                </DataTrigger>-->
+                                                        <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="true">
+                                                            <Setter TargetName="PART_Color" Property="Fill" Value="{Binding}"/>
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </Grid>
+                                </DataTemplate>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </inf:ScheduleGridLayout.BottomContent>
+                </inf:ScheduleGrid>
+            </Expander.Header>
+
+        </Expander>
+
+        <Border Visibility="{Binding CollectionView/IsInDesignMode,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}" 
+            Grid.Row="1" x:Name="SubEventTypeMaster"
+                        HorizontalAlignment="Stretch" cal:View.Model="{cal:Resolve ui:ISubEventTypeMasterPresenter}"/>
+
+        <DockPanel Grid.Row="1" Visibility="{Binding CollectionView/IsInDesignMode,Mode=OneWay,Converter={StaticResource InversionOfBooleanToVisibilityConverter}}">
+            <ListBox ItemsSource="{Binding SettingCategories}" IsSynchronizedWithCurrentItem="True"
+                     DockPanel.Dock="Top">
+                <ListBox.Template>
+                    <ControlTemplate TargetType="ListBox">
+                        <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="SnapsToDevicePixels" Value="true"/>
+                        <Setter Property="OverridesDefaultStyle" Value="true"/>
+                        <Setter Property="Foreground" Value="#FF858585"/>
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter/>
+                                    <ControlTemplate.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="false"/>
+                                                <Condition Property="IsMouseOver" Value="true"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </MultiTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock x:Name="PART_Text" Text="{Binding}" Margin="0 0 12 0"/>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBoxItem}}}" Value="true">
+                                <Setter Property="Foreground" TargetName="PART_Text" Value="Black"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ContentControl Content="{Binding}">
+                <ContentControl.Resources>
+
+                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBoxStyle}">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Width" Value="200" />
+                    </Style>
+                    <Style x:Key="NoneBindingData" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="ItemTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock OverridesDefaultStyle="True" Background="{x:Null}" Margin="0" Padding="0" IsHitTestVisible="True" Text="{Binding Value,TargetNullValue='(None)'}"/>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ContentControl.Resources>
+                <ContentControl.Template>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="0 10 0 0" x:Name="PART_General">
+                                    <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="10"/>
+                                </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" Grid.Column="1">
+                                    <Label  VerticalAlignment="Center">estimation by ServiceQueue</Label>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="8"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <ComboBox Grid.Row="0" ItemsSource="{Binding ServiceQueuesSource}" SelectedValue="{Binding CollectionView/Entity.ServiceQueue}" SelectedValuePath="Value" VerticalAlignment="Center">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock OverridesDefaultStyle="True" Background="{x:Null}" Margin="0" Padding="0" IsHitTestVisible="True" Text="{Binding Path=Name,TargetNullValue='(None)'}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Slider Grid.Row="2" VerticalAlignment="Top" Style="{StaticResource MetroSliderStyle}" inf:ControlService.Header="Priority"
+                                                        Maximum="10" Minimum="1" Interval="1" Value="{Binding CollectionView/Entity.EstimationPriority,Mode=TwoWay}"
+                                                        Grid.Column="0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="3">
+                                    <Label VerticalAlignment="Top">type</Label>
+                                    <ComboBox SelectedItem="{Binding CollectionView/Entity.Type}" ItemsSource="{Binding ImplementationTypes}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=.,Converter={StaticResource ResourceConverter}}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
+                                   
+                            </Grid>
+                            <Grid Margin="0 10 0 0" x:Name="PART_Rules">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0"/>
+                                    <ColumnDefinition Width="5"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+
+                                </Grid.RowDefinitions>
+                                <!--#FF12A0DC-->
+                                <TextBlock Text="ASSIGNMENT" VerticalAlignment="Top" Margin="5 8"  FontSize="14" Foreground="Black"/>
+                                <TextBlock Text="SUBEVENT INSERT" Grid.Row="1" VerticalAlignment="Top" Margin="5 8"   FontSize="14" Foreground="Black"/>
+
+                                <StackPanel Margin="0 0 30 0" VerticalAlignment="Top" Grid.Column="2">
+                                    <UniformGrid Columns="1"  DataContext="{Binding CollectionView/}">
+                                        <!--<CheckBox Content="{inf:Resource Shifts_AssignmentTypeDetail_InUse}" IsChecked="{Binding Entity.InUse}"/>-->
+                                        <CheckBox Content="{inf:Resource Shifts_AssignmentTypeDetail_GapGuaranteed}" IsChecked="{Binding Entity.GapGuaranteed}"/>
+                                        <CheckBox Content="{inf:Resource Shifts_AssignmentTypeDetail_Occupied}" IsChecked="{Binding Entity.Occupied}"/>
+                                        <CheckBox Content="{inf:Resource Shifts_AssignmentTypeDetail_IgnoreAdherence}" IsChecked="{Binding Entity.IgnoreAdherence}"/>
+                                        <CheckBox Content="{inf:Resource Shifts_AssignmentTypeDetail_AsAWork}" IsChecked="{Binding Entity.AsAWork}" IsEnabled="{Binding Entity.AsARest, Converter={StaticResource BooleanInverseConverter}}" />
+                                        <CheckBox Content="{inf:Resource Shifts_AssignmentTypeDetail_AsARest}" IsChecked="{Binding Entity.AsARest}" IsEnabled="{Binding Entity.AsAWork, Converter={StaticResource BooleanInverseConverter}}" />
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0 10 0 0" x:Name="PART_Region">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                </Grid.ColumnDefinitions>
+                                <!--TimeZone-->
+                                <StackPanel Grid.Column="1">
+                                    <Label>location</Label>
+                                    <ComboBox x:Name="Country" DataContext="{Binding CollectionView/}"  SelectedItem="{Binding Entity.Country}" ItemsSource="{Binding Source={StaticResource Countries}}"/>
+                                    <Label>
+                                        meet holiday event
+                                    </Label>
+                                    <ComboBox Style="{StaticResource NoneBindingData}"   
+                                              SelectedValuePath="Value"
+                                              ItemsSource="{Binding DataContext.BasicAssignmentTypes1,RelativeSource={RelativeSource AncestorType=local:AssignmentTypeMasterView}}"
+                                                   DataContext="{Binding CollectionView/}"
+                                      SelectedValue="{Binding Entity.Template1,Mode=TwoWay}"/>
+                                    <Label>meet daylight saving holiday</Label>
+                                    <ComboBox Style="{StaticResource NoneBindingData}"
+                                              SelectedValuePath="Value"
+                                              ItemsSource="{Binding DataContext.BasicAssignmentTypes1,RelativeSource={RelativeSource AncestorType=local:AssignmentTypeMasterView}}"
+                                                   DataContext="{Binding CollectionView/}"
+                                      SelectedValue="{Binding Entity.Template3,Mode=TwoWay}" Margin="0 0 0 10"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="3" >
+                                    <!--<ribbon:Separator Grid.Row="5" Label="Intellisense" Context="BackstageItem" />-->
+                                    <Label>timezone</Label>
+                                    <ComboBox DataContext="{Binding CollectionView/Entity}" SelectedValuePath="Id">
+                                        <ComboBox.ItemsSource>
+                                            <Binding Source="{StaticResource TimeZoneInfoOdp}" Mode="OneTime"/>
+                                        </ComboBox.ItemsSource>
+                                        <ComboBox.SelectedValue>
+                                            <Binding Path="TimeZoneInfoId" Mode="TwoWay"/>
+                                        </ComboBox.SelectedValue>
+                                    </ComboBox>
+                                    <Label>meet daylight saving</Label>
+                                    <ComboBox Margin="0 0 0 10" Style="{StaticResource NoneBindingData}"
+                                              SelectedValuePath="Value"
+                                              ItemsSource="{Binding DataContext.BasicAssignmentTypes1,RelativeSource={RelativeSource AncestorType=local:AssignmentTypeMasterView}}"
+                                              DataContext="{Binding CollectionView/}"
+                                      SelectedValue="{Binding Entity.Template2,Mode=TwoWay}" />
+
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0 10 0 0" x:Name="PART_Arrangemnt">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="5"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="26"/>
+                                    <ColumnDefinition Width="5"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <DataTemplate x:Key="WeekDay">
+                                        <CheckBox Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        IsChecked="{Binding IsSelected,Mode=TwoWay,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListBoxItem}}}">
+                                            <CheckBox.Style>
+                                                <Style TargetType="CheckBox">
+                                                    <Setter Property="SnapsToDevicePixels" Value="true"/>
+                                                    <Setter Property="OverridesDefaultStyle" Value="true"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="CheckBox">
+                                                                <Ellipse x:Name="CheckMark" Cursor="Hand" Width="8" Height="8" Stretch="Fill" Fill="#FF8AC33E"/>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsChecked" Value="false">
+                                                                        <Setter TargetName="CheckMark" Property="Fill" Value="#FFE5E5E5"/>
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsChecked" Value="{x:Null}">
+                                                                        <Setter TargetName="CheckMark" Property="Fill" Value="#FFE5E5E5"/>
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsChecked" Value="true">
+                                                                        <Setter TargetName="CheckMark" Property="Fill" Value="#FF8AC33E"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </Grid.Resources>
+
+                                <Label Padding="0">
+                                    <Label.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <shared:PixelSnapper>
+                                                <Image Height="25" Source="/Resources/Images/iCal7.png"/>
+                                            </shared:PixelSnapper>
+                                            <TextBlock VerticalAlignment="Center"  Text="面向週可上班日"/>
+                                        </StackPanel>
+                                    </Label.Content>
+                                </Label>
+
+                                <TextBlock Text="平日" FontSize="12" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                       Foreground="Gray" FontFamily="Microsoft JhengHei"/>
+                                <TextBlock Foreground="Red" Text="遇假日" FontSize="12" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Microsoft JhengHei"/>
+
+                                <ListBox Background="Transparent" IsHitTestVisible="False" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="7" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                            Margin="-1.5 0 0 0" BorderThickness="0" ItemsSource="{Binding Source={StaticResource WeekDays}}">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                            <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Width" Value="26" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                        <ContentPresenter x:Name="PART_Content" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Text="{Binding Converter={StaticResource DayOfWeekConverter}}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+                                <uc:CheckBoxList DataContext="{Binding CollectionView/Entity.WorkingDayMask,Converter={StaticResource DebugConverter}}" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="7"
+                                                        ArrayInt="{Binding Weekdays,Mode=TwoWay,FallbackValue=127}" Margin="-1.5 0 0 0"
+                                                        ItemsSource="{Binding WeekDayMask,Converter={StaticResource ArrayToCheckItemConverter}, ConverterParameter={x:Type sys:DayOfWeek}}"
+                                                                         ItemTemplate="{StaticResource WeekDay}"/>
+
+                                <uc:CheckBoxList DataContext="{Binding CollectionView/Entity.WorkingDayMask}" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="7"
+                                                        ArrayInt="{Binding Weekdays2,Mode=TwoWay,FallbackValue=127}" Margin="-1.5 0 0 0"
+                                                        ItemsSource="{Binding WeekDayMask2,Converter={StaticResource ArrayToCheckItemConverter}, ConverterParameter={x:Type sys:DayOfWeek}}"
+                                                        ItemTemplate="{StaticResource WeekDay}"/>
+
+                                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top">
+                                    <Image Height="25" Source="/Resources/Images/iCal.png"/>
+                                    <TextBlock VerticalAlignment="Center" DockPanel.Dock="Right" Text="面向月可上班日" FontFamily="Microsoft JhengHei"/>
+                                </StackPanel>
+
+                                <uc:CheckBoxList DataContext="{Binding CollectionView/Entity.WorkingDayMask}" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="7"
+                                                            ArrayInt="{Binding Monthdays,Mode=TwoWay,FallbackValue=2147483647}"
+                                                            ItemsSource="{Binding MonthDayMask,Converter={StaticResource ArrayToCheckItemConverter}, ConverterParameter={x:Type domain:MonthDay}}"/>
+
+                                <!--<Rectangle Height="2" Grid.Row="4" Grid.ColumnSpan="10" VerticalAlignment="Center"  Stroke="{StaticResource DottedHorizontalSeparatorBrush}" StrokeThickness="1" StrokeDashArray="2 2" RenderOptions.EdgeMode="Aliased" />-->
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding SettingCategories/}" Value="General">
+                                <Setter TargetName="PART_Rules" Property="Grid.Column" Value="1"/>
+                                <Setter TargetName="PART_Region" Property="Grid.Column" Value="1"/>
+                                <Setter TargetName="PART_Arrangemnt" Property="Grid.Column" Value="1"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SettingCategories/}" Value="Rules">
+                                <!--<Setter TargetName="PART_Rules" Property="Visibility" Value="Visible"/>-->
+                                <!--<Setter TargetName="PART_Arrangemnt" Property="Visibility" Value="Collapsed"/>                             
+                                <Setter TargetName="PART_Region" Property="Visibility" Value="Collapsed"/>-->
+                                <Setter TargetName="PART_General" Property="Grid.Column" Value="1"/>    
+                                <Setter TargetName="PART_Region" Property="Grid.Column" Value="1"/>
+                                <Setter TargetName="PART_Arrangemnt" Property="Grid.Column" Value="1"/>
+
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SettingCategories/}" Value="Region">
+                              
+                                <!--<Setter TargetName="PART_Rules" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="PART_Arrangemnt" Property="Visibility" Value="Collapsed"/>-->
+                                <Setter TargetName="PART_General" Property="Grid.Column" Value="1"/>
+                                <Setter TargetName="PART_Rules" Property="Grid.Column" Value="1"/>
+                                <Setter TargetName="PART_Arrangemnt" Property="Grid.Column" Value="1"/>
+
+                                <!--<Setter TargetName="PART_Region" Property="Visibility" Value="Visible"/>-->
+                            </DataTrigger>                          
+                            <DataTrigger Binding="{Binding SettingCategories/}" Value="Arrangemnt">
+                                <!--<Setter TargetName="PART_Arrangemnt" Property="Visibility" Value="Visible"/>-->
+                                <!--<Setter TargetName="PART_Rules" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="PART_Region" Property="Visibility" Value="Collapsed"/>-->
+                                <Setter TargetName="PART_General" Property="Grid.Column" Value="1"/>
+                                <Setter TargetName="PART_Rules" Property="Grid.Column" Value="1"/>
+                                <Setter TargetName="PART_Region" Property="Grid.Column" Value="1"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ContentControl.Template>
+            </ContentControl>
+        </DockPanel>
+
+
+        <!--<inf:TabControlEx Grid.Row="1" >
+            <inf:TabControlEx.Style>
+                <Style TargetType="inf:TabControlEx" BasedOn="{StaticResource DefaultTabControlStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CollectionView/Entity.Purpose}" Value="adjustment">
+                            <Setter Property="Behaviors:TabControlBehavior.SelectedTabIndex" Value="0"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </inf:TabControlEx.Style>
+          
+
+        </inf:TabControlEx>-->
+
+    </Grid>
+</UserControl>

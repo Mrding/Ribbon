@@ -1,0 +1,566 @@
+﻿<local:ShiftView x:Class="Luna.GUI.Views.Shifts.ShiftComposerView" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:behaviors="clr-namespace:Luna.WPF.ApplicationFramework.Behaviors;assembly=Luna.WPF.ApplicationFramework" 
+        xmlns:brick="http://www.grandsys.com/luna/brick" 
+        xmlns:cal="http://www.caliburnproject.org" 
+        xmlns:cell="http://www.grandsys.com/luna/cell" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking" 
+        xmlns:dropShadow="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
+        xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors" 
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:inf="http://www.grandsys.com/luna" 
+        xmlns:local="clr-namespace:Luna.GUI.Views.Shifts" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:presentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" 
+        xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon" 
+        xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:uc="clr-namespace:Luna.GUI.UserControls" TimeLineVisibility="Visible" 
+        xmlns:domain="http://www.grandsys.com/luna/domain"
+        behaviors:CommandBidingBehavior.RegisterCommandBindings="{Binding CommandBindings}" 
+        d:DesignHeight="300" d:DesignWidth="800" mc:Ignorable="d">
+    <inf:DockingWindowMetadata.Instance>
+        <inf:DockingWindowMetadata Title="{Binding Title}" />
+    </inf:DockingWindowMetadata.Instance>
+    <local:ShiftView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Luna.GUI;Component/Views/Shifts/ShiftComposerView.Resource.xaml" />
+                <ResourceDictionary Source="/Luna.GUI;Component/Views/Shifts/ShiftComposerView.ScheduleGrid.Resource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </local:ShiftView.Resources>
+    <Grid x:Name="RootLayout" >
+        <!--
+            <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/bck_body.jpg" />
+            </Grid.Background>
+        -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding HeaderWidth.Value,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftView}},Mode=OneWay}"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding TopRowHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ShiftView}}, Mode=TwoWay}" MinHeight="34" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="55" />
+        </Grid.RowDefinitions>
+
+        <Border BorderBrush="#FFC5C6C7" Grid.Column="1" BorderThickness="0 0 1 0" IsHitTestVisible="False"/>
+
+        <inf:ScheduleGrid Grid.ColumnSpan="2" Style="{StaticResource StaffingGrid}" x:Name="LinechartDashboard"
+                          EndTime="{Binding Schedule.End}" 
+                          LeftWidth="{Binding HeaderWidth.Value,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftView}},Mode=OneWay}" 
+                          ScreenEnd="{Binding ScreenEnd,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" 
+                          ScreenStart="{Binding ScreenStart,UpdateSourceTrigger=PropertyChanged}"
+                          StartTime="{Binding Schedule.Start}">
+            <ContentPresenter x:Name="StaffingChartView" cal:Message.Attach="[Event Loaded] = [Action RegisterRunStaffingChart($source)]" 
+                              cal:View.Context="StaffingCalculatorView" />
+
+        </inf:ScheduleGrid>
+
+
+        <!--  ToggleButton margin = 34(ui first row height) - 16(image height) /2 = 9  -->
+        <ToggleButton  Grid.ColumnSpan="2"  Margin="0 9 9 0" FocusVisualStyle="{x:Null}" Checked="PART_ShowHideCheckBox_Checked" HorizontalAlignment="Right" Unchecked="PART_ShowHideCheckBox_Unchecked" VerticalAlignment="Top">
+            <ToggleButton.Template>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Image x:Name="PART_Legend" Source="/Resources/Images/Show16.png" Stretch="None" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Source" TargetName="PART_Legend" Value="/Resources/Images/Show16.png" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Source" TargetName="PART_Legend" Value="/Resources/Images/Hide16.png" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </ToggleButton.Template>
+        </ToggleButton>
+
+        <Grid  Grid.ColumnSpan="2"  Grid.Row="1" x:Name="ContentGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <inf:ScheduleGrid EndTime="{Binding Schedule.End,Mode=OneTime}" ExtendedRowCount="1"                         
+                              LeftWidth="{Binding HeaderWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftComposerView}},Mode=TwoWay}" 
+                              ScreenStart="{Binding ScreenStart,Mode=TwoWay}" StartTime="{Binding Schedule.Start,Mode=OneTime}">
+                <inf:ScheduleGrid.RowCount>
+                    <MultiBinding Converter="{StaticResource SumListCountConverter}">
+                        <Binding Path="BindableAgents" />
+                    </MultiBinding>
+                </inf:ScheduleGrid.RowCount>
+                <inf:ScheduleGridLayout.LeftContent>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Rectangle Height="31"/>
+
+                        <inf:ElementListBox  Grid.Row="1" ItemsSource="{Binding BindableAgents}" ItemTemplate="{StaticResource AgentItemTemplate}" RowHeight="{StaticResource RowHeight}" />
+                        <!--<ScrollViewer Grid.Row="1" IsEnabled="False"
+                                                              inf:ScrollViewerUtilities.ScrollSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=inf:ScheduleGrid}}"
+                                                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                              ScrollViewer.VerticalScrollBarVisibility="Hidden">                        
+                        <ListBox Grid.Row="1" IsEnabled="True" ItemsSource="{Binding DataContext.BindableAgents,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=inf:ScheduleGrid}}" Style="{StaticResource LeftListBoxStyle}" ItemTemplate="{StaticResource AgentItemTemplate}"
+                                  Width="{Binding HeaderWidth.Value,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftView}},Mode=OneWay}"/>
+                        </ScrollViewer>-->
+                    </Grid>
+                </inf:ScheduleGridLayout.LeftContent>
+                <inf:BlockGridLayerContainer x:Name="Element_BlockGridLayerContainer" Style="{StaticResource CellBlockGridLayerContainerStyle}"
+                                             HorizontalAlignment="Left" 
+                                             BlockConverter="{Binding AssignmentCellConverter,Mode=OneWay}"
+                                             Interval="{StaticResource RowHeight}"
+                                             ItemsSource="{Binding BindableAgents,Mode=OneWay}"
+                                            CellMode="{Binding CellMode}">
+                    <inf:BlockGridLayerContainer.Header>
+                        <ScrollViewer x:Name="ColumnHeader"
+                                      VerticalAlignment="Stretch"
+                                      inf:ScrollViewerUtilities.ScrollSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=inf:ScheduleGrid}}"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                            <ListBox Style="{StaticResource DateColumnHeaderListBoxStyle}" ItemsSource="{Binding Dates[0]}" SelectedIndex="{Binding SelectedColumnIndex,Mode=TwoWay}">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}">
+                                        <Setter Property="Width" Value="{StaticResource LeftHeaderWidth}" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                    <!--<Grid Background="Transparent">-->
+                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                                       
+                                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                    <!--<Path x:Name="PART_V" Width="10" Height="6.594"
+                                                                          Margin="8,-1,0,6" Visibility="Collapsed"
+                                                                          HorizontalAlignment="Left"
+                                                                          VerticalAlignment="Top"
+                                                                          Data="M26.977657,156.79584 L30.624699,160.57376 33.922866,156.79584"
+                                                                          Fill="#FFFEFEF6"
+                                                                          Stretch="Fill"
+                                                                          Stroke="#FFB9CCE5" />-->
+                                                    <!--</Grid>-->
+                                                    <!--<ControlTemplate.Triggers>
+                                                        <Trigger Property="IsSelected" Value="true">
+                                                            <Setter TargetName="PART_V" Property="Visibility" Value="Visible"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>-->
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
+                        </ScrollViewer>
+                    </inf:BlockGridLayerContainer.Header>
+                    <Grid inf:ScheduleGrid.HorizontalMain="True" inf:ScheduleGrid.VerticalMain="True" >
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PaintShiftIsEnabled}" Value="true">
+                                        <Setter Property="Cursor" Value="/Resources/Cursors/Brush.cur" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Rectangle Fill="Transparent" />
+
+                        <inf:EditControlLayer cal:Message.Attach="[AttachedEvent RangeSelected.Selected] = [Action PaintShift()]; [AttachedEvent EditControlLayer.EndEdit] = [Action DeleteAssignments($source,$eventArgs)]"                                               
+                                               InitalDrawBlock="{Binding InitalDrawBlock,Mode=OneWayToSource}"
+                                               InputControlType="{x:Type TextBox}"
+                                              Popup="True" 
+                                               SelectionDataRowRange="{Binding SelectionDataRowRange,Mode=OneWayToSource}"
+                                               SelectionTimeRange="{Binding SelectionTimeRange,Mode=OneWayToSource}"
+                                              Visibility="{Binding CellMode,Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <inf:EditControlLayer.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,4,4" Background="Transparent">
+                                    
+                                        <Border BorderThickness="1 0 1 1" BorderBrush="LightGray">
+                                            <Border.Effect>
+                                                <DropShadowEffect Direction="-45" ShadowDepth="3" Color="LightGray" BlurRadius="4"/>
+                                            </Border.Effect>
+                                            <DockPanel Background="White" LastChildFill="True">
+
+                                            <TextBox Margin="2 0 0 0" MinWidth="80" DockPanel.Dock="Top" BorderThickness="0"
+                                                         Style="{StaticResource SearchTextBoxStyle}" 
+                                                       Background="White"
+                                                         ribbon:RibbonControlService.HintText="{inf:Resource Infrastructure_AgentFinder_EnterShiftName}">
+                                               
+                                                <i:Interaction.Behaviors>
+                                                    <inf:SelectorHighLightBehavior FilterPath="Kind.Text" Selector="{Binding ElementName=PART_Value}" AutoSelectedFirstItem="False"/>
+                                                </i:Interaction.Behaviors>
+                                            </TextBox>
+
+                                            <ListBox x:Name="PART_Value" BorderBrush="Gray" MinWidth="120" MaxHeight="100" BorderThickness="0" cal:Action.TargetWithoutContext="{Binding Parent.DataContext}"
+                                                     cal:Message.Attach="[AttachedEvent EditControlLayer.EndEdit] = [Action ChangeShfitCells($this.SelectedValue,$eventArgs)]"
+                                                     DataContext="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                     HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="True"
+                                                     ItemsSource="{Binding Parent.DataContext.CurrentDateAssignmentTypes}"
+                                                     SelectedValuePath="Kind" VirtualizingStackPanel.IsVirtualizing="True" FocusVisualStyle="{x:Null}">
+                                                <!--<ListBox.Resources>
+                                                        <Style BasedOn="{StaticResource RibbonListBoxItem}" TargetType="{x:Type ListBoxItem}" />
+                                                    </ListBox.Resources>-->
+                                                    <ListBox.Template>
+                                                    <ControlTemplate TargetType="{x:Type ListBox}">
+                                                            <ScrollViewer Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Background="#FFF5F5F5">
+                                                                <ItemsPresenter Margin="0"/>
+                                                            </ScrollViewer>
+                                                    </ControlTemplate>
+                                                    </ListBox.Template>
+                                                    <ListBox.ItemContainerStyle>
+                                                        <Style TargetType="{x:Type ListBoxItem}">
+                                                            <Setter Property="Background" Value="Transparent" />
+                                                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                                        <Border x:Name="Bd" Margin="0" Background="{TemplateBinding Background}" BorderThickness="0" SnapsToDevicePixels="true">
+                                                                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource HighlightLightBrush}"/>
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsSelected" Value="true">
+                                                                                <Setter Property="Background" TargetName="Bd" Value="#FF24A7FF"/>
+                                                                                <Setter Property="Foreground" Value="White"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </ListBox.ItemContainerStyle>
+                                                    <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <DockPanel VerticalAlignment="Center" Margin="8 2">
+                                                            <TextBlock Text="{Binding Kind.Text}"/>
+                                                            <TextBlock HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                                                       Text="{Binding Remains,StringFormat=\{0:0\}}" Margin="6,0,0,0"/>
+                                                        </DockPanel>                                                           
+                                                        </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </DockPanel>
+                                    </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </inf:EditControlLayer.CellTemplate>
+                            <behaviors:ElementDrawBehavior.ElementDraws>
+                                <cell:RangeSelectedDraw />
+                            </behaviors:ElementDrawBehavior.ElementDraws>
+                        </inf:EditControlLayer>
+                        <inf:BlockGrid ItemsSource="{Binding BindableAgents, Mode=OneWay}" Visibility="{Binding CellMode,Converter={StaticResource InversionOfBooleanToVisibilityConverter}}">
+                            <behaviors:ElementDrawBehavior.ElementDraws>
+                                <brick:BlockGridDraw />
+                            </behaviors:ElementDrawBehavior.ElementDraws>
+                        </inf:BlockGrid>
+
+                        <inf:BlockGrid ItemsSource="{Binding BindableAgents, Mode=OneWay}" Visibility="{Binding CellMode,Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <behaviors:ElementDrawBehavior.ElementDraws>
+                                <cell:CellBlockGridDraw  Background="{StaticResource DirtyCellColor}"/>
+                            </behaviors:ElementDrawBehavior.ElementDraws>
+                        </inf:BlockGrid>
+                        <inf:PointOutLayer>
+                            <inf:PointOutLayer.ToolTip>
+                                <ToolTip>
+                                    <ToolTip.Style>
+                                        <Style TargetType="ToolTip">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ToolTip">
+                                                        <ContentPresenter Content="{TemplateBinding Content}">
+                                                            <ContentPresenter.ContentTemplate>
+                                                                <DataTemplate >
+                                                                    <Border Background="Black" BorderThickness="0" Padding="4">
+                                                                        <TextBlock Foreground="White">
+                                                                            <AccessText x:Name="PART_Text" Text="{Binding Text}"/>
+                                                                            <AccessText Text="{Binding NativeName}"/>
+                                                                            <LineBreak />                                                
+                                                                            <AccessText>
+                                                                                 <MultiBinding StringFormat="{}{0:MM/dd HH:mm} - {1:HH:mm}">      
+                                                                                <Binding Path="Start"/>
+                                                                                <Binding Path="End"/>
+                                                                            </MultiBinding>
+                                                                            </AccessText>
+                                                                        </TextBlock>
+                                                                    </Border>
+                                                                    <DataTemplate.Triggers>
+                                                                        <DataTrigger Binding="{Binding Level}" Value="0">
+                                                                            <Setter TargetName="PART_Text" Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+                                                                    </DataTemplate.Triggers>
+                                                                </DataTemplate>
+                                                            </ContentPresenter.ContentTemplate>
+                                                        </ContentPresenter>
+
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ToolTip.Style>
+                                </ToolTip>
+                            </inf:PointOutLayer.ToolTip>
+                        </inf:PointOutLayer>
+                        <inf:DragToScrollLayer/>
+                    </Grid>
+                </inf:BlockGridLayerContainer>
+            </inf:ScheduleGrid>
+            <GridSplitter Style="{StaticResource HorizontalGridSplitterStyle}" Grid.Row="0" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                          IsEnabled="{Binding CellMode}"/>
+            <inf:ScheduleGrid x:Name="AssignmentEstimationGrid"
+                Style="{StaticResource DataGridStyle}" Grid.Row="1" EndTime="{Binding Schedule.End,Mode=OneTime}" 
+                             ExtendedRowCount="1"
+                              LeftWidth="{Binding HeaderWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftComposerView}},Mode=TwoWay}" 
+                             
+                              ScreenStart="{Binding Scree}"
+                              StartTime="{Binding Schedule.Start,Mode=OneTime}">
+                <inf:ScheduleGrid.RowCount>
+                    <MultiBinding Converter="{StaticResource SumListCountConverter}">
+                        <Binding Path="AssignmentTypes" />
+                    </MultiBinding>
+                </inf:ScheduleGrid.RowCount>
+                <inf:ScheduleGridLayout.LeftContent>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <ListBox Background="Transparent" BorderBrush="Transparent" DataContext="{Binding DataContext,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type inf:ScheduleGrid}}}" HorizontalAlignment="Right" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding StatisticItems}" VerticalAlignment="Center">
+                            <ListBox.Template>
+                                <ControlTemplate TargetType="{x:Type ListBox}">
+                                    <ItemsPresenter />
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Image x:Name="PART_Icon" HorizontalAlignment="Center" Stretch="None" VerticalAlignment="Center" Cursor="Hand" SnapsToDevicePixels="True"/>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Item1}" Value="AssignedServiceLevel">
+                                            <Setter Property="Source" TargetName="PART_Icon" Value="/Resources/Images/SL16.png" />
+                                            <Setter Property="ToolTip" TargetName="PART_Icon" Value="AssignedServiceLevel" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Item1}" Value="Staffings">
+                                            <Setter Property="Source" TargetName="PART_Icon" Value="/Resources/Images/Clock16.png" />
+                                            <Setter Property="ToolTip" TargetName="PART_Icon" Value="Staffings" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Item1}" Value="OtStaffings">
+                                            <Setter Property="Source" TargetName="PART_Icon" Value="/Resources/Images/ClockOt16.png" />
+                                            <Setter Property="ToolTip" TargetName="PART_Icon" Value="Overtime Staffings" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Item1}" Value="AgentCounts">
+                                            <Setter Property="Source" TargetName="PART_Icon" Value="/Resources/Images/Sum16.png" />
+                                            <Setter Property="ToolTip" TargetName="PART_Icon" Value="人次" />
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                <Border x:Name="Bd" Margin="5 0" Padding="2 1" Background="{TemplateBinding Background}"  SnapsToDevicePixels="true">
+                                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                                      SnapsToDevicePixels="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="true">
+                                                        <!--<Setter Property="BitmapEffect" TargetName="Bd">
+                                                            <Setter.Value>
+                                                                <OuterGlowBitmapEffect GlowColor="LightGray" GlowSize="3" />
+                                                            </Setter.Value>
+                                                        </Setter>-->
+                                                        <Setter TargetName="Bd" Property="Background" Value="White"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+
+                        <inf:ElementListBox Grid.Row="1" ItemsSource="{Binding AssignmentTypes,Mode=OneWay}" ItemTemplate="{StaticResource TermStyleItemTemplate}" RowHeight="{StaticResource RowHeight}"/>
+                    </Grid>
+                </inf:ScheduleGridLayout.LeftContent>
+                <inf:BlockGridLayerContainer BlockConverter="{Binding EvaluationStatisticConverter,Mode=OneTime}" Style="{StaticResource CellBlockGridLayerContainerStyle}"
+                                             Interval="{StaticResource RowHeight}" ItemsSource="{Binding AssignmentTypes,Mode=OneWay}"
+                                             CellMode="True">
+                    <inf:BlockGridLayerContainer.Header>
+                        <!--  ItemsSource="{Binding CurrentStatisticItem,Mode=TwoWay}"  -->
+                        <inf:BlockGrid ItemsSource="{Binding Path=StatisticItems/Item2}" VerticalAlignment="Center">
+                            <behaviors:ElementDrawBehavior.ElementDraws>
+                                <cell:TextGridDraw FixedRowCount="True" />
+                            </behaviors:ElementDrawBehavior.ElementDraws>
+                        </inf:BlockGrid>
+                    </inf:BlockGridLayerContainer.Header>
+                    <Grid inf:ScheduleGrid.HorizontalMain="True"  inf:ScheduleGrid.VerticalMain="True" >
+                        <Rectangle Fill="Transparent" />
+
+                        <inf:EditControlLayer InputControlType="{x:Type editors:Int32EditBox}"
+                                              SelectionDataRowRange="{Binding SelectionDataRowRange2,Mode=OneWayToSource}"
+                                               SelectionTimeRange="{Binding SelectionTimeRange2,Mode=OneWayToSource}">
+                            <DataTemplate>
+                                <DockPanel Height="25" Width="72" Background="#FFD6E7DE">
+                                    <editors:Int32EditBox x:Name="PART_Value" DockPanel.Dock="Right" Margin="0 0 3 0" Background="{x:Null}" BorderThickness="0" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" HorizontalAlignment="Left" Minimum="0" SpinnerVisibility="Visible" Value="{Binding Content.Max,Mode=OneWay,FallbackValue=0}" VerticalAlignment="Center" cal:Message.Attach="[AttachedEvent EditControlLayer.EndEdit] = [Action ChangeAssignmentTypeCells($dataContext.Tag, $this.Value, $eventArgs)];" />
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Center" Text="/" VerticalAlignment="Center" />
+                                    <TextBlock DockPanel.Dock="Right" Margin="0 0 3 0" HorizontalAlignment="Right" Text="{Binding Content.Value, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" />
+                                </DockPanel>
+                            </DataTemplate>
+                            <behaviors:ElementDrawBehavior.ElementDraws>
+                                <cell:RangeSelectedDraw />
+                                <!--<cell:MultiRangeDraw />-->
+                            </behaviors:ElementDrawBehavior.ElementDraws>
+                        </inf:EditControlLayer>
+                        <inf:BlockGrid Items="{Binding ChangedCells,Mode=OneWay}">
+                            <behaviors:ElementDrawBehavior.ElementDraws>
+                                <!--<cell:MultiRangeDraw/>-->
+                                <cell:TextGridDraw Background="{StaticResource DirtyCellColor}"/>
+                            </behaviors:ElementDrawBehavior.ElementDraws>
+                        </inf:BlockGrid>
+                        <inf:DragToScrollLayer/>
+                    </Grid>
+                </inf:BlockGridLayerContainer>
+            </inf:ScheduleGrid>
+
+        </Grid>
+
+        <Grid Grid.ColumnSpan="2" Grid.Row="2" Background="#FFF1F5FB">
+            <Border Height="6" BorderThickness="0" VerticalAlignment="Top">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Resources/Images/GrayBgShadow25x6.png" TileMode="Tile" Viewport="0,0,25,6" ViewportUnits="Absolute" />
+                </Border.Background>
+            </Border>
+            <DockPanel Grid.Row="2" Margin="15,0,0,0" Opacity="0.9" VerticalAlignment="Center">
+
+                <ContentPresenter Content="{Binding Path=.}" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                    <ContentPresenter.ContentTemplate>
+                        <DataTemplate>
+                            <Grid Margin=" 0 0 20 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+
+
+                                <StackPanel Margin="0,0,5,0" Orientation="Horizontal" x:Name="PART_SelectionRangeInfo">
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <TextBlock Foreground="#FF525252" HorizontalAlignment="Left" Text="WorkShifts" />
+                                        <TextBlock Foreground="#FF525252" HorizontalAlignment="Left" Text="ShiftsType" />
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock Foreground="#FF525252" Text="{Binding SelectionAgentRange,Mode=OneWay,FallbackValue='0 x 0'}" />
+                                        <TextBlock Foreground="#FF525252" Text="{Binding SelectionTypeRange,Mode=OneWay,FallbackValue='0 x 0'}" />
+                                    </StackPanel>
+                                </StackPanel>
+
+                            </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding CellMode}" Value="false">
+                                    <Setter TargetName="PART_SelectionRangeInfo" Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ContentPresenter.ContentTemplate>
+                </ContentPresenter>
+
+
+
+
+
+                <StackPanel Orientation="Vertical">
+                    <Label Margin="0" Padding="0" Content="Working Time" FontSize="14" Foreground="#FF6C6C6C" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <TextBlock Margin="0,0,5,0" Foreground="#FF525252" Text="Min" VerticalAlignment="Center" />
+                        <TextBlock Foreground="#FF525252" Text="{Binding MinWorkingHours,StringFormat=\{0:0.0\}, FallbackValue=0}" VerticalAlignment="Center" />
+                        <TextBlock Margin="10,0,5,0" Foreground="#FF525252" Text="Avg" VerticalAlignment="Center" />
+                        <TextBlock Foreground="#FF525252" Text="{Binding AverageWorkingHours, StringFormat=\{0:0.0\}, FallbackValue=0}" VerticalAlignment="Center" />
+                        <TextBlock Margin="10,0,5,0" Foreground="#FF525252" Text="Max" VerticalAlignment="Center" />
+                        <TextBlock Foreground="#FF525252" Text="{Binding MaxWorkingHours,StringFormat=\{0:0.0\}, FallbackValue=0}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+
+        <DockPanel Height="31" Grid.Row="1" VerticalAlignment="Top">
+            <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                    <Setter Property="VerticalAlignment" Value="Bottom"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CellMode}" Value="true">
+                            <Setter Property="Grid.Row" Value="1"/>
+                            <Setter Property="VerticalAlignment" Value="Top"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DockPanel.Style>
+            <Border DockPanel.Dock="Left" Width="60">
+                <TextBlock Margin="5 0 0 0" Background="{x:Null}" Text="Name" VerticalAlignment="Center" />
+            </Border>
+            <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right" Orientation="Horizontal">
+                <ListBox ScrollViewer.CanContentScroll="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <DockPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Grid Cursor="Hand"  Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Tag="{TemplateBinding Tag}" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action Sort($this.Tag)]">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Grid.RowSpan="2" Fill="Transparent" />
+                                            <ContentPresenter x:Name="PART_Content" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                            <TextBlock x:Name="PART_Sign" Grid.Column="1" FontFamily="Webdings" Text="5" VerticalAlignment="Center" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="false">
+                                                <Setter Property="Visibility" TargetName="PART_Sign" Value="Hidden" />
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding DataContext.Sorting, RelativeSource={RelativeSource AncestorType=local:ShiftComposerView}}" Value="asc">
+                                                <Setter Property="Text" TargetName="PART_Sign" Value="5" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DataContext.Sorting, RelativeSource={RelativeSource AncestorType=local:ShiftComposerView}}" Value="des">
+                                                <Setter Property="Text" TargetName="PART_Sign" Value="6" />
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBoxItem Width="45" Content="PW" Tag="PW" />
+                    <ListBoxItem Width="45" Content="FW" Tag="FW" />
+                    <ListBoxItem Width="45" Content="DO" Tag="DO" />
+                    <ListBoxItem Width="60" Content="LR" Tag="LR" />
+                    <ListBoxItem Padding="0 0 2 0" Width="75" Content="工時" HorizontalContentAlignment="Right" Tag="WorkingTotals" />
+                </ListBox>
+            </StackPanel>
+        </DockPanel>
+
+    </Grid>
+</local:ShiftView>

@@ -1,0 +1,434 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC69FE80-5DB0-4A50-AB1A-7D7860C71840}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ConfOrm</RootNamespace>
+    <AssemblyName>ConfOrm</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\SharedLibs\Source\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\SharedLibs\Source\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>3</LangVersion>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ConfOrm.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\SharedLibs\NHibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cascade.cs" />
+    <Compile Include="DefaultNHibernatePatternsHolder.cs" />
+    <Compile Include="DomainInspectorExtensions.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="EnumUtil.cs" />
+    <Compile Include="ExplicitDeclarationsHolder.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ForClass.cs" />
+    <Compile Include="IDomainInspector.cs" />
+    <Compile Include="IExplicitDeclarationsHolder.cs" />
+    <Compile Include="IObjectRelationalMapper.cs" />
+    <Compile Include="IPattern.cs" />
+    <Compile Include="IPatternApplier.cs" />
+    <Compile Include="IPatternsHolder.cs" />
+    <Compile Include="IPatternValueGetter.cs" />
+    <Compile Include="Mappers\CacheInclude.cs" />
+    <Compile Include="Mappers\CacheUsage.cs" />
+    <Compile Include="Mappers\CollectionFetchMode.cs" />
+    <Compile Include="Mappers\CollectionLazy.cs" />
+    <Compile Include="Mappers\FetchMode.cs" />
+    <Compile Include="Mappers\IAccessorPropertyMapper.cs" />
+    <Compile Include="Mappers\IAnyMapper.cs" />
+    <Compile Include="Mappers\IBagPropertiesMapper.cs" />
+    <Compile Include="Mappers\ICacheMapper.cs" />
+    <Compile Include="Mappers\IComponentMapKeyMapper.cs" />
+    <Compile Include="Mappers\IElementMapper.cs" />
+    <Compile Include="Mappers\IColumnMapper.cs" />
+    <Compile Include="Mappers\IColumnsMapper.cs" />
+    <Compile Include="Mappers\IDiscriminatorMapper.cs" />
+    <Compile Include="Mappers\IEntityAttributesMapper.cs" />
+    <Compile Include="Mappers\IEntitySqlsMapper.cs" />
+    <Compile Include="Mappers\IFilterMapper.cs" />
+    <Compile Include="Mappers\IListIndexMapper.cs" />
+    <Compile Include="Mappers\IListPropertiesMapper.cs" />
+    <Compile Include="Mappers\IManyToManyMapper.cs" />
+    <Compile Include="Mappers\IMapKeyMapper.cs" />
+    <Compile Include="Mappers\IMapKeyRelation.cs" />
+    <Compile Include="Mappers\INaturalIdMapper.cs" />
+    <Compile Include="Mappers\IOneToManyMapper.cs" />
+    <Compile Include="Mappers\IComponentParentMapper.cs" />
+    <Compile Include="Mappers\IPlainPropertyContainerMapper.cs" />
+    <Compile Include="Mappers\ISetPropertiesMapper.cs" />
+    <Compile Include="Mappers\IVersionMapper.cs" />
+    <Compile Include="Mappers\Lazy.cs" />
+    <Compile Include="Mappers\NotFoundMode.cs" />
+    <Compile Include="Mappers\SchemaAction.cs" />
+    <Compile Include="Mappers\VersionGeneration.cs" />
+    <Compile Include="NH\AbstractBasePropertyContainerMapper.cs" />
+    <Compile Include="NH\AccessorPropertyMapper.cs" />
+    <Compile Include="NH\AnyMapper.cs" />
+    <Compile Include="NH\CacheMapper.cs" />
+    <Compile Include="NH\ComponentMapKeyMapper.cs" />
+    <Compile Include="NH\CustomizersImpl\BagPropertiesCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\ClassCustomizer.cs" />
+    <Compile Include="NH\ColumnMapper.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionElementCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionElementRelationCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionKeyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionPropertiesCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\ComponentCustomizer.cs" />
+    <Compile Include="NH\CustomizersHolder.cs" />
+    <Compile Include="NH\CustomizersImpl\ComponentElementCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\ListPropertiesCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\ManyToManyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\MapKeyComponentCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\MapKeyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\MapKeyManyToManyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\MapKeyRelationCustomizer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NH\CustomizersImpl\MapPropertiesCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\OneToManyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\SetPropertiesCustomizer.cs" />
+    <Compile Include="NH\DefaultCandidatePersistentMembersProvider.cs" />
+    <Compile Include="NH\DefaultPatternsAppliersHolder.cs" />
+    <Compile Include="NH\DiscriminatorMapper.cs" />
+    <Compile Include="NH\ElementMapper.cs" />
+    <Compile Include="NH\EmptyPatternsAppliersHolder.cs" />
+    <Compile Include="NH\FilterMapper.cs" />
+    <Compile Include="NH\Generators.cs" />
+    <Compile Include="Mappers\IClassMapper.cs" />
+    <Compile Include="Mappers\ICollectionElementRelation.cs" />
+    <Compile Include="Mappers\ICollectionPropertiesMapper.cs" />
+    <Compile Include="Mappers\IComponentElementMapper.cs" />
+    <Compile Include="Mappers\IComponentMapper.cs" />
+    <Compile Include="Mappers\IEntityPropertyMapper.cs" />
+    <Compile Include="Mappers\IGenerator.cs" />
+    <Compile Include="Mappers\IGeneratorDef.cs" />
+    <Compile Include="Mappers\IGeneratorMapper.cs" />
+    <Compile Include="Mappers\IIdMapper.cs" />
+    <Compile Include="Mappers\IJoinedSubclassMapper.cs" />
+    <Compile Include="Mappers\IKeyMapper.cs" />
+    <Compile Include="Mappers\IManyToOneMapper.cs" />
+    <Compile Include="Mappers\IMapKeyManyToManyMapper.cs" />
+    <Compile Include="Mappers\IMapPropertiesMapper.cs" />
+    <Compile Include="Mappers\IOneToOneMapper.cs" />
+    <Compile Include="IPersistentIdStrategy.cs" />
+    <Compile Include="Mappers\IPropertyContainerMapper.cs" />
+    <Compile Include="Mappers\IPropertyMapper.cs" />
+    <Compile Include="Mappers\ISubclassMapper.cs" />
+    <Compile Include="Mappers\IUnionSubclassMapper.cs" />
+    <Compile Include="NH\CascadeConverter.cs" />
+    <Compile Include="NH\ComponentElementMapper.cs" />
+    <Compile Include="NH\ComponentNestedElementMapper.cs" />
+    <Compile Include="NH\GeneratorMapper.cs" />
+    <Compile Include="NH\ICandidatePersistentMembersProvider.cs" />
+    <Compile Include="NH\ICustomizersHolder.cs" />
+    <Compile Include="NH\IPatternsAppliersHolder.cs" />
+    <Compile Include="NH\IPersistentClassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\JoinedSubclassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\JoinedSubclassKeyCustomizer.cs" />
+    <Compile Include="NH\KeyManyToOneMapper.cs" />
+    <Compile Include="NH\KeyPropertyMapper.cs" />
+    <Compile Include="NH\ListIndexMapper.cs" />
+    <Compile Include="NH\ManyToManyMapper.cs" />
+    <Compile Include="NH\ManyToOneMapper.cs" />
+    <Compile Include="NH\MapKeyManyToManyMapper.cs" />
+    <Compile Include="NH\MapKeyMapper.cs" />
+    <Compile Include="NH\MapKeyRelation.cs" />
+    <Compile Include="NH\MapMapper.cs" />
+    <Compile Include="MappingException.cs" />
+    <Compile Include="NH\AbstractPropertyContainerMapper.cs" />
+    <Compile Include="NH\BagMapper.cs" />
+    <Compile Include="NH\ClassMapper.cs" />
+    <Compile Include="NH\CollectionElementRelation.cs" />
+    <Compile Include="NH\ComponentMapper.cs" />
+    <Compile Include="NH\IdMapper.cs" />
+    <Compile Include="NH\JoinedSubclassMapper.cs" />
+    <Compile Include="NH\KeyMapper.cs" />
+    <Compile Include="NH\ListMapper.cs" />
+    <Compile Include="NH\Mapper.cs" />
+    <Compile Include="NH\NaturalIdMapper.cs" />
+    <Compile Include="NH\NoMemberPropertyMapper.cs" />
+    <Compile Include="NH\OneToManyMapper.cs" />
+    <Compile Include="NH\OneToOneMapper.cs" />
+    <Compile Include="NH\CustomizersImpl\PersistentClassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\PropertyContainerCustomizer.cs" />
+    <Compile Include="NH\ComponentParentMapper.cs" />
+    <Compile Include="NH\PatternsAppliersHolderExtensions.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalAnyToManyWhereApplier.cs" />
+    <Compile Include="Patterns\PolymorphicOneToManyPattern.cs" />
+    <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPattern.cs" />
+    <Compile Include="Patterns\PolymorphicManyToOnePattern.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalAnyToManyKeyColumnApplier.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Patterns\PolymorphismBidirectionalAnyToManyPattern.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyCascadeApplier.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyInverseApplier.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyMemberPattern.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyOnDeleteConstraintApplier.cs" />
+    <Compile Include="Patterns\PolymorphismComponentClassApplier.cs" />
+    <Compile Include="Patterns\PolymorphismManyToOneClassApplier.cs" />
+    <Compile Include="NH\PropertyMapper.cs" />
+    <Compile Include="NH\PropertyPath.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NH\PropertyPathExtensions.cs" />
+    <Compile Include="NH\SetMapper.cs" />
+    <Compile Include="NH\CustomizersImpl\SubclassCustomizer.cs" />
+    <Compile Include="NH\SubclassMapper.cs" />
+    <Compile Include="NH\TypeNameUtil.cs" />
+    <Compile Include="NH\CustomizersImpl\UnionSubclassCustomizer.cs" />
+    <Compile Include="NH\UnionSubclassMapper.cs" />
+    <Compile Include="NH\VersionMapper.cs" />
+    <Compile Include="ObjectRelationalMapper.cs" />
+    <Compile Include="PatternExtensions.cs" />
+    <Compile Include="EmptyPatternsHolder.cs" />
+    <Compile Include="Patterns\AbstractCollectionPattern.cs" />
+    <Compile Include="Patterns\AbstractPropertyToFieldPattern.cs" />
+    <Compile Include="Patterns\ArrayCollectionPattern.cs" />
+    <Compile Include="Patterns\AssignedPoidPattern.cs" />
+    <Compile Include="Patterns\BagCollectionPattern.cs" />
+    <Compile Include="Patterns\BidirectionalForeignKeyAssociationManyToOneApplier.cs" />
+    <Compile Include="Patterns\BidirectionalForeignKeyAssociationOneToOneApplier.cs" />
+    <Compile Include="Patterns\BidirectionalManyToManyColumnApplier.cs" />
+    <Compile Include="Patterns\BidirectionalManyToManyInverseApplier.cs" />
+    <Compile Include="Patterns\BidirectionalManyToManyPattern.cs" />
+    <Compile Include="Patterns\BidirectionalManyToManyTableApplier.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyCascadeApplier.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyInverseApplier.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyMemberPattern.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyOnDeleteConstraintApplier.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />
+    <Compile Include="Patterns\BidirectionalOneToOneAssociationPoidApplier.cs" />
+    <Compile Include="Patterns\BidirectionalPrimaryKeyAssociationMasterOneToOneApplier.cs" />
+    <Compile Include="Patterns\BidirectionalPrimaryKeyAssociationMasterOneToOnePattern.cs" />
+    <Compile Include="Patterns\BidirectionalPrimaryKeyAssociationSlaveOneToOneApplier.cs" />
+    <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
+    <Compile Include="Patterns\BidirectionalUnaryAssociationPattern.cs" />
+    <Compile Include="Patterns\ComponentMultiUsageManyToOneColumnNameApplier.cs" />
+    <Compile Include="Patterns\ComponentMultiUsagePropertyColumnNameApplier.cs" />
+    <Compile Include="Patterns\ComponentMultiUsagePattern.cs" />
+    <Compile Include="Patterns\ComponentPattern.cs" />
+    <Compile Include="Patterns\CustomUserTypeInCollectionElementApplier.cs" />
+    <Compile Include="Patterns\CustomUserTypeInDictionaryKeyApplier.cs" />
+    <Compile Include="Patterns\DelegatedAdvancedApplier.cs" />
+    <Compile Include="Patterns\DelegatedApplier.cs" />
+    <Compile Include="Patterns\DelegatedPattern.cs" />
+    <Compile Include="Patterns\DictionaryCollectionPattern.cs" />
+    <Compile Include="Patterns\GuidOptimizedPoidPattern.cs" />
+    <Compile Include="Patterns\GuidPoidPattern.cs" />
+    <Compile Include="Patterns\HighLowPoidPattern.cs" />
+    <Compile Include="Patterns\IdentityPoidPattern.cs" />
+    <Compile Include="Patterns\JoinedSubclassOnDeleteApplier.cs" />
+    <Compile Include="Patterns\ListCollectionPattern.cs" />
+    <Compile Include="Patterns\MemberNoSetterToFieldAccessorApplier.cs" />
+    <Compile Include="Patterns\MemberReadOnlyAccessorApplier.cs" />
+    <Compile Include="Patterns\MemberToFieldAccessorApplier.cs" />
+    <Compile Include="Patterns\NoPoidGuidApplier.cs" />
+    <Compile Include="Patterns\NoSetterPropertyToFieldPattern.cs" />
+    <Compile Include="Patterns\PolymorphismOneToManyClassApplier.cs" />
+    <Compile Include="Patterns\PropertyToFieldPattern.cs" />
+    <Compile Include="Patterns\NativePoidPattern.cs" />
+    <Compile Include="Patterns\PoidGuidPattern.cs" />
+    <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
+    <Compile Include="Patterns\PoidIntPattern.cs" />
+    <Compile Include="Patterns\PoIdPattern.cs" />
+    <Compile Include="Patterns\PropertyToFieldCamelCasePattern.cs" />
+    <Compile Include="Patterns\PropertyToFieldMUnderscorePascalCasePattern.cs" />
+    <Compile Include="Patterns\PropertyToFieldPatterns.cs" />
+    <Compile Include="Patterns\PropertyToFieldUnderscoreCamelCasePattern.cs" />
+    <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePattern.cs" />
+    <Compile Include="Patterns\ReadOnlyPropertyPattern.cs" />
+    <Compile Include="Patterns\SequencePoidPattern.cs" />
+    <Compile Include="Patterns\SetCollectionPattern.cs" />
+    <Compile Include="Patterns\OneToOneUnidirectionalToManyToOnePattern.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyPattern.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToOneUniqueCascadeApplier.cs" />
+    <Compile Include="Patterns\UnidirectionalUnaryAssociationPattern.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relation.cs" />
+    <Compile Include="RelationOn.cs" />
+    <Compile Include="Shop\Appliers\CollectionOfComponentsPattern.cs" />
+    <Compile Include="Shop\Appliers\CollectionOfElementsColumnApplier.cs" />
+    <Compile Include="Shop\Appliers\CollectionOfElementsOnlyPattern.cs" />
+    <Compile Include="Shop\Appliers\CollectionOfElementsPattern.cs" />
+    <Compile Include="Shop\Appliers\ComponentMemberDeepPathPattern.cs" />
+    <Compile Include="Shop\Appliers\DatePropertyByNameApplier.cs" />
+    <Compile Include="Shop\Appliers\EnumElementAsStringApplier.cs" />
+    <Compile Include="Shop\Appliers\EnumPropertyAsStringApplier.cs" />
+    <Compile Include="Shop\Appliers\ManyToManyPattern.cs" />
+    <Compile Include="Shop\Appliers\MsSQL2008DateTimeApplier.cs" />
+    <Compile Include="Shop\Appliers\OneToManyPattern.cs" />
+    <Compile Include="Shop\Appliers\UseCurrencyForDecimalApplier.cs" />
+    <Compile Include="Shop\Appliers\UseNoLazyForNoProxableApplier.cs" />
+    <Compile Include="Shop\CoolNaming\CollectionOfComponentsKeyColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\CollectionOfComponentsTableApplier.cs" />
+    <Compile Include="Shop\CoolNaming\CollectionOfElementsColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\CollectionOfElementsKeyColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\CollectionOfElementsTableApplier.cs" />
+    <Compile Include="Shop\CoolNaming\CoolColumnsNamingPack.cs" />
+    <Compile Include="Shop\CoolNaming\CoolPatternsAppliersHolder.cs" />
+    <Compile Include="Shop\CoolNaming\CoolTablesAndColumnsNamingPack.cs" />
+    <Compile Include="Shop\CoolNaming\CoolTablesNamingPack.cs" />
+    <Compile Include="Shop\CoolNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\ListIndexAsPropertyPosColumnNameApplier.cs" />
+    <Compile Include="Shop\CoolNaming\ManyToManyColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\ManyToManyInCollectionTableApplier.cs" />
+    <Compile Include="Shop\CoolNaming\ManyToManyKeyIdColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\ManyToOneColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\OneToManyKeyColumnApplier.cs" />
+    <Compile Include="Shop\CoolNaming\UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\ClassPluralizedTableApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\CollectionOfComponentsKeyColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\CollectionOfComponentsTableApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\CollectionOfElementsKeyColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\CollectionOfElementsTableApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\DearDbaTablesAndColumnsNamingPack.cs" />
+    <Compile Include="Shop\DearDbaNaming\EntityPoidNamingExtension.cs" />
+    <Compile Include="Shop\DearDbaNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\JoinedSubclassPluralizedTableApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\ListIndexAsPropertyPosColumnNameApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\ManyToManyColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\ManyToManyKeyIdColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\ManyToManyPluralizedTableApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\ManyToOneColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\OneToManyKeyColumnApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\PoidColumnNameApplier.cs" />
+    <Compile Include="Shop\DearDbaNaming\UnionSubclassPluralizedTableApplier.cs" />
+    <Compile Include="Shop\InflectorNaming\ClassPluralizedTableApplier.cs" />
+    <Compile Include="Shop\InflectorNaming\CollectionOfElementsColumnApplier.cs" />
+    <Compile Include="Shop\InflectorNaming\JoinedSubclassPluralizedTableApplier.cs" />
+    <Compile Include="Shop\InflectorNaming\ManyToManyPluralizedTableApplier.cs" />
+    <Compile Include="Shop\InflectorNaming\PluralizedTablesPack.cs" />
+    <Compile Include="Shop\InflectorNaming\UnionSubclassPluralizedTableApplier.cs" />
+    <Compile Include="Shop\Inflectors\AbstractInflector.cs" />
+    <Compile Include="Shop\Inflectors\AbstractInflectorRule.cs" />
+    <Compile Include="Shop\Inflectors\CaseSensitiveRule.cs" />
+    <Compile Include="Shop\Inflectors\EnglishInflector.cs" />
+    <Compile Include="Shop\Inflectors\IInflector.cs" />
+    <Compile Include="Shop\Inflectors\IInflectorReplacementRule.cs" />
+    <Compile Include="Shop\Inflectors\IInflectorRuleApplier.cs" />
+    <Compile Include="Shop\Inflectors\InflectorExtensions.cs" />
+    <Compile Include="Shop\Inflectors\ItalianInflector.cs" />
+    <Compile Include="Shop\Inflectors\NounsRule.cs" />
+    <Compile Include="Shop\Inflectors\SpanishInflector.cs" />
+    <Compile Include="Shop\NamingAppliers\AbstractManyToManyInCollectionTableApplier.cs" />
+    <Compile Include="Shop\NamingAppliers\AbstractPoidColumnNameApplier.cs" />
+    <Compile Include="Shop\NamingAppliers\ComponentPropertyColumnNameApplier.cs" />
+    <Compile Include="Shop\Packs\BidirectionalManyToManyRelationPack.cs" />
+    <Compile Include="Shop\Packs\BidirectionalOneToManyRelationPack.cs" />
+    <Compile Include="Shop\Packs\DiscriminatorValueAsClassNamePack.cs" />
+    <Compile Include="Shop\Packs\DiscriminatorValueAsEnumValuePack.cs" />
+    <Compile Include="Shop\Packs\EnumAsStringPack.cs" />
+    <Compile Include="Shop\Packs\OneToOneRelationPack.cs" />
+    <Compile Include="Shop\Packs\PolymorphismPack.cs" />
+    <Compile Include="Shop\Packs\SafePoidPack.cs" />
+    <Compile Include="Shop\Packs\SafePropertyAccessorPack.cs" />
+    <Compile Include="Shop\Packs\TablePerClassPack.cs" />
+    <Compile Include="Shop\Packs\UseNoLazyForNoProxablePack.cs" />
+    <Compile Include="Shop\Patterns\UseBagWhenGenericListPattern.cs" />
+    <Compile Include="Shop\Patterns\UseSetWhenGenericCollectionPattern.cs" />
+    <Compile Include="Shop\Subclassing\ClassDiscriminatorValueAsClassNameApplier.cs" />
+    <Compile Include="Shop\Subclassing\ClassDiscriminatorValueAsEnumValueApplier.cs" />
+    <Compile Include="Shop\Subclassing\DiscriminatorColumnNameApplier.cs" />
+    <Compile Include="Shop\Subclassing\DiscriminatorIndexNameApplier.cs" />
+    <Compile Include="Shop\Subclassing\SubclassDiscriminatorValueAsClassNameApplier.cs" />
+    <Compile Include="Shop\Subclassing\SubclassDiscriminatorValueAsEnumValueApplier.cs" />
+    <Compile Include="StateAccessStrategy.cs" />
+    <Compile Include="TypeExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ConfOrm.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NHibernate\NHibernate\NHibernate.csproj">
+      <Project>{5909BFE7-93CF-4E5F-BE22-6293368AF01D}</Project>
+      <Name>NHibernate</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

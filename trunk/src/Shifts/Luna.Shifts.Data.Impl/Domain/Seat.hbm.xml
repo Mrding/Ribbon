@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name ="Seat" dynamic-update="true">
+    <id name="Id" column="SeatId">
+      <generator class="guid.comb"/>
+    </id>
+    <many-to-one name="Area" class="Area" update="false" column="AreaId" unique-key="unique_Number" foreign-key="FK_Seat_Area"/>
+    
+    <property name="Number" length="10" unique-key="unique_Number"/>
+    <property name="ExtNo" length="10" not-null="true" unique="true"/>
+
+    <property name="InUse" type="boolean" not-null="true" />
+    <property name="IsOpen" type="boolean" />
+    <property name="Rank"/>
+    <property name="Index" column="Priority"/>
+    <property name="LocationIndex" not-null="true">
+      <column name="LocationIndex" check="LocationIndex >= 0"/>
+    </property>
+
+    <many-to-one name="UsingOrganozation" class="Luna.Infrastructure.Domain.Organization, Luna.Infrastructure.Domain" column="UsingOrganozationId"  foreign-key="FK_Seat_Organization"/>
+    
+  </class>
+
+  <class name="PriorityEmployee" table="PriorityEmployee">
+    <id column="PriorityEmployeeId" type="Int64">
+      <generator class="hilo"/>
+    </id>
+    <many-to-one class="Seat" name="Seat" lazy="false" unique-key="UQ_CPK" foreign-key="FK_PriorityEmployee_Seat"/>
+    <many-to-one name="Object" class="Luna.Infrastructure.Domain.Employee, Luna.Infrastructure.Domain" column="EmployeeId" unique-key="UQ_CPK" lazy="false" foreign-key="FK_PriorityEmployee_Employee"/>
+
+    <property name="Index" column="Priority"/>
+
+  </class>
+
+</hibernate-mapping>

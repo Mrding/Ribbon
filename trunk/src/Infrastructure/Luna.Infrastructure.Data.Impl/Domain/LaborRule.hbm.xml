@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name ="LaborRule">
+    <id name="Id" column="LaborRuleId">
+      <generator class="guid.comb"/>
+    </id>
+
+    <property name="Name"/>
+    
+    <property name="MaxOvertime"/>
+    <property name="MaxShrinked"/>
+    <property name="MCDO"/>
+    <property name="MCWD"/>
+    <property name="MinIdleGap"/>
+    <property name="StdDailyLaborHour"/>
+    <property name="MaxLaborHour"/>
+    <property name="MinLaborHour"/>
+
+<!--下面属性增加-->
+      <property name="MaxSwapTimes"/>
+      <component name ="DayOffRule" class="DayOffRule">
+          <property name ="SystemAccumulate"/>
+          <property name ="Add1DayOffEachSaturdayInCS"/>
+          <property name ="Add1DayOffEachSundayInCS"/>
+          <property name ="Add1DayOffEachHolidayInCS"/>
+          <property name ="SpecifiedNumberOfDays"/>
+          <property name="HolidayShiftRule" type="HolidayShiftRule" />
+          <property name ="MaxFWTimes"/>
+          <property name ="MinFWTimes"/>
+          <property name ="MaxPWTimes"/>
+          <property name ="MinPWTimes"/>
+      </component>
+      <component name="DayOffMask" class="MaskOfDay">
+          <property name="Weekdays" column ="ValidDayOffWeekdayFromSun2Sat"/>
+          <property name ="Monthdays" column="ValidDayOffMonthday"/>
+      </component>
+      <!--<component name="GroupingArrangeShift" class="GroupingArrangeShift">
+          <property name="IsGrouping"/>
+          <property name ="IsMappingEvent"/>
+      </component>
+      <set name="ShiftGroups" table="LaborRuleShiftGroup" inverse="false" cascade="all"
+           collection-type="uNhAddIns.WPF.Collections.Types.ObservableSetType`1[Luna.Shifts.Domain.ShiftGroup,Luna.Shifts.Domain], uNhAddIns.WPF">
+          <key column="LaborRuleId" foreign-key="FK_ShiftGroup_LaborRule"/>
+          <many-to-many column="ShiftGroupId" class="Luna.Shifts.Domain.ShiftGroup,Luna.Shifts.Domain" foreign-key="FK_LaborRule_ShiftGroup"/>
+      </set>-->
+  </class>
+</hibernate-mapping>

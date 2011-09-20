@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="Luna.GUI.UserControls.MasterControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Luna.GUI.UserControls"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:uc="clr-namespace:Luna.GUI.UserControls"
+    xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+    xmlns:inf="http://www.grandsys.com/luna" Name="Self">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DefaultMasterItemTemplate">
+            <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                <TextBlock Text="{Binding Entity.Name}"/>
+                <TextBlock Text="*" VerticalAlignment="Center" Style="{StaticResource MasterDisplayItem}"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="180" Width="auto" MaxWidth="200"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.RowSpan="2" BorderThickness="0 0 1 0" BorderBrush="DarkGray" Background="{StaticResource ListBoxContainerBackgroud}" />
+            <Border BorderThickness="0 0 0 0.5" BorderBrush="DarkGray">
+                <DockPanel>
+                <Button Style="{StaticResource IconButton}" Foreground="MediumSeaGreen" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" 
+                        cal:Message.Attach="New">
+                    <Image Source="/Resources/Images/add.png"/>
+                </Button>
+                <TextBlock Text="{Binding FunctionName, ElementName=Self,FallbackValue=Title}" 
+                           Foreground="Gray" VerticalAlignment="Center" Margin="5"/>
+            </DockPanel>
+            </Border>
+            <ListBox x:Name="ItemList" Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0" ItemsSource="{Binding Presenters}" 
+                     ItemContainerStyle="{StaticResource FlatStyleListBoxItem}"
+                     Style="{StaticResource CustomListBoxStyle}"
+                     IsSynchronizedWithCurrentItem="True" ItemTemplate="{Binding ItemDisplayTemplate,ElementName=Self, TargetNullValue={StaticResource DefaultMasterItemTemplate}}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel
+                            ></VirtualizingStackPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </Grid>
+
+        <GridSplitter Grid.Column="0" Style="{StaticResource VerticalGridSplitterStyle}" VerticalAlignment="Top"  HorizontalAlignment="Right" Margin="0 6 3 0" />
+
+        <DockPanel Grid.Column="2" LastChildFill="True">
+            <Border DockPanel.Dock="Bottom" Padding="5"
+                    Background="{StaticResource {x:Static themes:DockingCommonDictionary.DockSiteBackgroundBrushKey}}">
+                <UniformGrid Rows="1" HorizontalAlignment="Right">
+                    <UniformGrid.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="MinWidth" Value="70"/>
+                        </Style>
+                    </UniformGrid.Resources>
+                    <Button Content="{inf:Resource Delete}" cal:Message.Attach="Delete"/>
+                    <Button Content="{inf:Resource Save}"
+                            
+                            IsEnabled="{Binding IsEditing}" cal:Message.Attach="Save"/>
+                    <!--inf:Validator.ValidateTarget="{inf:Visual ElementName=Element_Detail,VisualIndex=1}"-->
+                    <Button Content="{inf:Resource Cancel}" IsEnabled="{Binding IsEditing}" cal:Message.Attach="Cancel"/>
+                    
+                </UniformGrid>
+            </Border>
+
+            <ContentControl x:Name="Element_Detail" DockPanel.Dock="Top" ContentTemplate="{Binding Template, Mode=OneTime}"
+                            Content="{Binding Path=Presenters}" cal:Action.TargetWithoutContext="{Binding Path=Presenters/}"/>
+
+        </DockPanel>
+    </Grid>
+</UserControl>

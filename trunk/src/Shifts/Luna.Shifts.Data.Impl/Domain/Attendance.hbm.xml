@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <import class="Agent"/>
+  <import class="PlanningAgent"/>
+  <class name ="Attendance" table="CSAgent" dynamic-update="true">
+    <id name="Id" column="CSAgentId">
+      <generator class ="hilo"/>
+    </id>
+    <many-to-one name="SchedulingPayload" cascade="all,delete-orphan"
+                 unique="true" column="SchedulingPayload" foreign-key="FK_CSAgent_SchedulingPayload"/>
+    <many-to-one name="Agent" column="EmployeeId" not-null="true"
+                 class="Luna.Infrastructure.Domain.Employee, Luna.Infrastructure.Domain"
+                 foreign-key="FK_CSAgent_Employee"/>
+    <many-to-one name="Campaign" class="Luna.Infrastructure.Domain.Campaign, Luna.Infrastructure.Domain"
+                 update="false" foreign-key="FK_CSAgent_Campaign" index="IX_Attendance"/>
+
+    <property name="Start" index="IX_Attendance"/>
+    <property name="End" column="Finsh" index="IX_Attendance"/>
+
+    <property name="OvertimeTotals" column="MaxOvertimeCurrent"/>
+    <property name="MaxOvertimeThreshold" column="MaxOvertimeThreshold"/>
+
+    <property name="ShrinkedTotals" column="MaxShrinkedCurrent"/>
+    <property name="MaxShrinkedThreshold" column="MaxShrinkedThreshold"/>
+
+    <property name="MCDO"/>
+    <property name="MCWD"/>
+    <property name="MinIdleGap"/>
+    <property name="StdDailyLaborHour"/>
+    <property name="MaxLaborHour" />
+    <property name="MinLaborHour" />
+    <property name="LaborHourTotals" />
+    <property name="MaxSwapTimes"/>
+    
+    <property name="Score" not-null="false"/>
+
+    <component name ="DayOffRule" class="Luna.Infrastructure.Domain.DayOffRule,Luna.Infrastructure.Domain">
+      <property name ="SystemAccumulate"/>
+      <property name ="Add1DayOffEachSaturdayInCS"/>
+      <property name ="Add1DayOffEachSundayInCS"/>
+      <property name ="Add1DayOffEachHolidayInCS"/>
+      <property name ="SpecifiedNumberOfDays"/>
+      <property name="HolidayShiftRule" type="Luna.Infrastructure.Domain.HolidayShiftRule,Luna.Infrastructure.Domain" />
+      <property name ="MaxFWTimes"/>
+      <property name ="MinFWTimes"/>
+      <property name ="MaxPWTimes"/>
+      <property name ="MinPWTimes"/>
+    </component>
+    <property name="AmountDayOff"/>
+
+  </class>
+
+  <class name="SchedulingPayload" dynamic-update="true">
+    <id name="Id" column="SchedulingPayloadId">
+      <generator class ="hilo"/>
+    </id>
+    <component name="DayOffMask" class="Luna.Infrastructure.Domain.MaskOfDay,Luna.Infrastructure.Domain">
+      <property name="Weekdays" column ="ValidDayOffWeekdayFromSun2Sat"/>
+      <property name ="Monthdays" column="ValidDayOffMonthday"/>
+    </component>
+    <!--<component name="GroupingArrangeShift" class="Luna.Infrastructure.Domain.GroupingArrangeShift,Luna.Infrastructure.Domain">
+      <property name="IsGrouping"/>
+      <property name ="IsMappingEvent"/>
+    </component>-->
+  </class>
+
+</hibernate-mapping>

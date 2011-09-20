@@ -1,0 +1,493 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <Reference>
+      <Private>False</Private>
+    </Reference>
+  </ItemDefinitionGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{659B3C5B-C97C-426A-9EAB-808F94C050C6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Luna.WPF.ApplicationFramework</RootNamespace>
+    <AssemblyName>Luna.WPF.ApplicationFramework</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\output\Debug\Modules\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\output\Release\Modules\</OutputPath>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Luna.WPF.ApplicationFramework.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Luna.WPF.ApplicationFramework.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActiproSoftware.Docking.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Docking.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Editors.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Editors.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Ribbon.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Ribbon.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Shared.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Shared.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Wizard.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Wizard.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\output\Debug\Library\Castle.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\output\Debug\Library\Castle.Windsor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\output\Debug\Library\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\output\Debug\Library\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\WPF\WPFToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\..\..\lib\SharedLibs\WPF\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionCondition.cs" />
+    <Compile Include="Actions\AbstractBackgroundThreadTask.cs" />
+    <Compile Include="Actions\CustomSynchronousAction.cs" />
+    <Compile Include="Actions\BackgroundAction.cs" />
+    <Compile Include="Actions\BackgroundActionAttribute.cs" />
+    <Compile Include="Actions\BackgroundActionContext.cs" />
+    <Compile Include="Actions\BackgroundActionFactory.cs" />
+    <Compile Include="Actions\BackgroundThreadTask.cs" />
+    <Compile Include="Actions\BackgroundWorkerTask.cs" />
+    <Compile Include="Actions\EndMode.cs" />
+    <Compile Include="Actions\ExecuteManager.cs" />
+    <Compile Include="Actions\IBackgroundActionInfo.cs" />
+    <Compile Include="Actions\IBackgroundThreadTask.cs" />
+    <Compile Include="Actions\IBeforeProcessor.cs" />
+    <Compile Include="Actions\TaskImplFactory.cs" />
+    <Compile Include="Actions\TaskImplMode.cs" />
+    <Compile Include="Actions\ThreadPoolTask.cs" />
+    <Compile Include="Actions\UIThreadTask.cs" />
+    <Compile Include="ApplicationCommands.cs" />
+    <Compile Include="Attributes\FunctionAttribute.cs" />
+    <Compile Include="Attributes\InputTextAttribute.cs" />
+    <Compile Include="Attributes\ItemDependenciesAttribute.cs" />
+    <Compile Include="Attributes\ItemDependencyObserver.cs" />
+    <Compile Include="Attributes\ItemPropertyPathMonitor.cs" />
+    <Compile Include="Attributes\LogAttribute.cs" />
+    <Compile Include="Attributes\MenuAttribute.cs" />
+    <Compile Include="Behaviors\BehaviorBase.cs" />
+    <Compile Include="Behaviors\CursorBehavior.cs" />
+    <Compile Include="Behaviors\MonthCalendarBehavior.cs" />
+    <Compile Include="Behaviors\CommandBidingBehavior.cs" />
+    <Compile Include="Behaviors\CustomWindowBehavior.cs" />
+    <Compile Include="Behaviors\EditValueimumChangeBehavior.cs" />
+    <Compile Include="Behaviors\InitializeBehavior.cs" />
+    <Compile Include="Behaviors\SelectorHighLightBehavior.cs" />
+    <Compile Include="Behaviors\TabControlBehavior.cs" />
+    <Compile Include="Collections\TypedDictionary.cs" />
+    <Compile Include="Commands\AsyncCommandBinding.cs" />
+    <Compile Include="ControlService.cs" />
+    <Compile Include="Controls\AxisControls\AxisControl.cs" />
+    <Compile Include="Controls\AxisControls\AxisPanel.AxisConverter.cs">
+      <DependentUpon>AxisPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AxisControls\AxisPanel.cs" />
+    <Compile Include="Controls\AxisControls\AxisPanel.Scroll.cs">
+      <DependentUpon>AxisPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AxisControls\AxisPanel.Zoom.cs">
+      <DependentUpon>AxisPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AxisControls\Common\DrawingContextExt.cs" />
+    <Compile Include="Controls\AxisControls\Common\LimitRange.cs" />
+    <Compile Include="Controls\AxisControls\Common\MouseState.cs" />
+    <Compile Include="Controls\AxisControls\Converters\DefaultDateTimeConverter.cs" />
+    <Compile Include="Controls\AxisControls\Converters\DefaultTimeSpanConverter.cs" />
+    <Compile Include="Controls\AxisControls\Converters\LengthConverter.cs" />
+    <Compile Include="Controls\AxisControls\Draws\AxisControlDesignDraw.cs" />
+    <Compile Include="Controls\AxisControls\HControls\BackgroundColor.cs" />
+    <Compile Include="Controls\AxisControls\HControls\BackgroundColorDraw.cs">
+      <DependentUpon>BackgroundColor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AxisControls\Interfaces\AxisInterface.cs" />
+    <Compile Include="Controls\AxisControls\Interfaces\IAxisPanel.cs" />
+    <Compile Include="Controls\AxisControls\ScheduleGrid.cs" />
+    <Compile Include="Controls\AxisControls\ScheduleGrid.Event.cs">
+      <DependentUpon>ScheduleGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AxisControls\ScheduleGrid.Zoom.cs">
+      <DependentUpon>ScheduleGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AxisControls\ScheduleGrid.Layout.cs">
+      <DependentUpon>ScheduleGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleGridService.cs" />
+    <Compile Include="Controls\AxisControls\VControls\RowLineControl.cs" />
+    <Compile Include="Controls\AxisControls\VControls\RowLineControlDraw.cs" />
+    <Compile Include="Controls\AxisControls\VControls\SelecetedRowControl.cs" />
+    <Compile Include="Controls\AxisControls\VControls\SelectedRowControlDraw.cs" />
+    <Compile Include="Controls\AxisControls\VHControls\BlockGrid.cs" />
+    <Compile Include="Controls\AxisControls\VHControls\BaseBlockGridDraw.cs" />
+    <Compile Include="Controls\AxisControls\VHControls\BlockGridLayerContainer.cs" />
+    <Compile Include="Controls\AxisControls\VHControls\Layers\BlockGridLayerBase.cs" />
+    <Compile Include="Controls\AxisControls\VHControls\Layers\Interfaces\IBlockLayer.cs" />
+    <Compile Include="Controls\AxisControls\VHControls\Layers\Interfaces\ILayerContainer.cs" />
+    <Compile Include="Controls\AxisControls\ZoomChangedEventArgs.cs" />
+    <Compile Include="Controls\Brick\Converters\DateTimeToDayConverter.cs" />
+    <Compile Include="Controls\Brick\HControls\CalibrationControlDraw.cs">
+      <DependentUpon>CalibrationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Brick\HControls\DateTimeLineDraw.cs">
+      <DependentUpon>DateTimeLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Brick\HControls\DateTimeNumberLine.cs" />
+    <Compile Include="Controls\Brick\HControls\MarkBlock.cs" />
+    <Compile Include="Controls\Brick\VHControls\BlockGridDraw.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\BlockTimeDisplayLayerDraw.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\DragingRoutedEventArgs.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\DragItemLayerDraw.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\GapDistance.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\GapDistanceDraw.cs">
+      <DependentUpon>GapDistance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Brick\VHControls\Layers\MoveDargItemsLayer.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\MoveSelectedItemsLayer.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\MoveSelectedItemsLayerDraw.cs">
+      <DependentUpon>MoveSelectedItemsLayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Brick\VHControls\Layers\ScaleSelectedItemLayer.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\ScaleSelectedItemLayerDraw.cs">
+      <DependentUpon>ScaleSelectedItemLayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Brick\VHControls\Layers\SelectedBlocksLayer.cs" />
+    <Compile Include="Controls\Brick\VHControls\Layers\SelectedBlocksLayerDraw.cs">
+      <DependentUpon>SelectedBlocksLayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Brick\VHControls\Layers\TimeRangeLineLayerDraw.cs" />
+    <Compile Include="Controls\Cell\CellEditRoutedEventArgs.cs" />
+    <Compile Include="Controls\Cell\CellEditRoutedEventHandler.cs" />
+    <Compile Include="Controls\Cell\CellExtention.cs" />
+    <Compile Include="Controls\Cell\DragToScrollLayer.cs" />
+    <Compile Include="Controls\Cell\PointOutLayer.cs" />
+    <Compile Include="Controls\Cell\VerticalIndicator.cs" />
+    <Compile Include="Controls\SyncScrollViewer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converters\ComparingConverter.cs" />
+    <Compile Include="Converters\CountryToTimeZonesConverter.cs" />
+    <Compile Include="Converters\ImageConverter.cs" />
+    <Compile Include="Converters\IndexToDateConverter.cs" />
+    <Compile Include="Converters\IsNotNullConverter.cs" />
+    <Compile Include="Converters\TimeZonesByCountryConverter.cs" />
+    <Compile Include="Converters\ValueRangeToStatusConveter.cs" />
+    <Compile Include="Extensions\BitmapImageExtension.cs" />
+    <Compile Include="Extensions\ExcelRowProvingExt.cs" />
+    <Compile Include="Extensions\FrameworkElementExtension.cs" />
+    <Compile Include="Extensions\NotifyPropertyChangedExtension.cs" />
+    <Compile Include="FrameworkElementService.cs" />
+    <Compile Include="Helpers\ColumnNameMapping.cs" />
+    <Compile Include="Helpers\TableNames.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IDetailPresenter.cs" />
+    <Compile Include="Interfaces\IMasterPresenter.cs" />
+    <Compile Include="Markup\DelayBindingExtension.cs" />
+    <Compile Include="Presenters\DetailPresenter.cs" />
+    <Compile Include="Presenters\MasterPresenter.cs" />
+    <Compile Include="Presenters\OpenExcelFilePresenter.cs" />
+    <Compile Include="Extensions\TextDrawingExt.cs" />
+    <Compile Include="Controls\Cell\CellBlockGridDraw.cs" />
+    <Compile Include="Controls\Cell\RangeSelectedDraw.cs">
+      <DependentUpon>RangeSelected.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Cell\TextGridDraw.cs" />
+    <Compile Include="Controls\DrawingContextExtension.cs" />
+    <Compile Include="Behaviors\TimeLineChartBehavior.cs" />
+    <Compile Include="Behaviors\PriorityQueue.cs">
+      <DependentUpon>TimeLineChartBehavior.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\DayOfWeekConverter.cs" />
+    <Compile Include="Extensions\ColorExt.cs" />
+    <Compile Include="Converters\DateTimeToBrushConverter.cs" />
+    <Compile Include="Controls\Brick\Converters\ZoomPercentageConverter.cs" />
+    <Compile Include="Controls\Brick\Converters\ZoomToTimeConverter.cs" />
+    <Compile Include="Controls\Brick\HControls\CalibrationControl.cs" />
+    <Compile Include="Controls\Brick\HControls\ClozeLine.cs" />
+    <Compile Include="Controls\Brick\HControls\DateTimeLine.cs" />
+    <Compile Include="Controls\Brick\HControls\DateTimeTip.cs" />
+    <Compile Include="Controls\Brick\HControls\LineChartBase.cs" />
+    <Compile Include="Controls\Brick\HControls\TimeLineChart.cs">
+      <DependentUpon>LineChartBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Cell\EditControlLayer.cs" />
+    <Compile Include="Converters\ArrayToCheckItemConverter.cs" />
+    <Compile Include="Converters\BooleanArrayToDayOffWeekConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\SumListCountConverter.cs" />
+    <Compile Include="Extensions\CellExtension.cs" />
+    <Compile Include="Behaviors\ElementDrawBehavior.cs" />
+    <Compile Include="Collections\ElementDrawCollection.cs" />
+    <Compile Include="Helpers\AppManager.cs" />
+    <Compile Include="IBlockConverter.cs" />
+    <Compile Include="Controls\Cell\RangeSelected.cs" />
+    <Compile Include="Controls\ContextMenuManager.cs" />
+    <Compile Include="Behaviors\EditorServiceBehavior.cs" />
+    <Compile Include="Converters\TypeConverter.cs" />
+    <Compile Include="IElementDraw.cs" />
+    <Compile Include="Interfaces\ILogicalParent.cs" />
+    <Compile Include="Controls\AxisControls\Draws\DesignElementDraw.cs" />
+    <Compile Include="Controls\ElementDraw.cs" />
+    <Compile Include="Controls\ElementItemsControl.cs" />
+    <Compile Include="Controls\ElementListBox.cs" />
+    <Compile Include="Controls\ElementListBoxItem.cs" />
+    <Compile Include="Controls\ElementPanel.cs" />
+    <Compile Include="Interfaces\IInitialize.cs" />
+    <Compile Include="Interfaces\IPriority.cs" />
+    <Compile Include="Attributes\QuestionAttribute.cs" />
+    <Compile Include="Attributes\SuperRescueAttribute.cs" />
+    <Compile Include="Behaviors\ListBoxSelectAllAction.cs" />
+    <Compile Include="Behaviors\ReadOnlyPropertyAction.cs" />
+    <Compile Include="BootstrapperApplication.cs" />
+    <Compile Include="Commands\OperationCommand.cs" />
+    <Compile Include="Constants\DockSiteDock.cs" />
+    <Compile Include="Constants\Enums.cs" />
+    <Compile Include="Controls\GIFImage.cs" />
+    <Compile Include="Controls\CrossFade.cs" />
+    <Compile Include="Controls\GanttBar.cs" />
+    <Compile Include="Behaviors\CheckBoxSelectedAllBehavior.cs" />
+    <Compile Include="Controls\ITransition.cs" />
+    <Compile Include="Behaviors\ItemsElementBehavior.cs" />
+    <Compile Include="Controls\MaskAttach.cs" />
+    <Compile Include="Controls\Numericupdown.cs" />
+    <Compile Include="Behaviors\PopupButtonBehavior.cs" />
+    <Compile Include="Controls\SearchComboBox.cs" />
+    <Compile Include="Controls\TransitionPresenter.cs" />
+    <Compile Include="Converters\ArrayToStringConverter.cs" />
+    <Compile Include="Converters\BindableCollectionConverter.cs" />
+    <Compile Include="Converters\BooleanInverseConverter.cs" />
+    <Compile Include="Converters\BooleanStringConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityHiddenConverter.cs" />
+    <Compile Include="Converters\ByteToBitmapImageConverter.cs" />
+    <Compile Include="Converters\CollapsedWhenNullConverter.cs" />
+    <Compile Include="Converters\CollapseWhenEmptyConverter.cs" />
+    <Compile Include="Converters\ConditionalConverter.cs" />
+    <Compile Include="Converters\ConverterHelper.cs" />
+    <Compile Include="Converters\CustomTimeSpanConverter.cs" />
+    <Compile Include="Converters\DateTimeLengthConverter.cs" />
+    <Compile Include="Converters\DebugConverter.cs" />
+    <Compile Include="Converters\RedeemHourConverter.cs" />
+    <Compile Include="Converters\DefaultValueToBooleanConverter.cs" />
+    <Compile Include="Converters\DragBlockLengthConverter.cs" />
+    <Compile Include="Converters\EntityFillConvertor.cs" />
+    <Compile Include="Converters\EnumerableToListConverter.cs" />
+    <Compile Include="Converters\IndexStartFromConverter.cs" />
+    <Compile Include="Converters\IntToDateTimeConverter.cs" />
+    <Compile Include="Converters\IntToTimeSpanConverter.cs" />
+    <Compile Include="Converters\InversionOfBooleanConverter.cs" />
+    <Compile Include="Converters\IsEnumConverter.cs" />
+    <Compile Include="Converters\ItemIndexConverter.cs" />
+    <Compile Include="Converters\NameToBrushConverter.cs" />
+    <Compile Include="Converters\RangeInervalToBooleanConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\TimeSpanToMinuteIntConverter.cs" />
+    <Compile Include="Converters\ToMultiplesOfFiveConverter.cs" />
+    <Compile Include="Converters\ValidToBrushConverter.cs" />
+    <Compile Include="Converters\ValueConverter.cs" />
+    <Compile Include="Converters\WidthConverter.cs" />
+    <Compile Include="DataTemplateSelectors\ActionItemDataTemplateSelector.cs" />
+    <Compile Include="DefaultOpenFileService.cs" />
+    <Compile Include="DockingWindowMetadata.cs" />
+    <Compile Include="Extensions\ApplicationExtension.cs" />
+    <Compile Include="Extensions\CloneExtension.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\ColorMixerExt.cs" />
+    <Compile Include="Extensions\UIElementExtension.cs" />
+    <Compile Include="Extensions\DockingWindowExtensions.cs" />
+    <Compile Include="Extensions\PresenterExt.cs" />
+    <Compile Include="Extensions\VisualExtension.cs" />
+    <Compile Include="Helpers\SettingsBase.cs" />
+    <Compile Include="Helpers\TypeMatchExtension.cs" />
+    <Compile Include="IActiveAware.cs" />
+    <Compile Include="Interfaces\ICommandSetPresenter.cs" />
+    <Compile Include="Interfaces\IDockSitePresenter.cs" />
+    <Compile Include="Interfaces\IDockSiteRegionMetadata.cs" />
+    <Compile Include="Interfaces\IDialogBoxPresenter.cs" />
+    <Compile Include="Interfaces\ILoadScreen.cs" />
+    <Compile Include="Interfaces\IOpenFileService.cs" />
+    <Compile Include="Interfaces\IQuestionPresenter.cs" />
+    <Compile Include="Interfaces\IShellPresenter.cs" />
+    <Compile Include="Interfaces\IShiftViewerPresenter.cs" />
+    <Compile Include="LunaConfig.cs" />
+    <Compile Include="Markup\BaseMarkupExtension.cs" />
+    <Compile Include="Markup\VisualExtension.cs" />
+    <Compile Include="Presenters\DefaultPresenter.cs" />
+    <Compile Include="Presenters\DockingPresenter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\ExceptionsTable.Designer.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\StringsTable.Designer.cs" />
+    <Compile Include="BlendMergedDictionary.cs" />
+    <Compile Include="Converters\StaticObjectConverter.cs" />
+    <Compile Include="Threads\GapDispatcherTimer.cs" />
+    <Compile Include="Threads\UIThread.cs" />
+    <Compile Include="ViewStrategy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.Brick.ScheduleGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ExpressionTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\Brick\VControls\" />
+    <Folder Include="Graphics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\SharedSources\Caliburn\Caliburn.Core\Caliburn.Core.csproj">
+      <Project>{96ECAC8B-D61E-405E-A5D7-F6CC0F62CF2C}</Project>
+      <Name>Caliburn.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\SharedSources\Caliburn\Caliburn.ModelFramework\Caliburn.ModelFramework.csproj">
+      <Project>{F7176C5D-5949-48A6-AF05-C35A4D01DE65}</Project>
+      <Name>Caliburn.ModelFramework</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\SharedSources\Caliburn\Caliburn.PresentationFramework\Caliburn.PresentationFramework.csproj">
+      <Project>{209BCE75-E88D-43AA-946A-A09EE4A12F20}</Project>
+      <Name>Caliburn.PresentationFramework</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Luna.Infrastructure.Domain\Luna.Infrastructure.Domain.csproj">
+      <Project>{9D02C5C8-274F-416E-93EC-866052DEB5B3}</Project>
+      <Name>Luna.Infrastructure.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Luna.Common\Luna.Common.csproj">
+      <Project>{5942E530-CF35-4A36-AB21-F6A4634D0C97}</Project>
+      <Name>Luna.Common</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Luna.Core\Luna.Core.csproj">
+      <Project>{FEF376B8-9DAF-4A00-BBEF-DFCE2C11971C}</Project>
+      <Name>Luna.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Luna.Globalization\Luna.Globalization.csproj">
+      <Project>{5118575A-1266-4A84-B999-CB3EADC6C933}</Project>
+      <Name>Luna.Globalization</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\ExceptionsTable.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="Properties\StringsTable.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

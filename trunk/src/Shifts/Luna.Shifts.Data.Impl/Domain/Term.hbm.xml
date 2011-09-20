@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name ="Term" table="Term" abstract="true" lazy="false">
+    <id name="Id" column="TermId" type="Int64">
+      <generator class ="hilo"/>
+    </id>
+    <discriminator column="ChildClassType" type="string" not-null="true" length="32"/>
+    <version name="Version" type="Int64" />
+
+    <property name="Start">
+      <column  name ="StartTime" not-null="true" index="IX_TimeBox" sql-type="smalldatetime"/>
+    </property>
+    <property name ="End">
+      <column  name="FinishTime" not-null="true" index="IX_TimeBox" sql-type="smalldatetime"/>
+    </property>
+    <property name ="Locked" column="Locked" not-null="true" />
+    <property name="Level" column="LevelColumn" type="int"/>
+    <property name="Seat" column="SeatId"/>
+    <property name="Tag" column="Tag"/>
+    <property name="_employeeId" access="field" column="TimeBoxId" index="IX_TimeBox"/>
+    <property name ="OnService"/>
+    <property name="Background"/>
+    <property name="Text" column="DisplayText"/>
+    <property name ="AsARest"/>
+    <property name="IsNeedSeat" access="field.camelcase-underscore" column="IsNeedSeat"/>
+
+    <many-to-one name="Bottom" class="Term" column="ParentTermId" foreign-key="FK_Term_ParentTerm" />
+    <property name="TermStyleId"/>
+
+
+    <subclass name="Assignment" discriminator-value="assignment" lazy="false" dynamic-update="true">
+      <property name="From">
+         <column  name ="StartTime2" sql-type="smalldatetime"/>
+      </property>
+      <property name ="Finish">
+        <column  name ="FinishTime2" sql-type="smalldatetime"/>
+      </property>
+      <property name="ShrinkageTotals" type="TimeSpan" />
+      <property name="OvertimeTotals" type="TimeSpan" />
+      <property name="WorkingTotals" type="TimeSpan" />
+      <property name="AsAWork"/>
+      <property name="GapGuaranteed"/>
+      <property name="IgnoreAdherence"/>
+      <property name="BelongToPrv"/>
+      <property name="NativeName"/>
+      <property name="HrDate">
+        <column  name ="HrDate" sql-type="smalldatetime"/>
+      </property>
+    </subclass>
+    <subclass name="OvertimeAssignment" discriminator-value="ot_assignment" lazy="false" dynamic-update="true">
+      <property name="From">
+        <column  name ="otStartTime2" sql-type="smalldatetime"/>
+      </property>
+      <property name ="Finish">
+        <column  name ="otFinishTime2" sql-type="smalldatetime"/>
+      </property>
+      <property name="OvertimeTotals" type="TimeSpan" column="otOvertimeTotals" />
+      <property name="AsAWork"/>
+      <property name="GapGuaranteed"/>
+      <property name="IgnoreAdherence"/>
+      <property name="BelongToPrv"/>
+      <property name="NativeName"/>
+      <property name="HrDate">
+        <column  name ="HrDate" sql-type="smalldatetime"/>
+      </property>
+    </subclass>
+    <subclass name="DayOff" discriminator-value="dayOff" lazy="false" dynamic-update="true"/>
+    <subclass name="TimeOff" discriminator-value="timeOff" lazy="false" dynamic-update="true"/>
+    <subclass name="RegularSubEvent" discriminator-value="regular_subevent" lazy="false" dynamic-update="true"/>
+    <subclass name="UnlaboredSubEvent" discriminator-value="unlabored_event" lazy="false" dynamic-update="true"/>
+    <subclass name="OvertimeSubEvent" discriminator-value="ot_event" lazy="false" dynamic-update="true"/>
+    <subclass name="Shrink" discriminator-value="shrink" lazy="false" dynamic-update="true"/>
+    <subclass name="AbsentEvent" discriminator-value="absent_event" lazy="false" dynamic-update="true"/>
+    <subclass name="ExternalActivity" discriminator-value="ext_Act" lazy="false" dynamic-update="true">
+      <property name="IgnoreAdherence"/>
+      <property name="_customPayment" column="CustomPayment" access="field"/>
+    </subclass>
+  </class>
+
+  <class name="AdherenceEvent" table="AdherenceEvent" lazy="false">
+    <id column="AdherenceEventId" type="Int64">
+      <generator class ="hilo"/>
+    </id>
+    <timestamp name="TimeStamp"/>
+    <property name="Text" column="Event" />
+    <property name="Start">
+      <column  name ="StartTime" not-null="true" index="IX_1" sql-type="smalldatetime"/>
+    </property>
+    <property name ="End">
+      <column  name="FinishTime" not-null="true" index="IX_1" sql-type="smalldatetime"/>
+    </property>
+    <property name="EmployeeId" index="IX_1" not-null="true"/>
+    <property name="Assigner"/>
+    <property name="Reason" />
+    <filter name="AdherenceEventCoveredFilter" >
+      <![CDATA[((StartTime < :end  AND FinishTime >:start) OR ( StartTime = :start and FinishTime=:end))]]>
+    </filter>
+
+
+
+  </class>
+    <filter-def name="AdherenceEventCoveredFilter">
+      <filter-param name="start" type="DateTime"/>
+      <filter-param name="end" type="DateTime"/>
+    </filter-def>
+</hibernate-mapping>

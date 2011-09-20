@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name ="CustomEmployeeGroup">
+    <id name="Id" column="CustomEmployeeGroupId">
+      <generator class ="hilo"/>
+    </id>
+    <property name="GroupName"/>
+
+     <many-to-one name="Owner" class="Employee" not-null="true"/>
+    <set name="Employees" cascade="all-delete-orphan" table="CustomGroupEmployees" lazy="false">
+      <key column="CustomEmployeeGroupId" foreign-key="FK_Employee_CustomEmployeeGroup"/>
+      <many-to-many class="Employee"/>
+    </set>
+
+  </class>
+</hibernate-mapping>

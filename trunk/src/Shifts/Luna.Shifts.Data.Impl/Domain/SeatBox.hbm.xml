@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name ="SeatBox" table="SeatBox">
+    <id name="Id" column="SeatBoxId" >
+      <generator class="foreign">
+        <param name="property">Seat</param>
+      </generator>
+    </id>
+    <version name="Version" type="Int64" />
+    <one-to-one name="Seat" class="Seat" constrained="true" foreign-key="FK_SeatBox_Seat"/>
+
+    <set name="OccupationSet" cascade="all" batch-size="50" lazy="false" collection-type="OccupationSetType">
+      <key column="SeatBoxId"  foreign-key="FK_OccupationSet_SeatBox"/>
+      <one-to-many class="SeatEvent"/>
+     
+      <filter name="OccupationCurrentRange">
+        <![CDATA[(StartTime <=:watchPoint  AND FinishTime >:watchPoint)]]>
+      </filter>
+      <filter name="OccupationLargeRange" >
+        <![CDATA[(StartTime <  :end  AND FinishTime >:start) OR ( StartTime = :start and FinishTime=:end)]]>
+      </filter>
+    </set>
+  </class>
+  
+  <filter-def name="OccupationCurrentRange">
+    <filter-param name="watchPoint" type="DateTime"/>
+  </filter-def>
+  <filter-def name="OccupationLargeRange">
+    <filter-param name="start" type="DateTime"/>
+    <filter-param name="end" type="DateTime"/>
+  </filter-def>
+</hibernate-mapping>

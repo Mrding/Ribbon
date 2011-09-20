@@ -1,0 +1,13 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" 
+    xmlns:Sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:Controls="clr-namespace:Luna.WPF.ApplicationFramework.Controls"
+    xmlns:Theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+    xmlns:Converters="clr-namespace:Luna.WPF.ApplicationFramework.Converters"
+    >
+
+    
+
+</ResourceDictionary>

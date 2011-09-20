@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="Luna.GUI.UserControls.OrderingItemsButtons"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:local="clr-namespace:Luna.GUI.UserControls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="bd" BorderThickness="1.5" Background="Transparent" 
+                                BorderBrush="{Binding Path=Foreground,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"
+                                CornerRadius="4" Margin="2">
+
+                            <Path Width="7.886" Height="4.6" Stretch="Fill" x:Name="Arrow"
+                                  Fill="{Binding Path=Foreground,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"
+                                  Data="F1 M 791.803,402.725L 791.818,402.725L 755.483,366.391L 719.135,402.725L 791.803,402.725 Z " 
+                                  Margin="6">
+                                <Path.Style>
+                                    <Style TargetType="{x:Type Path}">
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Tag,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"
+                                                         Value="Down">
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                            <SkewTransform AngleX="0" AngleY="0"/>
+                                                            <RotateTransform Angle="180"/>
+                                                            <TranslateTransform X="8" Y="5.5"/>
+                                                        </TransformGroup>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Tag,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"
+                                                         Value="Top">
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                            <SkewTransform AngleX="0" AngleY="0"/>
+                                                            <RotateTransform Angle="0"/>
+                                                            <TranslateTransform X="0" Y="-5"/>
+                                                        </TransformGroup>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=Tag,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Button}}}"
+                                                         Value="Bottom">
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                            <SkewTransform AngleX="0" AngleY="0"/>
+                                                            <RotateTransform Angle="180"/>
+                                                            <TranslateTransform X="8" Y="10"/>
+                                                        </TransformGroup>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Path.Style>
+                            </Path>
+
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="LightGray"/>
+                                <Setter TargetName="Arrow" Property="Fill" Value="LightGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <!--DataContext="{Binding Path=Selector.DataContext,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:ItemsOrderingCommands}}}"-->
+        <UniformGrid x:Name="buttonsContainer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Rows="1" >
+            <Button x:Name="MoveTopButton" Tag="Top" ToolTip="Top"/>
+            <Button x:Name="MoveUpButton"  ToolTip="Up"/>
+            <Button x:Name="MoveDownButton"  Tag="Down" ToolTip="Down"/>
+            <Button x:Name="MoveToLastButton"  Tag="Bottom" ToolTip="Bottom"/>
+        </UniformGrid>
+    </Grid>
+</UserControl>

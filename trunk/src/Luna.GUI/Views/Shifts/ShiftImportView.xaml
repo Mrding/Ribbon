@@ -1,0 +1,589 @@
+﻿<local:ShiftView x:Class="Luna.GUI.Views.Shifts.ShiftImportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:domain="http://www.grandsys.com/luna/domain"
+             xmlns:inf="http://www.grandsys.com/luna"
+             xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"  
+             xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+             xmlns:behaviors="clr-namespace:Luna.WPF.ApplicationFramework.Behaviors;assembly=Luna.WPF.ApplicationFramework"
+             xmlns:cell="http://www.grandsys.com/luna/cell"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:local="clr-namespace:Luna.GUI.Views.Shifts"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"     
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="1000">
+    <local:ShiftView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Luna.GUI;Component/Views/Shifts/ShiftImportView.Resource.xaml" />
+                <inf:BlendMergedDictionary Source="pack://application:,,,/Resources/ApplicationResource.xaml"/>
+                <inf:BlendMergedDictionary Source="/Luna.GUI;Component/Resources/ApplicationStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </local:ShiftView.Resources>
+    <Grid x:Name="RootLayout">
+        <!--
+            <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/bck_body.jpg" />
+            </Grid.Background>
+        -->
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="{Binding TopRowHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ShiftView}}, Mode=TwoWay}" MinHeight="34" />-->
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="55" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Margin="10,9">
+            <shared:PixelSnapper>
+                <TextBlock Margin="7" Text="Import" FontSize="22" TextTrimming="CharacterEllipsis" />
+            </shared:PixelSnapper>
+            <!--<Rectangle Height="2" Stroke="{StaticResource DottedHorizontalSeparatorBrush}" StrokeThickness="1" StrokeDashArray="2 2" RenderOptions.EdgeMode="Aliased" />-->
+
+            <DockPanel Margin="7,0,0,10">
+                <Button FontWeight="Black" Height="65" Width="60" DockPanel.Dock="Left"  cal:Message.Attach="[Event Click] = [Action OpenFile()]">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource BlueButtonStyle}">
+                            <Setter Property="Content" Value="Open&#13;Excel"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Status}" Value="Running">
+                                    <Setter Property="Content" Value="Cancel"/>
+                                    <Setter Property="Background" Value="#FFDD4F41"/>
+                                    <Setter Property="BorderBrush" Value="#FFCD3335"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Style="{StaticResource GreenButtonStyle}" FontWeight="Black" DockPanel.Dock="Left" Margin="15,0,0,0" Height="65" Width="60" Content="Import"
+                                   cal:Message.Attach="[Event Click] = [Action Improt()]"/>
+                <StackPanel Margin="18,0,0,0" VerticalAlignment="Bottom">
+                    <TextBlock Text="Assignment" FontSize="13" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Margin="0,5,0,0" Text="Give some Explain " TextWrapping="Wrap" Foreground="Gray"/>
+                    <ContentPresenter Content="{Binding Path=.}" VerticalAlignment="Bottom" Margin="0 5 0 3" >
+                        <ContentPresenter.ContentTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="PART_FilePath" Text="{Binding Path=FilePath,StringFormat='{}{0}'}" TextWrapping="Wrap" VerticalAlignment="Top"
+                                               Margin="0 0 0 0"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 3 0">
+                                        <TextBlock Text="Invalid excel file format" x:Name="PART_InvalidExcelFileFormat" Visibility="Collapsed"/>
+                                        <TextBlock x:Name="PART_ProcessInfo" Text="{Binding ProcessInfo,FallbackValue=ProcessInfo}" />
+                                        <TextBlock x:Name="PART_Rows" Visibility="Collapsed">                            
+                                            <AccessText Text="{Binding Process,StringFormat=\{0:0\}}"/>
+                                            <AccessText Text="/"/>
+                                            <AccessText Text="{Binding TotalProcess,StringFormat=\{0:0\}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <ProgressBar Grid.Row="1" x:Name="PART_ProgressBar"  Opacity="0.4" Minimum="0" Value="{Binding Process}" Maximum="{Binding TotalProcess}" 
+                                                 Margin="0,5,0,0" Height="8" SnapsToDevicePixels="True"
+                                                 IsIndeterminate="{Binding Processing}"/>
+                                </Grid>
+                                <DataTemplate.Triggers>
+
+                                    <DataTrigger Binding="{Binding InvalidExcelFileFormat}" Value="true">
+                                        <Setter TargetName="PART_InvalidExcelFileFormat" Property="Visibility" Value="Visible"/>
+                                        <Setter TargetName="PART_ProcessInfo" Property="Visibility" Value="Collapsed"/>
+                                        <Setter TargetName="PART_Rows" Property="Visibility" Value="Collapsed"/>
+                                        <Setter TargetName="PART_FilePath" Property="Foreground" Value="Red"/>
+                                    </DataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Status}" Value="Running"/>
+                                            <Condition Binding="{Binding ProcessInfo}" Value="{x:Null}"/>
+                                            <Condition Binding="{Binding InvalidExcelFileFormat}" Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="PART_Rows" Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Status}" Value="Ready"/>
+                                            <Condition Binding="{Binding ProcessInfo}" Value="{x:Null}"/>
+                                            <Condition Binding="{Binding InvalidExcelFileFormat}" Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="PART_Rows" Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding FilePath}" Value="{x:Null}"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="PART_ProgressBar" Property="Visibility" Value="Collapsed"/>
+                                    </MultiDataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding InvalidExcelFileFormat}" Value="true"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="PART_ProgressBar" Property="Visibility" Value="Collapsed"/>
+                                    </MultiDataTrigger>
+
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ContentPresenter.ContentTemplate>
+                    </ContentPresenter>
+
+                </StackPanel>
+            </DockPanel>
+        </StackPanel>
+
+        <ContentControl Content="{Binding Path=.}" Grid.Row="1">
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ContentControl">
+                                <ContentPresenter/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="200" MaxWidth="200" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                               
+                                    <!--column header-->
+                                    <Grid  Grid.Column="0" Grid.ColumnSpan="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="0"/>
+                                            <RowDefinition Height="0"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" Height="31" Background="{StaticResource ColumnBg}"/>
+                                        <Border Grid.Row="1" Height="{StaticResource RowHeight}" />
+                                        <Border Grid.Row="2" Height="{StaticResource RowHeight}" />
+                                    </Grid>
+
+                                    <!--Left-->
+
+
+                                    <Grid Height="31" Grid.RowSpan="2" VerticalAlignment="Top">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Background="{x:Null}" Text="Name" VerticalAlignment="Center" Margin="26 0 0 0"/>
+                                    </Grid>
+
+                                    <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" HorizontalAlignment="Left" Style="{DynamicResource VerticalGridSplitterStyle}"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="Ready">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <inf:ScheduleGrid EndTime="{Binding ImportRange.End,Mode=OneWay}" ExtendedRowCount="1"
+                                               LeftWidth="{Binding HeaderWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ShiftImportView}},Mode=TwoWay}"
+                                               StartTime="{Binding ImportRange.Start,Mode=OneWay}"
+                                              ScreenStart="{Binding ImportRange.Start,Mode=OneWay}">
+                                            <inf:ScheduleGrid.RowCount>
+                                                <MultiBinding Converter="{StaticResource SumListCountConverter}">
+                                                    <Binding Path="BindableAgents" />
+                                                </MultiBinding>
+                                            </inf:ScheduleGrid.RowCount>
+                                            <inf:ScheduleGridLayout.LeftContent>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="31" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <DockPanel Height="{StaticResource RowHeight}">
+                                                        <TextBlock DockPanel.Dock="Left" Margin="26 0 0 0" Background="{x:Null}" Text="Name" VerticalAlignment="Center" />
+                                                        <ListBox ScrollViewer.CanContentScroll="False" Background="Transparent" BorderThickness="0" VerticalAlignment="Center"
+                                                                      DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                                            <ListBox.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <DockPanel />
+                                                                </ItemsPanelTemplate>
+                                                            </ListBox.ItemsPanel>
+                                                            <ListBox.ItemContainerStyle>
+                                                                <Style TargetType="ListBoxItem">
+                                                                    <Setter Property="Background" Value="Transparent" />
+                                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                                                <shared:PixelSnapper>
+                                                                                    <Grid Cursor="Hand" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Tag="{TemplateBinding Tag}" cal:Message.Attach="[Event MouseLeftButtonDown] = [Action Sort('Correctness')]">
+                                                                                    <Grid.ColumnDefinitions>
+                                                                                        <ColumnDefinition Width="auto" />
+                                                                                        <ColumnDefinition Width="auto" />
+                                                                                    </Grid.ColumnDefinitions>
+                                                                                    <Rectangle Grid.RowSpan="2" Fill="Transparent" />
+                                                                                    <ContentPresenter x:Name="PART_Content" VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                                                 
+                                                                                        <Image x:Name="PART_Sign" 
+                                                                                               
+                                                                                               Grid.Column="1" VerticalAlignment="Center" Margin="5,0,5,0" />
+                                                                                  
+                                                                                </Grid>
+                                                                                </shared:PixelSnapper>
+                                                                                <ControlTemplate.Triggers>
+                                                                                    <DataTrigger Binding="{Binding DataContext.Sorting, RelativeSource={RelativeSource AncestorType=local:ShiftImportView}}" Value="asc">
+                                                                                        <Setter Property="Source" TargetName="PART_Sign" Value="/Resources/Images/ImportSort32.png" />
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding DataContext.Sorting, RelativeSource={RelativeSource AncestorType=local:ShiftImportView}}" Value="des">
+                                                                                        <Setter Property="Source" TargetName="PART_Sign" Value="/Resources/Images/ImportErrorSort32.png" />
+                                                                                    </DataTrigger>
+                                                                                </ControlTemplate.Triggers>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </ListBox.ItemContainerStyle>
+                                                            <ListBoxItem Padding="0 0 2 0" Width="75" HorizontalContentAlignment="Right" IsSelected="False"/>
+                                                        </ListBox>
+                                                    </DockPanel>
+                                                    <ScrollViewer Grid.Row="1" IsEnabled="False"
+                                                              inf:ScrollViewerUtilities.ScrollSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=inf:ScheduleGrid}}"
+                                                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                              ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                                        <ListBox IsEnabled="True" ItemsSource="{Binding BindableAgents}" Style="{StaticResource LeftListBoxStyle}">
+                                                            <ListBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Grid VerticalAlignment="Center">
+
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition />
+                                                                        </Grid.RowDefinitions>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="25"/>
+                                                                            <ColumnDefinition Width="*"/>
+                                                                            <ColumnDefinition Width="5"/>
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <Rectangle  Width="25" x:Name="PART_DummySign"
+                                                                                    Height="25" Opacity="0.5"/>
+
+                                                                        <TextBlock Width="25" x:Name="PART_Index" TextAlignment="Center" Text="{Binding Index}" ToolTipService.ShowOnDisabled="True"  VerticalAlignment="Center">
+                                                                            <TextBlock.ToolTip>
+                                                                                <ToolTip Content="{Binding Path=.}">
+                                                                                    <ToolTip.Style>
+                                                                                        <Style TargetType="ToolTip">
+                                                                                            <Setter Property="Template">
+                                                                                                <Setter.Value>
+                                                                                                    <ControlTemplate TargetType="ToolTip">
+                                                                                                        <Border x:Name="PART_Border" Background="AliceBlue" BorderBrush="DarkGray" BorderThickness="1 1 1 1" Visibility="Collapsed" Padding="3">
+                                                                                                            <StackPanel>
+                                                                                                                <TextBlock x:Name="PART_Duplications" Text="{Binding Duplications,Converter={StaticResource ArrayToStringConverter},StringFormat='{}與第 {0} 行重複'}"
+                                                                                                                           Visibility="Collapsed"/>
+                                                                                                                <ContentPresenter x:Name="PART_ConterHost" Visibility="Collapsed">
+                                                                                                                    <ContentPresenter.Resources>                                                                                                                
+                                                                                                                        <DataTemplate DataType="{x:Type sys:String}">                                                                                                                        
+                                                                                                                               <TextBlock Text="{Binding Path=.}"/>
+                                                                                                                        </DataTemplate>
+                                                                                                                        <DataTemplate DataType="{x:Type domain:UnknowAssignment}"/>
+                                                                                                                    </ContentPresenter.Resources>                                                                                                            
+                                                                                                                </ContentPresenter>
+                                                                                                            </StackPanel> 
+                                                                                                        </Border>
+                                                                                                        <ControlTemplate.Triggers>
+                                                                                                            <DataTrigger Binding="{Binding Schedule,Converter={StaticResource IsNotNullConverter},FallbackValue=false}" Value="true">                                                                                                                                                                                   
+                                                                                                               <Setter TargetName="PART_ConterHost" Property="Content" Value="班表已存在" />
+                                                                                                               <Setter TargetName="PART_ConterHost" Property="Visibility" Value="Visible" />
+                                                                                                               <Setter TargetName="PART_Border" Property="Visibility" Value="Visible" />
+                                                                                                            </DataTrigger>
+                                                                                                            
+                                                                                                           
+                                                                                                            <DataTrigger Binding="{Binding Duplications,Converter={StaticResource IsNotNullConverter},FallbackValue=false}" Value="true">
+                                                                                                                <Setter TargetName="PART_Duplications" Property="Visibility" Value="Visible" />
+                                                                                                                <Setter TargetName="PART_Border" Property="Visibility" Value="Visible" />
+                                                                                                            </DataTrigger>                                                                                                            
+                                                                                                        </ControlTemplate.Triggers>
+                                                                                                    </ControlTemplate>
+                                                                                                </Setter.Value>
+                                                                                            </Setter>
+                                                                                        </Style>
+                                                                                    </ToolTip.Style>                                                                                                                                                                   
+                                                                                </ToolTip>
+                                                                            </TextBlock.ToolTip>
+                                                                            <TextBlock.Style>                                                                                
+                                                                                 <Style TargetType="TextBlock">                                                                                  
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger Binding="{Binding Tag,FallbackValue=true,TargetNullValue=false}" Value="false">
+                                                                                                <Setter Property="ToolTipService.IsEnabled" Value="False"/>   
+                                                                                            </DataTrigger>     
+                                                                                        </Style.Triggers>    
+                                                                                    </Style>
+                                                                            </TextBlock.Style>
+                                                                        </TextBlock>
+
+                                                                        <DockPanel  Grid.Column="1" VerticalAlignment="Center">
+                                                                            <TextBlock  FontSize="12" x:Name="PART_DummyName" Margin="5 0" Text="{Binding Path=.,Mode=OneWay}" Visibility="Collapsed"
+                                                                                      ToolTip="{StaticResource UnreachableProfileToolTip}"  ToolTipService.ShowOnDisabled="True" >
+                                                                                <TextBlock.TextDecorations>
+                                                                                    <TextDecoration Location="Underline">
+                                                                                        <TextDecoration.Pen>
+                                                                                            <Pen Brush="{StaticResource WavyBrush}" Thickness="4" />
+                                                                                        </TextDecoration.Pen>
+                                                                                    </TextDecoration>
+                                                                                </TextBlock.TextDecorations>
+                                                                            </TextBlock>
+                                                                            <TextBlock  FontSize="12" Margin="5 0" x:Name="PART_EmployeeName" Text="{Binding Name}" ToolTipService.ShowOnDisabled="True"
+                                                                                       Foreground="Black" DataContext="{Binding Profile}" ToolTip="{StaticResource EmployeeProfileToolTip}"
+                                                                                       VerticalAlignment="Center" HorizontalAlignment="Left" ToolTipService.ShowDuration="{DynamicResource ToolTipShowDuration}">
+                                                                            </TextBlock>
+                                                                        </DockPanel>
+                                                                    </Grid>
+                                                                    <DataTemplate.Triggers>
+                                                                        <DataTrigger Binding="{Binding Profile,FallbackValue=Dummy,TargetNullValue=Dummy}" Value="Dummy">
+                                                                            <Setter TargetName="PART_DummyName" Property="Visibility" Value="Visible"/>
+                                                                            <Setter TargetName="PART_Index" Property="Foreground" Value="LightGray"/>
+                                                                            <!--<Setter TargetName="PART_DummySign" Property="Fill" Value="pink"/>-->
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Tag,FallbackValue=true,TargetNullValue=false}" Value="false">
+                                                                            <!--<Setter TargetName="PART_Index" Property="Foreground" Value="White"/>-->
+                                                                            <!--<Setter TargetName="PART_DummySign" Property="Fill" Value="Green"/>-->
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Tag,FallbackValue=Passed}" Value="HasArranged">
+                                                                            <Setter TargetName="PART_Index" Property="Foreground" Value="LightGray"/>
+                                                                            <!--<Setter TargetName="PART_DummySign" Property="Fill" Value="Gray"/>-->
+                                                                        </DataTrigger>
+
+                                                                        <DataTrigger Binding="{Binding OperationFail,FallbackValue=False}" Value="true">
+                                                                            <Setter TargetName="PART_Index" Property="Foreground" Value="LightGray"/>
+                                                                        </DataTrigger>
+                                                                    </DataTemplate.Triggers>
+                                                                </DataTemplate>
+                                                            </ListBox.ItemTemplate>
+                                                        </ListBox>
+                                                    </ScrollViewer>
+                                                </Grid>
+                                            </inf:ScheduleGridLayout.LeftContent>
+                                            <inf:BlockGridLayerContainer x:Name="Element_BlockGridLayerContainer"
+                                                                     HorizontalAlignment="Left"
+                                                                     BlockConverter="{Binding AssignmentCellConverter,Mode=OneTime}"
+                                                                     Interval="{StaticResource RowHeight}"
+                                                                     ItemsSource="{Binding BindableAgents,Mode=OneWay}"
+                                                                     CellMode="True"
+                                                                         RecursivelyPointout="True">
+                                                <inf:BlockGridLayerContainer.Header>
+                                                    <ScrollViewer x:Name="ColumnHeader"
+                                                              VerticalAlignment="Stretch"
+                                                              inf:ScrollViewerUtilities.ScrollSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=inf:ScheduleGrid}}"
+                                                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                              ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                                        <ListBox Style="{StaticResource DateColumnHeaderListBoxStyle}" ItemsSource="{Binding Dates}">
+                                                            <ListBox.ItemContainerStyle>
+                                                                <Style TargetType="{x:Type ListBoxItem}">
+                                                                    <Setter Property="Width" Value="{StaticResource LeftHeaderWidth}" />
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                                                <Grid Background="Transparent">
+                                                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                                                </Grid>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </ListBox.ItemContainerStyle>
+                                                        </ListBox>
+                                                    </ScrollViewer>
+                                                </inf:BlockGridLayerContainer.Header>
+                                                <Grid inf:ScheduleGrid.HorizontalMain="True" inf:ScheduleGrid.VerticalMain="True">
+                                                    <Rectangle Fill="Transparent" />
+                                                    <inf:BlockGrid ItemsSource="{Binding BindableAgents,Mode=OneWay}">
+                                                        <behaviors:ElementDrawBehavior.ElementDraws>
+                                                            <cell:CellBlockGridDraw />
+                                                        </behaviors:ElementDrawBehavior.ElementDraws>
+                                                    </inf:BlockGrid>
+                                                    <inf:PointOutLayer>
+                                                        <inf:PointOutLayer.ToolTip>
+                                                            <ToolTip>
+                                                                <ToolTip.Style>
+                                                                    <Style TargetType="ToolTip">
+                                                                        <Setter Property="Template">
+                                                                            <Setter.Value>
+                                                                                <ControlTemplate TargetType="ToolTip">
+                                                                                    <ContentPresenter Content="{TemplateBinding Content}">
+                                                                                        <ContentPresenter.Resources>
+                                                                                            <DataTemplate DataType="{x:Type domain:Assignment}">
+                                                                                                <Grid Margin="0,0,10,0">
+                                                                                                    <Border x:Name="PART_Border" Background="White" BorderBrush="LightGray" BorderThickness="4 1 1 1" Padding="4">
+                                                                                                        <TextBlock>
+                                                                                                            <AccessText Text="{Binding NativeName}"/>
+                                                                                                            <LineBreak />                                                
+                                                                                                            <AccessText>
+                                                                                                                <MultiBinding StringFormat="{}{0:MM/dd HH:mm} - {1:HH:mm}">      
+                                                                                                            <Binding Path="Start"/>
+                                                                                                            <Binding Path="End"/>
+                                                                                                        </MultiBinding>
+                                                                                                        </AccessText>
+                                                                                                        </TextBlock>
+                                                                                                    </Border>
+                                                                                                    <Image x:Name="NewFlag" Source="/Resources/Images/New24Right.png" HorizontalAlignment="Right" Margin="0,0,-5,18" Visibility="Collapsed"/>
+                                                                                                </Grid>
+
+                                                                                                <DataTemplate.Triggers>
+                                                                                                    <DataTrigger Binding="{Binding Path=Id}" Value="0">
+                                                                                                        <Setter TargetName="PART_Border" Property="BorderBrush" Value="#FF2CA243"/>
+                                                                                                        <Setter TargetName="NewFlag" Property="Visibility" Value="Visible"/>
+                                                                                                    </DataTrigger>
+                                                                                                </DataTemplate.Triggers>
+                                                                                            </DataTemplate>
+
+                                                                                            <DataTemplate DataType="{x:Type domain:OvertimeAssignment}">
+                                                                                                <Border x:Name="PART_Border" Background="White" BorderBrush="LightGray" BorderThickness="4 1 1 1" Padding="4">
+                                                                                                    <TextBlock Foreground="White">
+                                                                                                        <AccessText Text="{Binding NativeName}"/>
+                                                                                                        <LineBreak />                                                                                          
+                                                                                                        <AccessText>
+                                                                                                             <MultiBinding StringFormat="{}{0:MM/dd HH:mm} - {1:HH:mm}">      
+                                                                                                            <Binding Path="Start"/>
+                                                                                                            <Binding Path="End"/>
+                                                                                                        </MultiBinding>
+                                                                                                        </AccessText>
+                                                                                                    </TextBlock>
+                                                                                                </Border>
+                                                                                                <DataTemplate.Triggers>
+                                                                                                    <DataTrigger Binding="{Binding Path=Id}" Value="0">
+                                                                                                        <Setter TargetName="PART_Border" Property="BorderBrush" Value="#FF2CA243"/>
+                                                                                                    </DataTrigger>
+                                                                                                </DataTemplate.Triggers>
+                                                                                            </DataTemplate>
+
+                                                                                            <DataTemplate DataType="{x:Type domain:DateTerm}">
+                                                                                                <Border Background="White" BorderBrush="OrangeRed" BorderThickness="4 1 1 1" Padding="4">
+                                                                                                    <TextBlock>
+                                                                                                        <AccessText Text="班名不存在 " x:Name="UnmatchedAssignment"/>
+                                                                                                        <AccessText Text="{Binding Text}"/>
+                                                                                                    </TextBlock>
+                                                                                                </Border>
+                                                                                                <DataTemplate.Triggers>
+                                                                                                    <DataTrigger Binding="{Binding Path=ErrorInfo}" Value="Overlap">
+                                                                                                        <Setter TargetName="UnmatchedAssignment" Property="Text" Value="安插失敗 "/>
+                                                                                                    </DataTrigger>
+                                                                                                </DataTemplate.Triggers>
+                                                                                            </DataTemplate>
+                                                                                            <DataTemplate DataType="{x:Type domain:UnknowAssignment}"/>
+                                                                                        </ContentPresenter.Resources>
+                                                                                    </ContentPresenter>
+                                                                                </ControlTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Style>
+                                                                </ToolTip.Style>
+                                                            </ToolTip>
+                                                        </inf:PointOutLayer.ToolTip>
+                                                    </inf:PointOutLayer>
+                                                </Grid>
+                                            </inf:BlockGridLayerContainer>
+                                        </inf:ScheduleGrid>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <!--状态 统计 任务栏位-->
+        <Grid Grid.Row="2" Background="#FFF1F5FB">
+            <Border Height="6"
+                    VerticalAlignment="Top"
+                    BorderThickness="0">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Resources/Images/GrayBgShadow25x6.png"
+                                TileMode="Tile"
+                                Viewport="0,0,25,6"
+                                ViewportUnits="Absolute" />
+                </Border.Background>
+            </Border>
+            <Grid Grid.Row="2" Margin="15,0,0,0" VerticalAlignment="Center">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="12"/>
+                        <!--<Setter Property="FontFamily" Value="Segoe UI, Arial, Verdana, Tahoma, sans-serif"/>-->
+                    </Style>
+                </Grid.Resources>
+
+                <StackPanel Orientation="Vertical">
+                    <Label Margin="0" Padding="0" Content="匯入統計" FontSize="14" Foreground="#FF6C6C6C" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <TextBlock Margin="0,0,5,0" Foreground="#FF525252" Text="正確" VerticalAlignment="Center" />
+                        <TextBlock Foreground="#FF525252" Text="{Binding PassedRows,StringFormat=\{0:0\}, FallbackValue=0}" VerticalAlignment="Center" />
+                        <TextBlock Margin="10,0,5,0" Foreground="#FF525252" Text="已有班" VerticalAlignment="Center" />
+                        <TextBlock Foreground="#FF525252" Text="{Binding HasArrangedRows, StringFormat=\{0:0\}, FallbackValue=0}" VerticalAlignment="Center" />
+                        <TextBlock Margin="10,0,5,0" Foreground="#FF525252" Text="人員不存在" VerticalAlignment="Center" />
+                        <TextBlock Foreground="#FF525252" Text="{Binding UnreachableRows,StringFormat=\{0:0\}, FallbackValue=0}" VerticalAlignment="Center" />
+                        <TextBlock Margin="10,0,5,0" Foreground="#FF525252" Text="班務有誤" VerticalAlignment="Center" />
+                        <TextBlock Foreground="#FF525252" Text="{Binding OperationFailRows,StringFormat=\{0:0\}, FallbackValue=0}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Border HorizontalAlignment="Left" Width="25" Height="25" Background="#FFF4F4F4" BorderBrush="gainsboro" BorderThickness="1">
+                        <TextBlock Text="{Binding PassedRows}" Foreground="#FF2CA243" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <TextBlock FontSize="12" Margin="30,0,0,0" VerticalAlignment="Center" Text="正確" Foreground="#FF525252"/>
+                </Grid>
+                <Grid Grid.Column="1" Margin="20,0,0,0">
+                    <Border HorizontalAlignment="Left" Width="25" Height="25" Background="#FFF4F4F4" BorderBrush="gainsboro" BorderThickness="1">
+                        <TextBlock Text="{Binding HasArrangedRows}" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Margin="30,0,0,0" FontSize="12" Text="人員重複/已有班" VerticalAlignment="Center" Foreground="#FF525252"/>
+                </Grid>
+                <Grid Grid.Column="2" Margin="20,0,0,0">
+                    <Border HorizontalAlignment="Left" Width="25" Height="25" Background="#FFF4F4F4" BorderBrush="gainsboro" BorderThickness="1">
+                        <Grid>
+                            <TextBlock Text="X" Foreground="Gray" Opacity="0.5" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding UnreachableRows}" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Border>
+                    <TextBlock Margin="30,0,0,0" FontSize="12" FontFamily="Segoe UI, Arial, Verdana, Tahoma, sans-serif" Text="人員不存在" VerticalAlignment="Center" Foreground="#FF525252"/>
+                </Grid>-->
+
+                <CheckBox Grid.Column="5" Margin="0,0,20,0" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource DefaultCheckBoxStyle}"
+                          IsChecked="{Binding ShowExistShift}" Content="顯示已存在班表"/>
+
+                <!--<Grid Grid.Column="3" Margin="20,0,0,0">
+                    <TextBlock VerticalAlignment="Center">
+                        <AccessText Text="有效班名為" Foreground="#FF525252"/>
+                        <AccessText Text="綠色" Foreground="#FF77BB44"/>
+                    </TextBlock>
+                </Grid>
+
+                <Grid Grid.Column="4" Margin="20,0,0,0">
+                    <TextBlock VerticalAlignment="Center">
+                        <AccessText Text="無效班名為" Foreground="#FF525252"/>
+                        <AccessText Text="紅色" Foreground="Red"/>
+                    </TextBlock>
+                </Grid>-->
+            </Grid>
+        </Grid>
+    </Grid>
+</local:ShiftView>

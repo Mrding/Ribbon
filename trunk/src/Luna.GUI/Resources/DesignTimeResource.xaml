@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:inf="clr-namespace:Luna.WPF.ApplicationFramework;assembly=Luna.WPF.ApplicationFramework">
+    <ResourceDictionary.MergedDictionaries>
+        <inf:BlendMergedDictionary Source="Resources/ApplicationResource.xaml"/>
+        <inf:BlendMergedDictionary Source="/Luna.GUI;Component/Resources/ApplicationStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

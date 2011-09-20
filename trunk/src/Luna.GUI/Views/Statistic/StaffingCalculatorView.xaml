@@ -1,0 +1,475 @@
+﻿<UserControl x:Class="Luna.GUI.Views.Statistic.StaffingCalculatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:inf="http://www.grandsys.com/luna"
+    xmlns:ctrl="http://www.grandsys.com/lunacontrols"
+    xmlns:local="clr-namespace:Luna.GUI.Views.Statistic"
+    xmlns:shifts="clr-namespace:Luna.GUI.Views.Shifts"
+    xmlns:brick="http://www.grandsys.com/luna/brick"
+    xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:behaviors="clr-namespace:Luna.WPF.ApplicationFramework.Behaviors;assembly=Luna.WPF.ApplicationFramework">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Luna.GUI;Component/Views/Statistic/StaffingCalculatorView.Resource.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Image x:Key="Recalculate" Source="/Resources/Images/RefreshRed16.png" Stretch="None" />
+            <Image x:Key="Alert" Source="/Resources/Images/RefreshBlue16.png" Stretch="None" />
+
+            <!--班次估算图表-->
+            <DataTemplate x:Key="EV">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <!--TEXT PART-->
+                    <TextBlock Margin="0 0 0 0" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="20" Foreground="LightGray" Text="over staff"/>
+                    <TextBlock Grid.Row="1" Margin="0 0 0 0" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontSize="20" Foreground="LightGray" Text="under staff"/>
+
+                    <Grid Grid.Row="1" VerticalAlignment="Top" Background="Transparent" Height="40" IsHitTestVisible="False">
+                        <!--<Rectangle Fill="Transparent"/>-->
+                        <!--<brick:DateTimeNumberLine ItemTemplate="{StaticResource DateTimeNumberLineDefaultTemplate}"/>-->
+                        <brick:DateTimeLine x:Name="PART_DateTimeLine" RenderTransformOrigin="0.5,0.5" ShowSelectedLine="False" Foreground="#FFCCD9EA">
+                            <brick:DateTimeLine.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                                    <SkewTransform AngleY="0" AngleX="0"/>
+                                    <RotateTransform Angle="0"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </brick:DateTimeLine.RenderTransform>
+                        </brick:DateTimeLine>
+                    </Grid>
+                    <brick:TimeLineChart Grid.RowSpan="2" DataContext="{Binding StaffingStatistics/Difference}" inf:TimeLineChartBehavior.MaxValue="{Binding MaxValue}"
+                                         inf:ScheduleGrid.HorizontalMain="True"
+                                         CorrectionValue="{Binding ZeroBaseValue}" Radius="0" VerticalAlignment="Top"
+                                             LineColor="{Binding Path=Color,TargetNullValue=Blue,FallbackValue=Green,Converter={StaticResource ApplicationResourceConverter}}"
+                                             inf:TimeLineChartBehavior.Data="{Binding Values}" />
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding HourWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type inf:ScheduleGrid}}}" Value="3">
+                        <Setter TargetName="PART_DateTimeLine" Property="Interval" Value="18"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding HourWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type inf:ScheduleGrid}}}" Value="40">
+                        <Setter TargetName="PART_DateTimeLine" Property="Interval" Value="10"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <!--人力计算图表-->
+            <DataTemplate x:Key="SV">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+
+                    <!--注意以下 Grid 的 Margin Top 值必须参考 TimeLineChart 的 Radius Margin="0 -2.5 0 0"-->
+                    <Grid x:Name="LineChartContainer"  Grid.Row="1" Height="25"  Visibility="{Binding TimeLineVisibility,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type shifts:ShiftView}},Mode=TwoWay}">
+
+                        <!--<brick:DateTimeLine RenderTransformOrigin="0.5,0.5" Foreground="#FFCCD9EA" ShowSelectedLine="False">
+                            <brick:DateTimeLine.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                                    <SkewTransform AngleY="0" AngleX="0"/>
+                                    <RotateTransform Angle="0"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </brick:DateTimeLine.RenderTransform>
+                        </brick:DateTimeLine>
+                        <brick:DateTimeNumberLine ItemTemplate="{StaticResource DateTimeNumberLineDefaultTemplate}"/>-->
+                    </Grid>
+                    <ItemsControl Grid.Row="0" ItemsSource="{Binding Path=StaffingCalculatorData/Items}"
+                                  inf:ScheduleGrid.HorizontalMain="True">
+                        <ItemsControl.Template>
+                            <ControlTemplate TargetType="ItemsControl">
+                                <Border Background="Transparent" RenderTransformOrigin="0.5,0.5" >
+                                    <Border.RenderTransform>
+                                        <ScaleTransform  ScaleX="1" ScaleY="-1"/>
+                                    </Border.RenderTransform>
+                                    <ItemsPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <brick:TimeLineChart x:Name="Line" inf:TimeLineChartBehavior.MaxValue="{Binding MaxValue}" 
+                                             Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                             VerticalAlignment="Top"
+                                             LineColor="{Binding Path=Color,TargetNullValue=Blue,FallbackValue=Green,Converter={StaticResource ApplicationResourceConverter}}"
+                                             inf:TimeLineChartBehavior.Data="{Binding Values}"
+                                             ToolTip="{StaticResource LineChartToolTip}"  
+                                         Radius="0" />
+                                <!--如更改 TimeLineChart 的 Radius 需同时修改 DateTimeLine 的外容器 Margin-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </Grid>
+                <!--<DataTemplate.Triggers>
+                    <Trigger SourceName="LineChartContainer" Property="Visibility" Value="Visible">
+                        <Setter Property="inf:ScheduleGrid.HorizontalMain" Value="True"/>
+                    </Trigger>
+                </DataTemplate.Triggers>-->
+            </DataTemplate>
+
+            <!--人力计算 ServiceQueue ComboBox-->
+            <DataTemplate x:Key="LSV">
+                <StackPanel>
+                    <DockPanel Margin="5">
+                        <Button DockPanel.Dock="Right" cal:Message.Attach="FullyFetch" IsEnabled="{Binding AnalyisAborted,Mode=OneWay}">                           
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="True">
+                                            <Setter Property="Content" Value="{StaticResource Recalculate}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Content" Value="{StaticResource Alert}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <ComboBox Margin="0 0 5 0" ItemsSource="{Binding StaffingCalculatorData}" IsSynchronizedWithCurrentItem="True"/>
+                    </DockPanel>
+                    
+                    <ListBox BorderThickness="0" Margin="5 0 0 0" Style="{StaticResource CustomListBoxStyle}"
+                        ItemsSource="{Binding Source={StaticResource StatisticCategories}}" SelectedItem="{Binding SelectedCategory}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="inf:ItemsElementBehavior.IsBroughtIntoViewWhenSelected" Value="true"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border x:Name="OuterBorder" Background="Transparent">
+                                                <Grid Margin="2 2 2 0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <ContentPresenter x:Name="Content" VerticalAlignment="Center"/>
+                                                        <ItemsControl x:Name="Legend" Visibility="Collapsed" VerticalAlignment="Center" Margin="5 0 0 0"
+                                                                              ItemsSource="{Binding Path=DataContext.StaffingCalculatorData/Items3,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <StackPanel Orientation="Horizontal"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <CheckBox IsChecked="{Binding IsSelected}"
+                                                                              Style="{StaticResource ColorIndicatorStyle}"
+                                                                              Foreground="{Binding Path=Color,TargetNullValue=Blue,FallbackValue=Green,Converter={StaticResource ApplicationResourceConverter}}">
+                                                                        <CheckBox.ToolTip>
+                                                                            <Label Content="{Binding Text}"/>
+                                                                        </CheckBox.ToolTip>
+                                                                    </CheckBox>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsSelected" Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter TargetName="Legend" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="OuterBorder" Property="BorderThickness" Value="0 0 0 1"/>
+                                                    <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{StaticResource HLinearGradientBorder}"/>
+
+                                                    <!--<Setter TargetName="OuterBorder" Property="Background" Value="#FFBBCEE9" />-->
+                                                </MultiTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+            </DataTemplate>
+
+            <!--合并ServiceQueue-->
+            <DataTemplate x:Key="CompositiveServiceQueue_LeftContent">
+                <StackPanel>
+                    <DockPanel Margin="5">
+                        <Button DockPanel.Dock="Right" cal:Message.Attach="Combine" IsEnabled="{Binding AnalyisComplete,Mode=OneWay}">
+                            <Image Source="/Resources/Images/RefreshBlue16.png" Stretch="None" />
+                        </Button>
+                        <ribbon:PopupButton VerticalAlignment="Center" DataContext="{Binding}" PopupHasBorder="False" Margin="0 0 5 0">
+                            <ribbon:PopupButton.PopupContent>
+                                <ListBox ItemsSource="{Binding ServiceQueues}" IsSynchronizedWithCurrentItem="True"
+                                         VirtualizingStackPanel.IsVirtualizing="False"
+                                         inf:MultipleSelectionBehavior.NoSelectionText="Select SQ"
+                                         inf:MultipleSelectionBehavior.DisplayContent="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:PopupButton}}}"
+                                         BorderThickness="1"  MaxHeight="300" SelectionMode="Multiple" SelectedIndex="-1"
+                                     Width="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType=ribbon:PopupButton}}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left"
+    								                      IsChecked="{Binding IsSelected,Mode=TwoWay}">
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                        <ContentPresenter x:Name="PART_Content" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <!--<i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <inf:ReadOnlyPropertyAction DpProperty="inf:ListBoxSelectAllAction.CacheSelectedItems" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>-->
+                                </ListBox>
+                            </ribbon:PopupButton.PopupContent>
+                        </ribbon:PopupButton>
+                    </DockPanel>
+                    <ListBox BorderThickness="0" Margin="5 0 0 0" Style="{StaticResource CustomListBoxStyle}"
+                        ItemsSource="{Binding Source={StaticResource StatisticCategories}}" SelectedItem="{Binding SelectedCategory}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="inf:ItemsElementBehavior.IsBroughtIntoViewWhenSelected" Value="true"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border x:Name="OuterBorder" Background="Transparent">
+                                                <Grid Margin="2 2 2 0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <ContentPresenter x:Name="Content" VerticalAlignment="Center"/>
+                                                        <ItemsControl x:Name="Legend" Visibility="Collapsed" VerticalAlignment="Center" Margin="5 0 0 0"
+                                                                              ItemsSource="{Binding Path=DataContext.CombinedServiceQueuesItems3,RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <StackPanel Orientation="Horizontal"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <CheckBox IsChecked="{Binding IsSelected}"
+                                                                              Style="{StaticResource ColorIndicatorStyle}"
+                                                                              Foreground="{Binding Path=Color,TargetNullValue=Blue,FallbackValue=Green,Converter={StaticResource ApplicationResourceConverter}}">
+                                                                        <CheckBox.ToolTip>
+                                                                            <Label Content="{Binding Text}"/>
+                                                                        </CheckBox.ToolTip>
+                                                                    </CheckBox>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsSelected" Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter TargetName="Legend" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="OuterBorder" Property="BorderThickness" Value="0 0 0 1"/>
+                                                    <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{StaticResource HLinearGradientBorder}"/>
+                                                </MultiTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="CompositiveServiceQueue_Content">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <!--注意以下 Grid 的 Margin Top 值必须参考 TimeLineChart 的 Radius-->
+                    <!--<Grid x:Name="LineChartContainer"  Grid.Row="1" Margin="0 -2.5 0 0" Height="25"  Visibility="{Binding TimeLineVisibility,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type shifts:ShiftView}},Mode=TwoWay}">
+                        <brick:DateTimeNumberLine ItemTemplate="{StaticResource DateTimeNumberLineDefaultTemplate}"/>
+                        <brick:DateTimeLine RenderTransformOrigin="0.5,0.5" Foreground="#FFCCD9EA" ShowSelectedLine="False">
+                            <brick:DateTimeLine.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                                    <SkewTransform AngleY="0" AngleX="0"/>
+                                    <RotateTransform Angle="0"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </brick:DateTimeLine.RenderTransform>
+                        </brick:DateTimeLine>
+                    </Grid>-->
+                    <ItemsControl Grid.Row="0" ItemsSource="{Binding Path=CombinedServiceQueuesItems}">
+                        <ItemsControl.Template>
+                            <ControlTemplate TargetType="ItemsControl">
+                                <Border Background="Transparent" RenderTransformOrigin="0.5,0.5" >
+                                    <Border.RenderTransform>
+                                        <ScaleTransform  ScaleX="1" ScaleY="-1"/>
+                                    </Border.RenderTransform>
+                                    <ItemsPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </ItemsControl.Template>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <brick:TimeLineChart x:Name="Line" inf:TimeLineChartBehavior.MaxValue="{Binding MaxValue}" 
+                                             Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                             VerticalAlignment="Top"
+                                             LineColor="{Binding Path=Color,TargetNullValue=Blue,FallbackValue=Green,Converter={StaticResource ApplicationResourceConverter}}"
+                                             inf:TimeLineChartBehavior.Data="{Binding Values}"
+                                             ToolTip="{StaticResource LineChartToolTip}"  
+                                         Radius="0" />
+                                <!--如更改 TimeLineChart 的 Radius 需同时修改 DateTimeLine 的外容器 Margin-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </Grid>
+                <!--<DataTemplate.Triggers>
+                    <Trigger SourceName="LineChartContainer" Property="Visibility" Value="Visible">
+                        <Setter Property="inf:ScheduleGrid.HorizontalMain" Value="True"/>
+                    </Trigger>
+                </DataTemplate.Triggers>-->
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <UserControl.Template>
+        <ControlTemplate>
+
+            <Border BorderBrush="#FFCCD9EA" BorderThickness="0 0 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding LeftWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type inf:ScheduleGrid}},Mode=OneWay}"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.RowSpan="2" Grid.Column="1" BorderThickness="1 0 0 0" BorderBrush="#FFC5C6C7"/>
+
+
+                    <inf:BackgroundColor x:Name="PART_BackgroundColor" Grid.Column="1" Grid.RowSpan="2" ShowDateText="True" SnapsToDevicePixels="True"/>
+
+
+                    <ContentPresenter Height="130" Grid.Column="1" Grid.Row="1" x:Name="PRAT_Content" Content="{Binding }"/>
+
+                    <inf:VerticalIndicator Grid.RowSpan="2" x:Name="PART_ValueIndicator"
+                                          Grid.Column="1"
+                                           FilterParams="{Binding SelectedCategory,Mode=OneWay}"/>               
+
+                    <Border Background="{StaticResource LeftContentBackground}" Grid.RowSpan="2" >
+                        <ContentPresenter x:Name="PART_LeftContent" Content="{Binding }"/>
+                    </Border>
+
+                </Grid>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="ActualHeight" Value="34">
+                    <Setter TargetName="PRAT_Content" Property="Visibility" Value="Collapsed"/>
+                    <Setter TargetName="PART_BackgroundColor" Property="Visibility" Value="Collapsed"/>
+                    <Setter TargetName="PART_ValueIndicator" Property="Visibility" Value="Collapsed"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding ViewMode}" Value="Estimation">
+                    <Setter TargetName="PRAT_Content" Property="ContentTemplate" Value="{StaticResource EV}"/>
+                    <Setter TargetName="PART_LeftContent" Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <DockPanel Margin="5" VerticalAlignment="Top" LastChildFill="True" >
+                                    <Button Command="inf:ApplicationCommands.EstimateShift" DockPanel.Dock="Right" VerticalAlignment="Top" Margin="5 0 0 0">
+                                        <Image Source="/Resources/Images/Start16.png" Stretch="None"/>
+                                    </Button>
+                                    <ComboBox ItemsSource="{Binding StaffingCalculatorData}" IsSynchronizedWithCurrentItem="True"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="PART_ValueIndicator" Property="ItemsSource" Value="{Binding Path=StaffingStatistics/Difference,Mode=OneWay}"/>
+                    <Setter TargetName="PART_ValueIndicator" Property="CorrectionValue" Value="{Binding StaffingStatistics/Difference.ZeroBaseValue}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ViewMode}" Value="Analysis">
+                    <Setter TargetName="PRAT_Content" Property="ContentTemplate" Value="{StaticResource SV}"/>
+                    <Setter TargetName="PART_LeftContent" Property="ContentTemplate" Value="{StaticResource LSV}"/>
+                    <Setter TargetName="PART_ValueIndicator" Property="ItemsSource" Value="{Binding Path=StaffingCalculatorData/Items,Mode=OneWay}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ViewMode}" Value="CompositiveServiceQueue">
+                    <Setter TargetName="PRAT_Content" Property="ContentTemplate" Value="{StaticResource CompositiveServiceQueue_Content}"/>
+                    <Setter TargetName="PART_LeftContent" Property="ContentTemplate" Value="{StaticResource CompositiveServiceQueue_LeftContent}"/>
+                    <Setter TargetName="PART_ValueIndicator" Property="ItemsSource" Value="{Binding Path=CombinedServiceQueuesItems,Mode=OneWay}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding HourWidth,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type inf:ScheduleGrid}}}" Value="3">
+                    <Setter TargetName="PART_BackgroundColor" Property="ShowDateText" Value="false"/>
+                </DataTrigger>
+
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Template>
+    <!--<inf:MaskAttach.Content>
+        <inf:MaskAttach Open="{Binding IsLoading,Mode=OneWay}">
+            <inf:MaskAttach.Template>
+                <DataTemplate>
+                    <Border Opacity="0.8" Background="Silver">
+                        <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="SteelBlue" Text="{inf:Resource Statistic_StaffingCalculatorView_Loading}" HorizontalAlignment="Center" />
+                    </Border>
+                </DataTemplate>
+            </inf:MaskAttach.Template>
+        </inf:MaskAttach>
+    </inf:MaskAttach.Content>
+    <ContentControl>
+        <ContentControl.Template>
+            <ControlTemplate>
+                
+            </ControlTemplate>
+        </ContentControl.Template>
+    </ContentControl>-->
+
+
+
+
+
+
+</UserControl>

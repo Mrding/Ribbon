@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+    <class name ="Skill">
+        <id name="Id" column="SkillId">
+          <generator class="guid.comb"/>
+        </id>
+
+        <property name="Name"/>
+        <property name="Description"/>
+    </class>
+</hibernate-mapping>

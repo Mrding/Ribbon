@@ -1,0 +1,130 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ToolTip.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <ToolTip x:Key="AdherenceEventTooltip" x:Shared="false" DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
+        <ToolTip.Style>
+            <Style TargetType="{x:Type ToolTip}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding CurrentBlock}" Value="{x:Null}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ToolTip.Style>
+        <TextBlock>
+            <AccessText Margin="0 5 0 0">
+                <AccessText.Style>
+                    <Style TargetType="AccessText">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentBlock.Text}" Value="LateToWork">
+                                <Setter Property="Foreground" Value="Tomato"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentBlock.Text}" Value="LateToLeave">
+                                <Setter Property="Foreground" Value="Green"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </AccessText.Style>
+                <Binding Path="CurrentBlock.Reason"/>
+            </AccessText>
+            <AccessText>
+                    <MultiBinding StringFormat="{}{0:MM/dd HH:mm} - {1:HH:mm}">      
+                    <Binding Path="CurrentBlock.Start"/>
+                    <Binding Path="CurrentBlock.End"/>
+                    
+                </MultiBinding>
+            </AccessText>
+            <AccessText Text="{Binding CurrentBlock.Assigner}" Foreground="Blue"/>
+
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="AdherenceTermTooltip" x:Shared="false" DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
+        <ToolTip.Style>
+            <Style TargetType="{x:Type ToolTip}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding CurrentBlock}" Value="{x:Null}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ToolTip.Style>
+        <TextBlock>
+                                <AccessText>
+                                       <MultiBinding StringFormat="{}{0:MM/dd HH:mm} - {1:HH:mm}">      
+                                        <Binding Path="CurrentBlock.Start"/>
+                                        <Binding Path="CurrentBlock.End"/>
+                                    </MultiBinding>
+                                </AccessText>
+                                        <AccessText FontWeight="Bold" Text="("/>
+                                <AccessText Foreground="Blue">
+                                       <MultiBinding  Converter="{StaticResource DateTimeLengthConverter}" >      
+                                        <Binding Path="CurrentBlock.Start"/>
+                                        <Binding Path="CurrentBlock.End"/>
+                                    </MultiBinding>
+                                </AccessText>
+                                        <AccessText FontWeight="Bold" Text=")"/>
+        </TextBlock>
+    </ToolTip>
+
+    <ToolTip x:Key="TermTooltip" x:Shared="false" DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}"
+             HorizontalOffset="-10" VerticalOffset="-20">
+        <ToolTip.Style>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource NonStyleToolTip}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding PointOutBlock}" Value="{x:Null}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ToolTip.Style>
+        <Grid Background="{x:Null}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Height="38">
+                <Image Source="/Resources/Images/StickyNoteGreen.png" Stretch="Fill"/>
+                <TextBlock VerticalAlignment="Center" Margin="10 5 70 0" >
+                    <AccessText Foreground="CornflowerBlue">
+                        <Binding Path="PointOutBlock.Text"/>
+                    </AccessText>
+                    <AccessText>
+                        <AccessText.Style>
+                            <Style TargetType="AccessText">
+                                <Setter Property="Text">
+                                            <Setter.Value>
+                                                <MultiBinding StringFormat="{}{0:MM/dd HH:mm} - {1:MM/dd HH:mm}">      
+                                                    <Binding Path="PointOutBlock.Start"/>
+                                                    <Binding Path="PointOutBlock.End"/>
+                                                </MultiBinding>
+                                            </Setter.Value>
+                                        </Setter>
+                                <!--<Style.Triggers>
+                                    <DataTrigger Binding="{Binding CurrentBlock.Level}" Value="0">
+                                        <Setter Property="Text">
+                                            <Setter.Value>
+                                                <MultiBinding StringFormat="{}{0:MM/dd HH:mm} - {1:HH:mm}">      
+                                                    <Binding Path="CurrentBlock.From"/>
+                                                    <Binding Path="CurrentBlock.Finish"/>
+                                                </MultiBinding>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>-->
+                            </Style>
+                        </AccessText.Style>
+                    </AccessText>
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="1" Height="38" Margin="20 -12 0 0" Visibility="{Binding PointOutBlock.Tag,Converter={StaticResource NullToVisibilityConverter}}">
+                <Image Source="/Resources/Images/StickyNoteRed.png" Stretch="Fill" HorizontalAlignment="Left"/>
+                <TextBlock VerticalAlignment="Center" Margin="10 5 70 0" Text="{Binding PointOutBlock.Tag}"/>
+            </Grid>
+        </Grid>
+    </ToolTip>
+
+</ResourceDictionary>

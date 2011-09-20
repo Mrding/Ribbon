@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6D4B8222-DC4C-4789-95A1-B884CAF3B8F2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>uNhAddIns.ComponentBehaviors.Castle</RootNamespace>
+    <AssemblyName>uNhAddIns.ComponentBehaviors.Castle</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\output\Debug\Library\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\output\Release\Library\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>3</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ComponentProxyFactory\ComponentProxyFactory.cs" />
+    <Compile Include="Configuration\BehaviorConfigurator.cs" />
+    <Compile Include="Configuration\BehaviorInspector.cs" />
+    <Compile Include="Configuration\ComponentBehaviorsFacility.cs" />
+    <Compile Include="Configuration\IBehaviorConfigurator.cs" />
+    <Compile Include="Configuration\ProxyInformation.cs" />
+    <Compile Include="Configuration\RegistrationExtensions.cs" />
+    <Compile Include="DataErrorInfoBehavior.cs" />
+    <Compile Include="EditableBehavior.cs" />
+    <Compile Include="GetEntityNameBehavior.cs" />
+    <Compile Include="NHibernateInterceptor\ComponentBehaviorInterceptor.cs" />
+    <Compile Include="NotifyPropertyChangedBehavior.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyFactory\ComponentProxyFactory.cs" />
+    <Compile Include="ProxyFactory\ComponentProxyFactoryFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\SharedLibs\Castle\Castle.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\..\SharedLibs\Castle\Castle.Windsor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\SharedLibs\NHibernate\log4net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NHibernate\NHibernate.ByteCode.Castle\NHibernate.ByteCode.Castle.csproj">
+      <Project>{31C3F0EA-0FED-4A2F-B68D-96CE29844487}</Project>
+      <Name>NHibernate.ByteCode.Castle</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NHibernate\NHibernate\NHibernate.csproj">
+      <Project>{5909BFE7-93CF-4E5F-BE22-6293368AF01D}</Project>
+      <Name>NHibernate</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\uNhAddIns.Adapters\uNhAddIns.Adapters.csproj">
+      <Project>{7829F0F2-BD04-409C-923D-F751AB640F8E}</Project>
+      <Name>uNhAddIns.Adapters</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\uNhAddIns.ComponentBehaviors\uNhAddIns.ComponentBehaviors.csproj">
+      <Project>{9290B468-7879-4C05-819D-C9FF106C22C8}</Project>
+      <Name>uNhAddIns.ComponentBehaviors</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\uNhAddIns.NHibernateTypeResolver\uNhAddIns.NHibernateTypeResolver.csproj">
+      <Project>{4FF0B892-8FF0-4737-97A3-807C76C25B7F}</Project>
+      <Name>uNhAddIns.NHibernateTypeResolver</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

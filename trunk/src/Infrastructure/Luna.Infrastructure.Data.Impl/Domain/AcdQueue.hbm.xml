@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+    <class name ="AcdQueue">
+        <id name="Id" column="AcdQueueId">
+          <generator class="guid.comb"/>
+        </id>
+      <property name="Name"/>
+      <property name="Description"/>
+      <property name="SplitId"/>
+      <many-to-one name="ServiceQueue" column="ServiceQueueId" foreign-key="FK_AcdQueue_ServiceQueue"/>
+      <many-to-one name="Acd" column="AcdId" foreign-key="FK_AcdQueue_Acd"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,326 @@
+﻿<Window x:Class="Luna.GUI.Views.Infrastructure.AgentFinderView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org" 
+    xmlns:inf="http://www.grandsys.com/luna"
+    xmlns:local="clr-namespace:Luna.GUI.Views.Infrastructure"
+    xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors" 
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:converters="clr-namespace:Luna.WPF.ApplicationFramework.Converters;assembly=Luna.WPF.ApplicationFramework"
+    xmlns:uc="clr-namespace:Luna.GUI.UserControls"
+    Title="{inf:Resource Infrastructure_AgentFinder_AgentFinderView}" Width="800" Height="490" ResizeMode="CanResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/ListView.xaml"/>
+                <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/ComboBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Width" Value="93"/>
+            </Style>
+
+            <ItemsPanelTemplate x:Key="UniformGridItemsPanel">
+                <UniformGrid IsItemsHost="True" Columns="2" HorizontalAlignment="Left"/>
+            </ItemsPanelTemplate>
+
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+
+                <Setter Property="Width" Value="80"/>
+            </Style>
+
+
+            <Style x:Key="LabelColumn" TargetType="ColumnDefinition">
+                <Setter Property="Width" Value="80"/>
+            </Style>
+
+            <Style x:Key="{x:Type GridViewColumn}" TargetType="{x:Type GridViewColumn}">
+                <Setter Property="HeaderContainerStyle" Value="{StaticResource AlignLeftColumnHeader}"/>
+            </Style>
+
+            <DataTemplate x:Key="ShiftNameSearching">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="{inf:Resource Infrastructure_AgentFinder_ShiftName}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+ <!--inf:PopupButtonBehavior.PopupContent="{Binding ElementName=PART_FieldList}"-->
+                    <ribbon:PopupButton VerticalAlignment="Center" x:Name="FieldRestrictionPopButton"
+                                        Label="{Binding Path=(inf:ListBoxSelectAllAction.SelectedItemsCount),ElementName=SelectEmployeeBox_Element,StringFormat={inf:Resource Infrastructure_AgentFinder_CurrentSelectedShift}}"
+                                       HorizontalContentAlignment="Left" DataContext="{Binding}">
+                        
+                        <ribbon:PopupButton.PopupContent>
+                            <ribbon:Menu ItemVariantSize="Large">
+                                <ribbon:Separator Label="{inf:Resource Infrastructure_AgentFinder_Search2}" HorizontalContentAlignment="Center" />
+                                <TextBox BorderThickness="1" Style="{StaticResource SearchTextBoxStyle}"
+                                                         ribbon:RibbonControlService.HintText="{inf:Resource Infrastructure_AgentFinder_EnterShiftName}">
+                                    <i:Interaction.Behaviors>
+                                        <inf:SelectorHighLightBehavior Selector="{Binding ElementName=PART_FieldList}"/>
+                                    </i:Interaction.Behaviors>
+                                </TextBox>
+                                <ribbon:Separator Label="{inf:Resource Infrastructure_AgentFinder_Choice}"/>
+                                <CheckBox Content="{inf:Resource Infrastructure_AgentFinder_CheckAll}" Margin="5,0,0,0" IsThreeState="True"
+                                  x:Name="SelectEmployeeBox_Element">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <inf:ListBoxSelectAllAction EnableListenSource="False" EnableSelectedCache="True" 
+                                                                        TargetElement="{Binding ElementName=PART_FieldList}" 
+                                                                        IsChecked="{Binding IsChecked, ElementName=SelectEmployeeBox_Element}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <ribbon:Separator Label="{inf:Resource Infrastructure_AgentFinder_List}" />
+                               
+                                <ListBox x:Name="PART_FieldList" ItemsSource="{Binding Types}"
+                                         VirtualizingStackPanel.IsVirtualizing="False"
+                                         MinWidth="120" BorderThickness="0" MaxHeight="300"
+                                      SelectionMode="Multiple">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <CheckBox Margin="0,0,5,0"
+                                                          Content="{Binding}"
+                                                          VerticalAlignment="Center" HorizontalAlignment="Left"
+    								                    IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}">
+                                                </CheckBox>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <inf:ReadOnlyPropertyAction DpProperty="inf:ListBoxSelectAllAction.CacheSelectedItems"
+                                                                        BindablePropertyItem="{Binding DataContext.SelectedTypes,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ribbon:PopupButton}}, Mode=TwoWay}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ListBox>
+                            </ribbon:Menu>
+                     
+                        </ribbon:PopupButton.PopupContent>
+                    </ribbon:PopupButton>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="AgentOnly">
+                <CheckBox Width="150"  Content="{inf:Resource Infrastructure_AgentFinder_AgentOnly}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="EqEmployeeType1">
+                <StackPanel Orientation="Horizontal" >
+                    <CheckBox Content="{inf:Resource Infrastructure_AgentFinder_EqEmployeeType1}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <ComboBox Width="150" inf:ItemsElementBehavior.DefaultSelectedIndex="0"
+                              SelectedItem="{Binding SelectedType,Mode=OneWayToSource}"
+                              ItemsSource="{Binding Source={StaticResource EmployeeType1ListCollectionView}}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="EqEmployeeType2">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="{inf:Resource Infrastructure_AgentFinder_EqEmployeeType2}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <ComboBox Width="150" inf:ItemsElementBehavior.DefaultSelectedIndex="0"
+                              SelectedItem="{Binding SelectedType,Mode=OneWayToSource}"
+                              ItemsSource="{Binding Source={StaticResource EmployeeType2ListCollectionView}}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="EqEmployeeType3">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="{inf:Resource Infrastructure_AgentFinder_EqEmployeeType3}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <ComboBox Width="150" inf:ItemsElementBehavior.DefaultSelectedIndex="0" 
+                              SelectedItem="{Binding SelectedType,Mode=OneWayToSource}"
+                              ItemsSource="{Binding Source={StaticResource EmployeeType3ListCollectionView}}"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="SkillMatching">
+                <StackPanel Orientation="Horizontal" >
+                    <CheckBox Content="{inf:Resource Infrastructure_AgentFinder_SkillMatching}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <ComboBox Width="150" HorizontalAlignment="Stretch"
+                              DisplayMemberPath="Name" SelectedItem="{Binding SelectedSkill}"
+                              ItemsSource="{Binding Items}"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="OrganizationMatching">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Width="92" Content="{inf:Resource Infrastructure_AgentFinder_OrganizationMatching}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <ComboBox Width="150" HorizontalAlignment="Stretch"
+                              DisplayMemberPath="Name" SelectedItem="{Binding SelectedOrganization}"
+                              ItemsSource="{Binding Items}"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="InRank">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Width="92" Content="{inf:Resource Infrastructure_AgentFinder_InRank}"
+                              IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <editors:PartEditBox SpinnerVisibility="Visible" Foreground="Black">
+                        <editors:Int32PartGroup x:Name="fromInt" Maximum="{Binding Value, ElementName=toInt}" DataContext="{Binding}" 
+                                                Value="{Binding Path=Min}" Minimum="1" />
+                        <editors:TextBlockPartGroup Text="~" Margin="2,0" />
+                        <editors:Int32PartGroup x:Name="toInt" Minimum="{Binding Value, ElementName=fromInt}" DataContext="{Binding}" 
+                                                Value="{Binding Path=Max}" Maximum="10" />
+                    </editors:PartEditBox>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="InEnrollDate">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Width="92" Content="{inf:Resource Infrastructure_AgentFinder_InEnrollDate}" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <editors:PartEditBox SpinnerVisibility="Visible" Foreground="Black">
+                        <editors:DateTimePartGroup x:Name="fromDate" Format="d" Maximum="{Binding Value, ElementName=toDate}" DataContext="{Binding}" Value="{Binding Path=Min}" />
+                        <editors:TextBlockPartGroup Text="~" Margin="2,0" />
+                        <editors:DateTimePartGroup x:Name="toDate" Format="d" Minimum="{Binding Value, ElementName=fromDate}" DataContext="{Binding}" Value="{Binding Path=Max}" />
+                    </editors:PartEditBox>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="FieldRestriction">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Width="20" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}, Mode=FindAncestor}}"/>
+                    <ribbon:PopupButton VerticalAlignment="Center" x:Name="FieldRestrictionPopButton"
+                                       HorizontalContentAlignment="Left" DataContext="{Binding Fields}" 
+                                        inf:PopupButtonBehavior.PopupContent="{Binding ElementName=PART_FieldList}">
+                        <ribbon:PopupButton.PopupContent>
+                            <ribbon:Menu ItemVariantSize="Large">
+                                <ribbon:Separator Label="{inf:Resource Infrastructure_AgentFinder_Choice}"/>
+                                <CheckBox Content="{inf:Resource Infrastructure_AgentFinder_CheckAll}" Margin="5,0,0,0" IsThreeState="True"
+                                  x:Name="SelectEmployeeBox_Element">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <inf:ListBoxSelectAllAction
+                                                                        TargetElement="{Binding ElementName=PART_FieldList}" 
+                                                                        IsChecked="{Binding IsChecked, ElementName=SelectEmployeeBox_Element}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <ribbon:Separator Label="{inf:Resource Infrastructure_AgentFinder_List}" />
+                                <ListBox x:Name="PART_FieldList" ItemsSource="{Binding}"
+                                         VirtualizingStackPanel.IsVirtualizing="False"
+                                      SelectionMode="Multiple"  BorderThickness="0" Height="140"
+                                    >
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}"  BasedOn="{StaticResource RibbonListBoxItem}">
+                                            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox ContentStringFormat="{}{0}"
+                                           Content="{Binding Name}" IsChecked="{Binding IsSelected}"></CheckBox>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <inf:ReadOnlyPropertyAction DpProperty="inf:ListBoxSelectAllAction.CacheSelectedItems"
+                                                                        BindablePropertyItem="{Binding DataContext.SelectedTypes,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ribbon:PopupButton}}, Mode=TwoWay}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ListBox>
+                            </ribbon:Menu>
+                        </ribbon:PopupButton.PopupContent>
+                    </ribbon:PopupButton>
+                    <inf:SearchComboBox
+                        Style="{StaticResource {x:Static ribbon:RibbonStyles.ComboBoxKey}}"
+                        TriggerElement="{Binding SearchElement,Mode=OneWay,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:AgentFinderView}}}"
+                        Margin="5 0" Width="80" SearchModel="Agent" Text="{Binding InputValue,UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="CustomFilterDataTemplate">
+                <ContentPresenter Content="{Binding}" Name="cp" MinWidth="500"/>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="ShiftNameSearching">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource ShiftNameSearching}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="AgentOnly">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource AgentOnly}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqEmployeeType1">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqEmployeeType1}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqEmployeeType2">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqEmployeeType2}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="EqEmployeeType3">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource EqEmployeeType3}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="SkillMatching">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource SkillMatching}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="OrganizationMatching">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource OrganizationMatching}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="InRank">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource InRank}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="InEnrollDate">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource InEnrollDate}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ResourceKey}" Value="FieldRestriction">
+                        <Setter TargetName="cp" Property="ContentTemplate" Value="{StaticResource FieldRestriction}" />
+                    </DataTrigger>
+
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListBox x:Name="FilterList" DockPanel.Dock="Top"  ItemsPanel="{DynamicResource UniformGridItemsPanel}" 
+                 ItemTemplate="{StaticResource CustomFilterDataTemplate}"
+                 ItemsSource="{Binding Filters}" SelectionMode="Multiple"     
+                 inf:ItemsElementBehavior.DefaultSelectedIndex="0"
+                 inf:ItemsElementBehavior.HasBindableSelectedItems="True"
+                    BorderThickness="0 0 0 1"
+                     ItemContainerStyle="{StaticResource NoStyleBoxItem}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
+            <ListView x:Name="QueryResultList" ItemsSource="{Binding QueryResults}" VirtualizingStackPanel.IsVirtualizing="False"
+                      inf:ItemsElementBehavior.HasBindableSelectedItems="True" SelectionMode="Multiple"
+                       BorderThickness="0 0 0 1">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn HeaderTemplate="{StaticResource CheckBoxHeaderTemplate}" Width="35"
+                                        HeaderContainerStyle="{StaticResource CheckBoxColumnHeaderContainerStyle}"
+                                        CellTemplate="{StaticResource DefaultCellTemplateCheckbox}"/>
+                        <GridViewColumn Header="{inf:Resource Infrastructure_AgentFinder_Name}" Width="100" 
+                                        DisplayMemberBinding="{Binding Name}"
+                                        HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}"/>
+                        <GridViewColumn Header="{inf:Resource Infrastructure_AgentFinder_Organization}" Width="180" 
+                                        DisplayMemberBinding="{Binding Organization.Name}"
+                                        HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}"/>
+                        <!--<GridViewColumn Header="性别" Width="30" />-->
+                        <GridViewColumn Header="{inf:Resource Infrastructure_AgentFinder_Rank}" Width="40" 
+                                        DisplayMemberBinding="{Binding Rank}"
+                                        HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}"/>
+                        <GridViewColumn Header="{inf:Resource Infrastructure_AgentFinder_EmployeeType1}" Width="100" 
+                                        DisplayMemberBinding="{Binding EmployeeType1}"
+                                        HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}"/>
+                        <GridViewColumn Header="{inf:Resource Infrastructure_AgentFinder_EnrollmentDate}" Width="110" 
+                                        DisplayMemberBinding="{Binding EnrollmentDate,StringFormat=\{0:yyyy/MM/dd\}}"
+                                        HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}"/>
+                        <GridViewColumn Header="Acdid" Width="110" DisplayMemberBinding="{Binding AgentAcdids, Converter={StaticResource ArrayToStringConverter}}"
+                                        HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+        <DockPanel Grid.Row="1" >
+            <Button DockPanel.Dock="Left" Content="{inf:Resource Infrastructure_AgentFinder_Add}"  Margin="10" cal:Message.Attach="AddQueryResult(QueryResultList.BindableSelectedItems)" />
+            <Button DockPanel.Dock="Left" Content="{inf:Resource Infrastructure_AgentFinder_Replace}" VerticalAlignment="Center"
+                    cal:Message.Attach="ReplaceWithResult(QueryResultList.BindableSelectedItems)"/>
+
+            <Button DockPanel.Dock="Right" Content="{inf:Resource Infrastructure_AgentFinder_Search}"
+                    x:Name="Element_Search" 
+                    Margin="10" cal:Message.Attach="Query(FilterList.BindableSelectedItems)"
+                    HorizontalAlignment="Right"/>
+            <Label Content="{Binding QueryResults.Count}" VerticalAlignment="Center" ContentStringFormat="{inf:Resource Infrastructure_AgentFinder_QueryResult}"  DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+        </DockPanel>
+    </Grid>
+</Window>

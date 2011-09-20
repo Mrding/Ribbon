@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{89A25BE3-33EB-4DAB-ABC0-9065F6F13693}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Luna.Basic.GuyWire</RootNamespace>
+    <AssemblyName>Luna.Basic.GuyWire</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\output\Debug\Modules\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\output\Release\Modules\</OutputPath>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Luna.Basic.GuyWire.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Luna.Basic.GuyWire.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\output\Debug\Library\Castle.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\..\output\Debug\Library\Castle.Windsor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\..\output\Debug\Library\Iesi.Collections.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\..\output\Debug\Library\NHibernate.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache">
+      <HintPath>..\..\..\output\Debug\Library\NHibernate.Caches.SysCache.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="uNhAddIns">
+      <HintPath>..\..\..\output\Debug\Library\uNhAddIns.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uNhAddIns.Adapters, Version=3.0.0.738, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\output\Debug\Library\uNhAddIns.Adapters.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uNhAddIns.Adapters.Common">
+      <HintPath>..\..\..\output\Debug\Library\uNhAddIns.Adapters.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uNhAddIns.CastleAdapters">
+      <HintPath>..\..\..\output\Debug\Library\uNhAddIns.CastleAdapters.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uNhAddIns.ComponentBehaviors, Version=3.0.0.738, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\output\Debug\Library\uNhAddIns.ComponentBehaviors.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uNhAddIns.ComponentBehaviors.Castle">
+      <HintPath>..\..\..\output\Debug\Library\uNhAddIns.ComponentBehaviors.Castle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uNhAddIns.NHibernateTypeResolver">
+      <HintPath>..\..\..\output\Debug\Library\uNhAddIns.NHibernateTypeResolver.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractConfigurator.cs">
+      <DependentUpon>IConfigurator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configurators\EntitiesConfigurator.cs" />
+    <Compile Include="Configurators\ModelsConfigurator.cs" />
+    <Compile Include="Configurators\NHibernateConfigurator.cs" />
+    <Compile Include="Configurators\RepositoriesConfigurator.cs" />
+    <Compile Include="GeneralGuyWire.cs" />
+    <Compile Include="IConfigurator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Luna.Common\Luna.Common.csproj">
+      <Project>{5942E530-CF35-4A36-AB21-F6A4634D0C97}</Project>
+      <Name>Luna.Common</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Luna.ComponentBehaviors\Luna.ComponentBehaviors.csproj">
+      <Project>{00AD65C0-2873-46E9-8F5E-9ED4CAD55233}</Project>
+      <Name>Luna.ComponentBehaviors</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Luna.Core\Luna.Core.csproj">
+      <Project>{FEF376B8-9DAF-4A00-BBEF-DFCE2C11971C}</Project>
+      <Name>Luna.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Luna.Data\Luna.Data.csproj">
+      <Project>{021E19A3-FBEA-4C09-B4E5-CF11ED5581B5}</Project>
+      <Name>Luna.Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Luna.Infrastructure.Domain.Impl\Luna.Infrastructure.Domain.Impl.csproj">
+      <Project>{642F6126-B8EA-40A5-AD18-846DA2453C21}</Project>
+      <Name>Luna.Infrastructure.Domain.Impl</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Luna.Infrastructure.Domain\Luna.Infrastructure.Domain.csproj">
+      <Project>{9D02C5C8-274F-416E-93EC-866052DEB5B3}</Project>
+      <Name>Luna.Infrastructure.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shifts\Luna.Shifts.Data\Luna.Shifts.Data.csproj">
+      <Project>{4609D3A0-573B-454E-ABB6-D2AECA7021F3}</Project>
+      <Name>Luna.Shifts.Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shifts\Luna.Shifts.Domain\Luna.Shifts.Domain.csproj">
+      <Project>{3A1B68B4-1CE3-4560-9BE6-0A631103CB27}</Project>
+      <Name>Luna.Shifts.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shifts\Luna.Shifts\Luna.Shifts.csproj">
+      <Project>{BA44BB5A-0F8A-42C4-9D87-92E6802B6847}</Project>
+      <Name>Luna.Shifts</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

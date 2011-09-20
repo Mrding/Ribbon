@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Luna.GUI.UserControls.ZoomSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+             xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+             xmlns:inf="http://www.grandsys.com/luna"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:brick="http://www.grandsys.com/luna/brick"
+             xmlns:local="clr-namespace:Luna.GUI.UserControls"        
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <brick:ZoomPercentageConverter x:Key="ZoomPercentageConverter" />
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <ribbon:Button Context="StatusBarItem" Margin="0,1,0,1"  Padding="6,0,6,0" 
+						ScreenTipHeader="{Binding ElementName=scaleSlider, Path=Value, Converter={StaticResource ZoomPercentageConverter},ConverterParameter=ToolTip}"
+						Label="{Binding ElementName=scaleSlider, Path=Value, Converter={StaticResource ZoomPercentageConverter},ConverterParameter=Percentage}"/>
+
+        <RepeatButton Margin="1,0,1,0" CommandTarget="{Binding ElementName=scaleSlider}" ribbon:ScreenTipService.ScreenTipHeader="{inf:Resource ZoomOut}" 
+						Style="{StaticResource {x:Static ribbon:RibbonStyles.StatusBarSliderDecreaseButtonKey}}"/>
+        <Slider x:Name="scaleSlider" Width="100"
+                    Minimum="1" Maximum="5" LargeChange="1" SmallChange="1" VerticalAlignment="Center" 
+					IsSnapToTickEnabled="True" TickFrequency="0.1"
+                    Ticks="1,2,3,4,5"
+                    ribbon:ScreenTipService.ScreenTipHeader="Zoom">
+            <!--<i:Interaction.Behaviors>
+                <brick:SliderZoomValueBehavior ScheduleGrid="{Binding Path=(inf:FrameworkElementService.Tag),RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ZoomSlider}}}"/>
+            </i:Interaction.Behaviors>-->
+        </Slider>
+        <RepeatButton Margin="1,0,1,0" CommandTarget="{Binding ElementName=scaleSlider}" ribbon:ScreenTipService.ScreenTipHeader="{inf:Resource ZoomIn}" 
+						Style="{StaticResource {x:Static ribbon:RibbonStyles.StatusBarSliderIncreaseButtonKey}}"/>
+    </StackPanel>
+</UserControl>

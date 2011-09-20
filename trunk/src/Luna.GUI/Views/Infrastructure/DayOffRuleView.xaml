@@ -1,0 +1,84 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="Luna.GUI.Views.Infrastructure.DayOffRuleView"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:share="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:uc="clr-namespace:Luna.GUI.UserControls"
+    xmlns:inf="http://www.grandsys.com/luna" mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <DockPanel Margin="0,10" LastChildFill="True" Opacity="0.7" >
+                <TextBlock Style="{StaticResource CategoryText}" Text="{inf:Resource Administration_DayOffRule_HolidayCondition}" />
+                <Border Style="{StaticResource CategoryLine}" />
+            </DockPanel>
+            <share:RadioButtonList BulletVerticalAlignment="Top" SelectedValuePath="Tag" AutoDisableNonSelectedItemContent="True"
+                                       SelectedValue="{Binding Entity.DayOffRule.SystemAccumulate}">
+                <StackPanel Tag="False" Height="50">
+                    <TextBlock Text="{inf:Resource Administration_DayOffRule_CustomHolidayCount}" Margin="0 0 0 5"/>
+                    <editors:Int32EditBox Value="{Binding Entity.DayOffRule.SpecifiedNumberOfDays}" 
+                               SpinnerVisibility="Visible" VerticalAlignment="Top"
+                               HorizontalAlignment="Left" Maximum="30" Minimum="0"
+                               IsEnabled="{Binding Path=IsSelected,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem}}">
+                        <i:Interaction.Behaviors>
+                            <inf:EditValueimumChangeBehavior/>
+                        </i:Interaction.Behaviors>
+                    </editors:Int32EditBox>
+                </StackPanel>
+                <StackPanel Tag="True">
+                    <TextBlock Text="{inf:Resource Administration_DayOffRule_SysStatistic}" Margin="0 0 0 5"/>
+                    <StackPanel DataContext="{Binding Entity}" Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding DayOffRule.Add1DayOffEachSaturdayInCS}" Content="{inf:Resource Administration_DayOffRule_Saturday}"/>
+                        <CheckBox IsChecked="{Binding DayOffRule.Add1DayOffEachSundayInCS}" Content="{inf:Resource Administration_DayOffRule_Sunday}"/>
+                        <CheckBox IsChecked="{Binding DayOffRule.Add1DayOffEachHolidayInCS}" Content="{inf:Resource Administration_DayOffRule_NationalHoliday}"/>
+                    </StackPanel>
+                </StackPanel>
+            </share:RadioButtonList>
+            <Grid DataContext="{Binding Entity.DayOffRule}" Margin="8 10 0 0" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="{inf:Resource Shifts_AgentResources_OptionalHoliday1Day}" Grid.Row="0"/>
+
+                <uc:RangeEditBox Grid.Column="1" Grid.Row="0" Min="0" Max="5"
+                                         
+                                         StartValue="{Binding MinPWTimes,UpdateSourceTrigger=PropertyChanged}" 
+                                         EndValue="{Binding MaxPWTimes,UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="{inf:Resource Shifts_AgentResources_OptionalHoliday2Days}" Grid.Row="1"/>
+
+
+                <uc:RangeEditBox Grid.Column="1" Grid.Row="1" Min="0" Max="5"
+                                         
+                                         StartValue="{Binding MinFWTimes,UpdateSourceTrigger=PropertyChanged}" 
+                                         EndValue="{Binding MaxFWTimes,UpdateSourceTrigger=PropertyChanged}"/>
+
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <DockPanel Margin="0,10" LastChildFill="True" Opacity="0.7" >
+                <TextBlock Style="{StaticResource CategoryText}" Text="{inf:Resource Administration_DayOffRule_NHAssignRule}" />
+                <Border Style="{StaticResource CategoryLine}" />
+            </DockPanel>
+            <share:RadioButtonList HorizontalAlignment="Stretch"
+                                   SelectedValuePath="Tag" SelectedValue="{Binding Entity.DayOffRule.HolidayShiftRule}">
+                <ListBoxItem Tag="FreeToAssign" Content="{inf:Resource Administration_DayOffRule_FreeToAssign}"></ListBoxItem>
+                <ListBoxItem Tag="NeverAssignDayOff" Content="{inf:Resource Administration_DayOffRule_CoerceAssign}"></ListBoxItem>
+                <ListBoxItem Tag="NeverAssignShift" Content="{inf:Resource Administration_DayOffRule_CoerceAssignOut}"></ListBoxItem>
+            </share:RadioButtonList>
+        </StackPanel>
+    </Grid>
+</UserControl>

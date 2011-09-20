@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <import class="Luna.Common.Domain.CompareToSelectedEntity`1[[Employee]], Luna.Common"/>
+  <class name="Employee" dynamic-update="true" dynamic-insert="true">
+    <id name="Id" column="EmployeeId">
+      <generator class="guid.comb"/>
+    </id>
+    <property name="Name"/>
+    <property name="Name2"/>
+    <property name="EnrollmentDate"/>
+    <property name="LeavingDate" />
+    <property name="EmployeeTag1"/>
+    <property name="EmployeeTag2"/>
+    <property name="AgentId" unique="true"/>
+    <property name="IsAgent"/>
+    <property name="Rank"/>
+    <property name="EmployeeType1"/>
+    <property name="EmployeeType2"/>
+    <property name="EmployeeType3"/>
+    <property name="Language" />
+    <property name="Address1"/>
+    <property name="Address2"/>
+    <property name="Email"/>
+    <property name ="Mobile"/>
+    <property name="Productivity"/>
+    <property name="Password"/>
+
+    <many-to-one name="CustomLaborRule" class="LaborRule" column="LaborRuleId" foreign-key="FK_Employee_LaborRule" />
+
+    <many-to-one name="Organization" class="Organization" column="OrganizationId" foreign-key="FK_Employee_Organization"/>
+
+    <map name="SkillMap" table="EmployeeSkill" cascade="all" batch-size="50">
+      <cache usage="read-write"/>
+      <key column="EmployeeId" foreign-key="FK_EmployeeSkill_Employee"/>
+      <composite-index class="AcdSkill">
+        <key-many-to-one name="Skill" lazy="false" class="Skill" column="SkillId" foreign-key="FK_EmployeeSkill_Skill"/>
+        <key-property name="AgentAcdid"/>
+        <key-property name="Color"/>
+      </composite-index>
+      <element type="Double" column="Productivity"/>
+    </map>
+  </class>
+</hibernate-mapping>

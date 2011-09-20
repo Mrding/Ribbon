@@ -1,0 +1,68 @@
+﻿<Window x:Class="Luna.GUI.Views.Shifts.MaintenanceScheduleView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:inf="http://www.grandsys.com/luna"
+        xmlns:cal="http://www.caliburnproject.org" 
+        xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors" 
+        xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+        xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+        SizeToContent="WidthAndHeight"
+        Title="{inf:Resource Shifts_MaintenanceSchedule_Title}">
+    
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <shared:RadioButtonList BulletVerticalAlignment="Top" BulletMargin="0,0,0,10" SelectedIndex="{Binding DeleteWay,Mode=TwoWay}">
+            <DockPanel>
+                <!--<TextBlock Text="特定日期" DockPanel.Dock="Top" />-->
+                <editors:MonthCalendar x:Name="Calendar" Width="300" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" MaxViewMode="Month"
+                               MinDate="{Binding CanChooseRange.Start}" 
+                               MaxDate="{Binding CanChooseRange.End,Converter={StaticResource RedeemDateTimeConverter},ConverterParameter=1}"
+                               ActiveDate="{Binding SelectedDate}"
+                               SelectedDate="{Binding SelectedDate,Mode=TwoWay}"
+                               SelectionMode="Multiple" IsDayOfWeekHeaderVisible="True" IsTodayHighlighted="False" IsTodayButtonVisible="False" BorderThickness="0" />
+
+            </DockPanel>
+            <TextBlock Text="全期"/>
+        </shared:RadioButtonList>
+        <CheckBox Grid.Row="1" Margin="5 10 0 10" Content="包含鎖定的班表" IsChecked="{Binding LockedTermIncluded}"/>
+        <!--<CheckBox Grid.Row="2" Margin="5 10 0 10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="班別" Margin="2 0 10 0" VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center"/>
+            </StackPanel>
+        </CheckBox>-->
+        <Border Grid.Row="3" Background="#F0F0F0" BorderThickness="0 0.5 0 0" BorderBrush="DarkGray">
+            <Grid Margin="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Button Content="{inf:Resource OK}" Grid.Column="1" Margin="5 0" 
+                        cal:Message.Attach="Apply(Calendar.SelectedDates:OneWay)" 
+                        />
+                <CheckBox Content="完成後關閉" IsChecked="{Binding CloseAfterApplied}" />
+            </Grid>
+        </Border>
+         <Grid Opacity="0.8" Grid.RowSpan="4" Background="Silver" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="*"/>
+                                 <RowDefinition/>
+            </Grid.RowDefinitions>
+                <!--<TextBlock FontSize="16" VerticalAlignment="Center"  Foreground="SteelBlue" Text="{inf:Resource Shifts_ShiftDispatcher_Reading}" HorizontalAlignment="Center" />-->
+                           
+                            <ProgressBar  x:Name="PrograssBar" Grid.Row="1" Value="{Binding Progress}" Minimum="0" Maximum="100" Margin="50" Height="20" VerticalAlignment="Center"/>
+               <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="{Binding Value,StringFormat=\{\0:0.0\}%,ElementName=PrograssBar}" HorizontalAlignment="Center" />
+        </Grid>
+    </Grid>
+</Window>

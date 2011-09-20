@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BA44BB5A-0F8A-42C4-9D87-92E6802B6847}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Luna.Shifts</RootNamespace>
+    <AssemblyName>Luna.Shifts</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\output\Debug\Modules\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\output\Release\Modules\</OutputPath>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET35;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Luna.Shifts.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;Release;NET35;</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Luna.Shifts.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActiproSoftware.Editors.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Editors.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Ribbon.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Ribbon.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Shared.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Shared.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiproSoftware.Wizard.Wpf351, Version=11.1.543.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharedLibs\Actipro\ActiproSoftware.Wizard.Wpf351.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\output\Debug\Library\Castle.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\..\output\Debug\Library\Castle.Windsor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\..\output\Debug\Library\Iesi.Collections.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\output\Debug\Library\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdherenceBlockConverter.cs" />
+    <Compile Include="BlockToCellConverter.cs" />
+    <Compile Include="DefalutBlockConverter.cs" />
+    <Compile Include="OccupationBlockConverter.cs" />
+    <Compile Include="Presenters\AddingEventPresenter.cs" />
+    <Compile Include="Presenters\AddingShiftPresenter.cs" />
+    <Compile Include="Presenters\AssignmentTypeDetailPresenter.cs" />
+    <Compile Include="Presenters\AssignmentTypeMasterPresenter.cs" />
+    <Compile Include="Presenters\Extentions\AgentListExtension.cs" />
+    <Compile Include="Presenters\Interfaces\IAddingEventPresenter.cs" />
+    <Compile Include="Presenters\Interfaces\IAddingShiftPresenter.cs" />
+    <Compile Include="Presenters\Interfaces\IAssignmentTypeDetailPresenter.cs" />
+    <Compile Include="Presenters\Interfaces\IAssignmentTypeMasterPresenter.cs" />
+    <Compile Include="Presenters\Interfaces\IEditSchedulePresenter.cs" />
+    <Compile Include="Presenters\Interfaces\IShiftComposerPresenter.cs" />
+    <Compile Include="Presenters\Interfaces\IShiftDispatcherPresenter.cs" />
+    <Compile Include="Presenters\Interfaces\ISubEventTypeMasterPresenter.cs" />
+    <Compile Include="Presenters\RecentScheduleManagerPresenter.cs" />
+    <Compile Include="Presenters\ScheduleInfomationPresenter.cs" />
+    <Compile Include="Presenters\ShiftComposerPresenter.cs" />
+    <Compile Include="Presenters\ShiftComposerPresenter.Estimation.cs">
+      <DependentUpon>ShiftComposerPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\ShiftComposerPresenter.Extentions.cs">
+      <DependentUpon>ShiftComposerPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\ShiftComposerPresenter.Statistic.cs">
+      <DependentUpon>ShiftComposerPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\ShiftDispatcherPresenter.Action.Adherence.cs">
+      <DependentUpon>ShiftDispatcherPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\ShiftDispatcherPresenter.Action.cs">
+      <DependentUpon>ShiftDispatcherPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\ShiftDispatcherPresenter.Action.Statistic.cs">
+      <DependentUpon>ShiftDispatcherPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\ShiftDispatcherPresenter.cs" />
+    <Compile Include="Presenters\ShiftImportPresenter.Biz.cs">
+      <DependentUpon>ShiftImportPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\ShiftImportPresenter.cs" />
+    <Compile Include="Presenters\ShiftImportPresenter.Sort.cs">
+      <DependentUpon>ShiftImportPresenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\SubEventTypeDetailPresenter.cs" />
+    <Compile Include="Presenters\SubEventTypeMasterPresenter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShiftBlockConverter.cs" />
+    <Compile Include="TermStyleBlockConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\SharedSources\Caliburn\Caliburn.Core\Caliburn.Core.csproj">
+      <Project>{96ECAC8B-D61E-405E-A5D7-F6CC0F62CF2C}</Project>
+      <Name>Caliburn.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\SharedSources\Caliburn\Caliburn.PresentationFramework\Caliburn.PresentationFramework.csproj">
+      <Project>{209BCE75-E88D-43AA-946A-A09EE4A12F20}</Project>
+      <Name>Caliburn.PresentationFramework</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Luna.Common\Luna.Common.csproj">
+      <Project>{5942E530-CF35-4A36-AB21-F6A4634D0C97}</Project>
+      <Name>Luna.Common</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Luna.Core\Luna.Core.csproj">
+      <Project>{FEF376B8-9DAF-4A00-BBEF-DFCE2C11971C}</Project>
+      <Name>Luna.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Luna.Globalization\Luna.Globalization.csproj">
+      <Project>{5118575A-1266-4A84-B999-CB3EADC6C933}</Project>
+      <Name>Luna.Globalization</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Luna.WPF.ApplicationFramework\Luna.WPF.ApplicationFramework.csproj">
+      <Project>{659B3C5B-C97C-426A-9EAB-808F94C050C6}</Project>
+      <Name>Luna.WPF.ApplicationFramework</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\Luna.Infrastructure.Domain\Luna.Infrastructure.Domain.csproj">
+      <Project>{9D02C5C8-274F-416E-93EC-866052DEB5B3}</Project>
+      <Name>Luna.Infrastructure.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Statistic\Luna.Statistic.Domain\Luna.Statistic.Domain.csproj">
+      <Project>{3ED17595-721B-4FB8-BA3C-7605ED833C1E}</Project>
+      <Name>Luna.Statistic.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Luna.Shifts.Domain\Luna.Shifts.Domain.csproj">
+      <Project>{3A1B68B4-1CE3-4560-9BE6-0A631103CB27}</Project>
+      <Name>Luna.Shifts.Domain</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Presenters\ShiftDispatcherPresenter.Action.Seating.cs">
+      <DependentUpon>ShiftDispatcherPresenter.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Presenters\ShiftComposerPresenter.Agents.cs">
+      <DependentUpon>ShiftComposerPresenter.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

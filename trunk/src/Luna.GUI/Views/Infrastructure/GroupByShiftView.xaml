@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Luna.GUI.Views.Infrastructure.GroupByShiftView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:inf="http://www.grandsys.com/luna">
+    <Grid>
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="0.1*"/>
+    		<RowDefinition Height="0.9*"/>
+    	</Grid.RowDefinitions>
+    	<CheckBox x:Name="groupBox" HorizontalAlignment="Left" Margin="20,0,0,0" 
+                  IsChecked="{Binding Entity.GroupingArrangeShift.IsGrouping}"
+                  Content="{inf:Resource Administration_GroupByShift_AssginByGroup}" VerticalAlignment="Center"/>
+    	<GroupBox Margin="0,0,0,0" Grid.Row="1" Header="{inf:Resource Administration_GroupByShift_AsssgnCondition}">
+    		<CheckBox HorizontalAlignment="Left" Margin="10,20,0,0" 
+                      IsEnabled="{Binding Path=IsChecked,ElementName=groupBox}"
+                      IsChecked="{Binding Entity.GroupingArrangeShift.IsMappingEvent}"
+                      VerticalAlignment="Top"  Content="{inf:Resource Administration_GroupByShift_GroupingArrangeShift}"/>
+    	</GroupBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,242 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Luna.WPF.ApplicationFramework"
+    xmlns:controls="clr-namespace:Luna.WPF.ApplicationFramework.Controls"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+    xmlns:brick="clr-namespace:Luna.WPF.ApplicationFramework.Controls.Brick" xmlns:Behaviors="clr-namespace:Luna.WPF.ApplicationFramework.Behaviors">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!--<ResourceDictionary Source="/Luna.WPF.ApplicationFramework;component/Themes/AutoCompleteTextBox.xaml" />-->
+        <!--<ResourceDictionary Source="/Luna.WPF.ApplicationFramework;component/Themes/TimeSpanEditor.generic.xaml" />-->
+        <!--<ResourceDictionary Source="/Luna.WPF.ApplicationFramework;component/Themes/ControlExtensions.xaml" />-->
+        <ResourceDictionary Source="/Luna.WPF.ApplicationFramework;component/Themes/Generic.Brick.ScheduleGrid.xaml" />
+        <!--<ResourceDictionary Source="/Luna.WPF.ApplicationFramework;component/Themes/Generic.Brick.ScreenLayer.xaml" />-->
+    </ResourceDictionary.MergedDictionaries>
+
+
+
+    <Style TargetType="{x:Type Behaviors:ListSortDecorator}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Behaviors:ListSortDecorator}">
+                    <Path x:Name="path" Data="M0,0L2,0 1,1z"
+						  Fill="{TemplateBinding Foreground}"
+						  Stroke="{TemplateBinding Foreground}"
+						  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+						  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+						  Width="7" Height="4" Stretch="Fill"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="path" Property="Data" Value="M0,1L2,1L1,0Z"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <SolidColorBrush x:Key="ListBorder" Color="#FF7F9DB9"/>
+
+    <LinearGradientBrush x:Key="TopButtonNormalBrush" StartPoint="0,0" EndPoint="1,2">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="#CCCCF0" Offset=".2"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TopButtonHoverBrush" StartPoint="0,0" EndPoint="1,2">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="#DDDDFF" Offset=".2"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TopButtonPressedBrush" StartPoint="0,0" EndPoint="1,2">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="#AAAAFF" Offset=".2"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BottomButtonNormalBrush" StartPoint="0,-1" EndPoint="1,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#CCCCF0" Offset=".8"/>
+            <GradientStop Color="#9999CC" Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BottomButtonHoverBrush" StartPoint="0,-1" EndPoint="1,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#DDDDFF" Offset=".8"/>
+            <GradientStop Color="#CCCCCC" Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BottomButtonPressedBrush" StartPoint="0,-1" EndPoint="1,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#AAAAFF" Offset=".8"/>
+            <GradientStop Color="#9999CC" Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <Style TargetType="{x:Type RepeatButton}" x:Key="SharedStyle"> 
+        <!--<Setter Property="Height" Value="9"/>
+        <Setter Property="Width" Value="17"/>-->
+        <Setter Property="Focusable" Value="False"/>
+        <!--<Setter Property="Margin" Value="0 .25 0 .25"/>-->
+    </Style>
+
+    <Style TargetType="{x:Type RepeatButton}" x:Key="TopButton" BasedOn="{StaticResource SharedStyle}">
+        <Setter Property="Background" Value="#8D8D8D"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <!--<Border Name="TopButtonBorder" BorderThickness="0" 
+                  Background="Transparent">-->
+
+                    <Path Margin="5,8,5,0" Width="7" Height="4" Data="F1 M 365.12,302.39L 358.479,311.21L 371.761,311.21L 365.12,302.39 Z" Fill="{TemplateBinding Background}" Stretch="Fill" />
+                        
+                    <!--</Border>-->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <!--<Setter TargetName="TopButtonBorder" Property="Background" 
+                      Value="{StaticResource TopButtonHoverBrush}"/>-->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <!--<Setter TargetName="TopButtonBorder" Property="Background" 
+                      Value="{StaticResource TopButtonPressedBrush}"/>-->
+                            <Setter Property="Background" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type RepeatButton}" x:Key="BottomButton" BasedOn="{StaticResource SharedStyle}">
+        <Setter Property="Background" Value="#8D8D8D"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <!--<Border Name="BottomButtonBorder" BorderThickness="0"
+                  Background="Transparent">-->
+
+                    <Path Margin="5,0,5,8" Width="7" Height="4" Data="F1 M 365.12,302.39L 358.479,311.21L 371.761,311.21L 365.12,302.39 Z" Fill="{TemplateBinding Background}" Stretch="Fill" RenderTransformOrigin="0.5,0.5" >
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="180"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+
+                    <!--</Border>-->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <!--<Setter TargetName="BottomButtonBorder" Property="Background" 
+                      Value="{StaticResource BottomButtonHoverBrush}"/>-->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <!--<Setter TargetName="BottomButtonBorder" Property="Background" 
+                      Value="{StaticResource BottomButtonPressedBrush}"/>-->
+                            <Setter Property="Background" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="{x:Type controls:NumericUpDown}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush"
+            Value="{StaticResource ListBorder}"/>
+        <Setter Property="BorderThickness"
+            Value="1"/>
+        <Setter Property="Padding"
+            Value="0"/>
+        <Setter Property="MinWidth"
+            Value="32"/>
+        <Setter Property="Height"
+            Value="32"/>
+        <Setter Property="HorizontalAlignment" 
+            Value="Center"/>
+        <Setter Property="VerticalAlignment" 
+            Value="Center"/>
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Border>
+                                    <Rectangle Margin="1"
+                             StrokeThickness="1"
+                             Stroke="Black"
+                             StrokeDashArray="1 2"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:NumericUpDown}">
+                    
+                    <Border 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                     
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Ellipse VerticalAlignment="Center" Width="24" Height="24" Grid.Column="1" Grid.RowSpan="2" StrokeThickness="1" StrokeLineJoin="Round" 
+                                     Fill="{TemplateBinding Background}" Stroke="#8D8D8D"/>
+
+
+                            <TextBlock Text="{TemplateBinding ValueString}" HorizontalAlignment="Right" TextAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" Margin="2 0 5 0"/>
+
+                            <RepeatButton Command="controls:NumericUpDown.IncreaseCommand" x:Name="PART_Up"
+                            Grid.Column="1" Grid.Row="0"
+                            Style="{StaticResource TopButton}"/>
+                            <RepeatButton Command="controls:NumericUpDown.DecreaseCommand"  x:Name="PART_Down"
+                            Grid.Column="1" Grid.Row="1"
+                            Style="{StaticResource BottomButton}"/>                         
+                        </Grid>
+                       
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="#8D8D8D"/>
+                            <Setter Property="Background" Value="White" TargetName="PART_Up"/>
+                            <Setter Property="Background" Value="White" TargetName="PART_Down"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

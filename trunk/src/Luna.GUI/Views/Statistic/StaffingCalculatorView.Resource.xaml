@@ -1,0 +1,113 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"   
+                  
+                    xmlns:domain="http://www.grandsys.com/luna/domain"
+                  
+                    xmlns:inf="http://www.grandsys.com/luna">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Luna.GUI;Component/Resources/Controls/BrickControl.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <ObjectDataProvider x:Key="StatisticCategories" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="domain:StatisticCategory"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <DataTemplate x:Key="DateTimeNumberLineDefaultTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock FontSize="12" Margin="2 2 0 0" FontFamily="Candara"  Foreground="#FF9BC9F2">    
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="00:00">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource ZoomToTimeConverter}" >                                   
+                        <Binding Path="ZoomValue">
+                            <Binding.RelativeSource>
+                                <RelativeSource Mode="FindAncestor" AncestorType="{x:Type inf:ScheduleGrid}"/>
+                            </Binding.RelativeSource>
+                         </Binding>
+                         <Binding />
+                    </MultiBinding>
+                </TextBlock.Text>
+                <TextBlock.ToolTip>
+                    <TextBlock Text="{Binding}" />
+                </TextBlock.ToolTip>
+            </TextBlock>
+        </StackPanel>
+    </DataTemplate>
+
+    <ToolTip x:Key="LineChartToolTip" Visibility="{Binding IsMouseOverValuePoint}" DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
+        <StackPanel Margin="5,2,5,0">
+            <TextBlock Text="{Binding DataContext.Source}"/>
+            <TextBlock Text="{Binding DataContext.Text}"/>
+            <Label Margin="0" Padding="0" Content="{Binding CurrentData}" ContentStringFormat="{Binding DataContext.Format}"/>
+            <TextBlock Text="{Binding CurrentTime,StringFormat=\{0:M/dd HH:mm\}}"/>
+        </StackPanel>
+    </ToolTip>
+
+    <VisualBrush x:Key="GridBackground" Stretch="Fill" TileMode="Tile" Viewport="0,0,80,80" ViewportUnits="Absolute">
+        <VisualBrush.Visual>
+            <UniformGrid Columns="1" Rows="2" Width="80" Height="80">
+                <Rectangle    SnapsToDevicePixels="True"  Fill="#FFF7F8F3"/>
+
+                <Rectangle    SnapsToDevicePixels="True"   Fill="White"/>
+            </UniformGrid>
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <Style x:Key="ColorIndicatorStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Opacity" Value="0.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                        <DockPanel VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" >
+                            <Rectangle Width="8" Height="8" Margin="0 0 3 0" Opacity="{TemplateBinding Opacity}"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{TemplateBinding Foreground}"/>
+                            <ContentPresenter Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </DockPanel>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Foreground="Black" Text="{Binding}"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="BitmapEffect">
+                    <Setter.Value>
+                        <OuterGlowBitmapEffect GlowColor="White" GlowSize="6"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+</ResourceDictionary>

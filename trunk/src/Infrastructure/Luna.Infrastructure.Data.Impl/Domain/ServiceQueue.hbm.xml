@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name ="ServiceQueue">
+    <id name="Id" column="ServiceQueueId">
+      <generator class="guid.comb"/>
+    </id>
+    <property name="Description"/>
+    <property name="AbandonRate"/>
+    <many-to-one name="Campaign" class="Campaign" foreign-key="FK_ServiceQueue_Campaign"/>
+    <property name="Name" type="string" not-null="true" />
+    <many-to-one name="MappedSkill" class="Skill" foreign-key="FK_ServiceQueue_Skill"/>
+    <property name="MinimumOnlines"/>
+
+    <!--<set name="AcdQueues">
+      <key column="ServiceQueueId" foreign-key="FK_AcdQueue_ServiceQueue"/>
+      <one-to-many class="AcdQueue"/>
+    </set>-->
+  </class>
+</hibernate-mapping>

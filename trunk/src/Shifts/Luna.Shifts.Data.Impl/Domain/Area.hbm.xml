@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name="Area" dynamic-update="true">
+    <id name="Id" column="AreaId">
+      <generator class="guid.comb"/>
+    </id>
+    <property name="Name" not-null="true"/>
+    <property name="Index" column="Priority"/>
+    <component class="Luna.Common.Dimension, Luna.Common" name="Dimension">
+      <property name="Rows" />
+      <property name="Columns" />
+    </component>
+
+    <many-to-one name="Site" class="Site" column="SiteId" update="false" foreign-key="FK_Area_Site"/>
+    <many-to-one name="Campaign" class="Luna.Infrastructure.Domain.Campaign, Luna.Infrastructure.Domain" foreign-key="FK_Area_Campaign"/>
+
+    <set name="Seats" cascade="all" order-by="LocationIndex asc">
+            <key column="AreaId" foreign-key="FK_Seat_Area"/>
+            <one-to-many class="Seat" />
+    </set>
+  </class>
+</hibernate-mapping>

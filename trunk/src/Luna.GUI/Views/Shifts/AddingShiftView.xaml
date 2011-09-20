@@ -1,0 +1,108 @@
+﻿<Window x:Class="Luna.GUI.Views.Shifts.AddingShiftView"
+   xmlns:inf="http://www.grandsys.com/luna"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+     xmlns:cal="http://www.caliburnproject.org" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors" 
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+    Title="{inf:Resource Shifts_AddingShift_Title}" Height="300" Width="560" Padding="10">
+    <Window.Resources>
+        <Style x:Key="CategoryText" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="DockPanel.Dock" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="CategoryLine" TargetType="{x:Type Border}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="0,0.9,0,0"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ListView Margin="0 0 0 10" ItemsSource="{Binding AvailableTypes}" BorderThickness="0 0 0 1"
+                  SelectedItem="{Binding SelectedEventType}" TextSearch.TextPath="Name">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}" DisplayMemberBinding="{Binding Name}"
+                                    Width="150" Header="{inf:Resource Shifts_AddingShift_ColumnHeader_Name}" />
+                    <GridViewColumn HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}" 
+                                    Width="100" Header="{inf:Resource Shifts_AddingShift_ColumnHeader_Type}" DisplayMemberBinding="{Binding Type,Converter={StaticResource ResourceConverter}}"/>
+                    <GridViewColumn HeaderContainerStyle="{StaticResource AlignLeftColumnHeader}" 
+                                    Width="60" Header="{inf:Resource Shifts_AddingShift_ColumnHeader_Length}" DisplayMemberBinding="{Binding TimeRange.Length}" />
+                     <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding Background}" Height="15" Width="15" BorderThickness="1" BorderBrush="DarkGray" Margin="2"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="{inf:Resource Shifts_AddingShift_ShiftStart}"/>
+            <editors:DateTimeEditBox Grid.Column="1" SpinnerVisibility="Visible" 
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center" Value="{Binding ShiftStart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Margin="5 0 0 0" Content="{inf:Resource Shifts_AddingShift_NavigateTo}" Grid.Column="2" HorizontalAlignment="Left" cal:Message.Attach="NavigateTo"/>
+            <Label Content="{inf:Resource Shifts_AddingShift_ShiftEnd}" Grid.Column="3"/>
+            <Label Grid.Column="4" ContentStringFormat="{}{0:yyyy/MM/dd HH:mm}" Content="{Binding ShiftEnd,Mode=OneWay,FallbackValue='2010/1/1 12:00'}" VerticalAlignment="Center"
+                                     HorizontalAlignment="Left"/>
+        </Grid>
+        <!--<DockPanel Grid.Row="2" Margin="5,10" LastChildFill="True" Opacity="0.7">
+            <TextBlock Style="{StaticResource CategoryText}" Text="{inf:Resource Shifts_AddingShift_EmployeeSelectionHeader}" />
+            <Border Style="{StaticResource CategoryLine}" />
+        </DockPanel>-->
+        <shared:RadioButtonList Grid.Row="3" Margin="5 0 0 0" SelectedIndex="{Binding EmployeeSelectionWay,Mode=TwoWay}">
+
+            <TextBlock DataContext="{Binding CurrentAgent}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{inf:Resource Shifts_AddingShift_ApplyToCurrentSelectedEmployee}">
+                        <Binding Path="Profile.Name" FallbackValue="?"/>
+                        <Binding Path="Profile.AgentId" FallbackValue="?"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Text="{Binding SelectedCount,FallbackValue=0,StringFormat={inf:Resource Shifts_AddingShift_ApplyToSelectedEmployees}}"/>
+        </shared:RadioButtonList>
+        <Grid Grid.Row="4" Margin="0 10 5 5" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Margin="5" Style="{DynamicResource {x:Static ribbon:RibbonStyles.TextBoxKey}}" 
+                ribbon:RibbonControlService.HintText="{inf:Resource Shifts_AddingShift_Hint}"
+                     VerticalAlignment="Center"
+                     Text="{Binding Comments}" TextWrapping="Wrap" ></TextBox>
+          
+                <Button Grid.Column="1" Content="{inf:Resource Shifts_AddingShift_Add}"
+                        VerticalAlignment="Center" cal:Message.Attach="[Action Apply]" />
+                <!--<Button Grid.Column="2" Content="{inf:Resource Shifts_AddingShift_Close}" 
+                        VerticalAlignment="Center"
+                        cal:Message.Attach="Close"
+                        Margin="5 0" IsCancel="True"/>-->
+       
+        </Grid>
+        
+       
+    </Grid>
+    </Window>

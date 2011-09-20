@@ -1,0 +1,238 @@
+﻿<UserControl x:Class="Luna.GUI.Views.Shifts.SubEventTypeDetailDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    
+   xmlns:cal="http://www.caliburnproject.org" 
+    xmlns:bm="http://www.grandsys.com/luna/controls/blockmatrix" 
+    xmlns:uc="clr-namespace:Luna.GUI.UserControls"
+    xmlns:shift="clr-namespace:Luna.GUI.Views.Shifts"
+    xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+    xmlns:editors="http://schemas.actiprosoftware.com/winfx/xaml/editors"
+    xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+    xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"  
+    xmlns:inf="http://www.grandsys.com/luna">
+    <Grid>
+        <TextBlock IsHitTestVisible="False" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="75 -60 0 0" Foreground="LightGray" FontSize="72" Opacity="0.3">
+           <TextBlock.Style>               
+               <Style TargetType="TextBlock">
+                   <Setter Property="Text" Value="Edit"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Invoker.CollectionView/Entity.IsNew}" Value="true">
+                            <Setter Property="TextBlock.Text" Value="New"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+               </Style>
+           </TextBlock.Style>
+        </TextBlock>
+        <StackPanel Margin="10 0 10 0">
+
+            <Expander Background="{Binding Invoker.CollectionView/Entity.Background,FallbackValue=Green}" Header="{Binding}">
+                <Expander.Style>
+                    <Style TargetType="{x:Type Expander}">
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>                                 
+                                        <StackPanel>
+                                            <TextBox Text="{Binding Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                                            <TextBlock Visibility="{Binding HasError,Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                                    Text="{Binding Error}" Foreground="Red"/>
+                                        </StackPanel>                                                        
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Expander}">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="true">
+                                        <DockPanel >
+                                            <ToggleButton DockPanel.Dock="Top" x:Name="HeaderSite" 
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+										            Content="{TemplateBinding Header}" Foreground="{TemplateBinding Foreground}" 
+                                                    Background="{TemplateBinding Background}"
+										            FontWeight="{TemplateBinding FontWeight}" 
+										            FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" 
+										            FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" 
+										            HorizontalAlignment="Stretch"
+										            IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+										            MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
+										            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="{x:Type ToggleButton}">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                    <Border>
+                                                                        <Grid Background="Transparent" SnapsToDevicePixels="True" Margin="5">
+                                                                            <Grid.ColumnDefinitions>
+                                                                                <ColumnDefinition Width="auto"/>
+                                                                                <ColumnDefinition Width="22"/>
+                                                                            </Grid.ColumnDefinitions>
+                                                                            <Grid Grid.Column="1" Height="22" VerticalAlignment="Top" Background="{TemplateBinding Background}">
+                                                                                <Grid.LayoutTransform>
+                                                                                    <TransformGroup>
+                                                                                        <TransformGroup.Children>
+                                                                                            <TransformCollection>
+                                                                                                <RotateTransform Angle="180"/>
+                                                                                            </TransformCollection>
+                                                                                        </TransformGroup.Children>
+                                                                                    </TransformGroup>
+                                                                                </Grid.LayoutTransform>
+                                                                                <Path x:Name="arrow" Data="M 1,4.5  L 4.5,1  L 8,4.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="White" StrokeThickness="2" VerticalAlignment="Center"/>
+                                                                            </Grid>
+                                                                            <ContentPresenter HorizontalAlignment="Left" Margin="0,0,5,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                                                                        </Grid>
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsChecked" Value="true">
+                                                                            <Setter Property="Data" TargetName="arrow" Value="M 1,1.5 L 4.5,5 L 8,1.5"/>
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                                            <Setter Property="Stroke" TargetName="arrow" Value="#222"/>
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsPressed" Value="true">
+                                                                            <Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+
+                                            <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Bottom" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </DockPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsExpanded" Value="true">
+                                            <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                        </Trigger>
+                                        <!--<DataTrigger Binding="{Binding Invoker.CollectionView/Entity.IsNew}" Value="false">
+                                            <Setter Property="HeaderTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBlock FontSize="16" HorizontalAlignment="Left" Text="{Binding Invoker.CollectionView/Entity.Name,FallbackValue=Entity.Name}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>-->
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Expander.Style>
+
+                <ListBox SelectedValue="{Binding Invoker.CollectionView/Entity.Background}" ItemsSource="{Binding Source={StaticResource TermStyleColors}}" VerticalAlignment="Top"
+                              HorizontalAlignment="Left" BorderThickness="0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <ContentControl x:Name="contentControl" Foreground="{TemplateBinding Foreground}">
+                                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                                                  VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                        </ContentControl>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="2"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <shared:PixelSnapper>
+                                <Grid>
+                                    <Rectangle x:Name="PART_Color" Height="14" Width="14" Fill="{Binding}" Stroke="Transparent" StrokeThickness="0.5" Margin="2"/>
+                                    <Path x:Name="PART_Checked" Visibility="Hidden" Width="8" Height="7" Stretch="Fill" StrokeThickness="1.5" StrokeLineJoin="Round" Stroke="White" Data="F1 M 71.5591,7.37148L 72.3123,8.01638L 73.2596,6.45389"/>
+                                </Grid>
+                                
+                            </shared:PixelSnapper>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected,RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="true">
+                                    <Setter TargetName="PART_Checked" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </Expander>
+
+            <Slider Style="{StaticResource MetroSliderStyle}" inf:ControlService.Header="{inf:Resource Shifts_SubEventTypeDetail_PrepareLength}"
+                            Maximum="480" Minimum="0" SmallChange="5" LargeChange="5" IsSnapToTickEnabled="true" 
+                            TickFrequency="5" Value="{Binding Invoker.CollectionView/TimeLength}" Margin="0 10" />
+
+
+
+            <!--<Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+               Content="{inf:Resource Shifts_SubEventTypeDetail_Name}" />-->
+
+            <DockPanel Margin="0 10">
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+               Text="{inf:Resource Shifts_SubEventTypeDetail_Category}" Margin="0 0 5 0"/>
+                <ComboBox  x:Name="Element_SubeventTypes"
+            VerticalAlignment="Center" 
+            ItemsSource="{Binding Source={StaticResource SubeventTypes}}"         
+            SelectedValuePath="Key"
+            SelectedValue="{Binding Invoker.CollectionView/Entity.Type}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key,Converter={StaticResource ResourceConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </DockPanel>
+
+
+
+
+            <!--<Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+               Content="{inf:Resource Shifts_SubEventTypeDetail_Style}"/>-->
+
+
+
+
+            <!--<inf:RequiredValidator Priority="0" TriggerElement="{Binding ElementName=Element_Save}"
+            Property="{Binding Text,ElementName=Element_Name}"/>
+        <inf:StringLengthValidator Priority="1" TriggerElement="{Binding ElementName=Element_Save}"
+            Property="{Binding Text,ElementName=Element_Name}"
+            MaximumLength="30" MinimumLength="1"/>
+        <inf:ObjectCollectionValidator Priority="2" CurrentItemValue="{Binding Entity.Name}"  Property="{Binding Text,ElementName=Element_Name}"
+                                       MatchProperty="Entity.Name" Collection="{Binding Parent.Presenters}"
+                                       TriggerElement="{Binding ElementName=Element_Save}"/>-->
+
+
+
+            <UniformGrid HorizontalAlignment="Left" Columns="1" DataContext="{Binding Invoker.CollectionView/}">
+                <UniformGrid.Resources>
+                    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBoxStyle}">
+                        <Setter Property="Margin" Value="0 5"/>
+                        <Setter Property="Width" Value="200" />
+                    </Style>
+                </UniformGrid.Resources>
+                <CheckBox x:Name="OnService" IsChecked="{Binding Entity.OnService}" Content="{inf:Resource Shifts_SubEventTypeDetail_OnService}" />
+                <CheckBox IsChecked="{Binding Entity.Occupied}" Content="{inf:Resource Shifts_SubEventTypeDetail_Occupied}"/>
+                <CheckBox IsChecked="{Binding Entity.AsARest}" Content="{inf:Resource Shifts_SubEventTypeDetail_AsARest}"/>
+                <CheckBox IsChecked="{Binding Entity.InUse}" Content="{inf:Resource Shifts_SubEventTypeDetail_InUse}"/>
+            </UniformGrid>
+        </StackPanel>
+    </Grid>
+</UserControl>

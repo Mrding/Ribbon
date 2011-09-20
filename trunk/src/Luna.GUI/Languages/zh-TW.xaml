@@ -1,0 +1,1185 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary x:Uid="Adherence">
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary x:Uid="Adherence_AdherenceMenuItem">
+                    <sys:String x:Key="Adherence_AdherenceMenuItem_Adherence">現場管理</sys:String>
+                    <sys:String x:Key="Adherence_AdherenceMenuItem_RTAA">遵時異常</sys:String>
+                    <sys:String x:Key="Adherence_AdherenceMenuItem_RTAAStatistic">異常統計</sys:String>
+                    <sys:String x:Key="Adherence_AdherenceMenuItem_RTSA">座席監控</sys:String>
+                    <sys:String x:Key="Adherence_AdherenceMenuItem_AgentStatusTypes">值機狀態類別</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_AgentSeatFilter">
+                    <sys:String x:Key="Adherence_AgentSeatFilter_AgentSeatFilterView">座席選擇器</sys:String>
+                    <sys:String x:Key="Adherence_AgentSeatFilter_Organization">組織</sys:String>
+                    <sys:String x:Key="Adherence_AgentSeatFilter_AgentShowUpStateFilter">座席員遵時狀態選擇</sys:String>
+                    <sys:String x:Key="Adherence_AgentSeatFilter_NotShowUp">未就席人員</sys:String>
+                    <sys:String x:Key="Adherence_AgentSeatFilter_ShouldBeOffLine">未離席人員</sys:String>
+                    <sys:String x:Key="Adherence_AgentSeatFilter_AgentStatusType">值機狀態</sys:String>
+                    <sys:String x:Key="Adherence_AgentSeatFilter_With1stLevelAlarm">具有一段告警</sys:String>
+                    <sys:String x:Key="Adherence_AgentSeatFilter_With2ndLevelAlarm">具有二段告警</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_AgentStatusHistory">
+                    <sys:String x:Key="Adherence_AgentStatusHistory_Title">{0}值機狀態記錄</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_AgentStatusType">值機狀態</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_EmplyeeInfo">人員信息</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_TimeStamp">時間</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_StartTime">開始</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_EndTime">結束</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_NoneGroup">無分組</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_Reading">正在讀取ACD资料...</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_GroupType">分組方式</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_CostTime">{0}共執行{1}小時{2}分鐘{3}秒</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusHistory_ShowLoginAndOutOnly">只顯示登入登出</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_RtaaStatistic">
+                    <sys:String x:Key="Adherence_RtaaStatistic_RTAAStateChart ">值機狀態分佈圖</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_Agent">客服員</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_CurrentlyOnLine">目前在席</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_NotShowUp">未就席</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_OffLineNormally">用餐休息</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_ShouldBeOffLine">未下線</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_UnexpectedShowUp">無班表出席</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountTotalAgents">共找出客服員( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountShouldBeOnLine">表定值機( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountShouldBeOffLine">表定離開( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountNoPlan">無班人數( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountAbsent">請假( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountCurrentlyOnLine">目前在席( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountNotShowUp">未就席( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountOffLineNormally">用餐休息( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountShouldBeOffLine1">未下線( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_AmountUnexpectedOnLine">無班表值機( {0} )</sys:String>
+                    <sys:String x:Key="Adherence_RtaaStatistic_DayOff">休假( {0} )</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_RtsaStatistic">
+                    <sys:String x:Key="Adherence_RtsaStatistic_PlanToShowUp">表定出席</sys:String>
+                    <sys:String x:Key="Adherence_RtsaStatistic_CurrentlyShowUp">目前在席</sys:String>
+                    <sys:String x:Key="Adherence_RtsaStatistic_OffLineNormally">正常離線</sys:String>
+                    <sys:String x:Key="Adherence_RtsaStatistic_NotShowUp">未就席</sys:String>
+                    <sys:String x:Key="Adherence_RtsaStatistic_ShouldBeOffLine">未離線</sys:String>
+                    <sys:String x:Key="Adherence_RtsaStatistic_ExtraShowUp">額外出席</sys:String>
+                    <sys:String x:Key="Adherence_RtsaStatistic_UnexpectedShowUp">異常出席</sys:String>
+                    <sys:String x:Key="Adherence_RtsaStatistic_OfflineOverTime">離線逾時</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_SeatMonitoring">
+                    <sys:String x:Key="Adherence_SeatMonitoring_Title">座席監控:{0}</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_WatchPoint">監看點</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_Organization">組織</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_Skills">技能</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_PlanedActive">PlanedActive</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_SeatNo">座席號</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_ExtNo">分機號</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_CurrentSeatAgent">CurrentSeatAgent</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_AutoRefresh">自動刷新 間隔時間</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_ShowRtaaPanel">顯示遵時</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_ShowRtsaPanel">顯示遵席</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_ShowFilter">啟用篩選</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_OpenFilter">篩選</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_Alert1">第一級告警</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_Alert2">第二級告警</sys:String>
+                    <sys:String x:Key="Adherence_SeatMonitoring_ListAgentStatus">值機狀態</sys:String>
+
+
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_AgentStatusTypeDetail">
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_StatusCode">狀態代碼</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_StatusName">名稱</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_Image">代表圖示</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_OnService">是否在線</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_AlertTime1">第一級告警</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_AlertTime2">第二級告警</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_PleaseInputStatusCode">請輸入狀態代碼</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_PleaseInputStatusName">請輸入狀態名稱</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_ImageCannotBeNull">圖片不能為空</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_PleaseSelectImage">請選擇圖片</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_OffLine">離線</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_OnLine">在線</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_ImageSizeOutOfRange">圖片大小超出限制</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_StatusCodeDunplicate">代碼代號重複</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_AlertTime1Warnning">第一級告警必須小於第二級告警</sys:String>
+                    <sys:String x:Key="Adherence_AgentStatusTypeDetail_AlertTime2Warnning">第二級告警必須大於第一級告警</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_AgentStatusTypeMaster">
+                    <sys:String x:Key="Adherence_AgentStatusTypeMaster_New">新建</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Adherence_AttendanceDetail">
+                    <sys:String x:Key="Adherence_AttendanceDetail_Name">姓名</sys:String>
+                    <sys:String x:Key="Adherence_AttendanceDetail_Name2">花名</sys:String>
+                    <sys:String x:Key="Adherence_AttendanceDetail_AgentId">員工編號</sys:String>
+                    <sys:String x:Key="Adherence_AttendanceDetail_AgentACDId">員工ACDID</sys:String>
+                    <sys:String x:Key="Adherence_AttendanceDetail_LastStatus">最後狀態</sys:String>
+                    <sys:String x:Key="Adherence_AttendanceDetail_Use">以</sys:String>
+                    <sys:String x:Key="Adherence_AttendanceDetail_ShowOn">出現於</sys:String>
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Administration">
+            <ResourceDictionary.MergedDictionaries>
+
+
+                <ResourceDictionary x:Uid="Administration_BasicLaborRule">
+                    <sys:String x:Key="Administration_BasicLaborRule_DeleteError">工時政策被引用</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_WindowTitle">工時政策管理</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_Title">工時政策</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_Name">名稱</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MaxOvertime">最大加班工時：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MaxShrinked">最大減班工時：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MCDO">最大連續休假日數：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MCWD">最大連續上班天數：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MinIdleGap">最小班距時長：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_StdDailyLaborHour">每日標準工時：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MaxLaborHour">最大標準工時：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MinLaborHour">最小標準工時：</sys:String>
+                    <sys:String x:Key="Administration_BasicLaborRule_MaxSwapTimes">代換班次數上限：</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Administration_LaborRule_AgentFinder">
+                    <sys:String x:Key="Administration_AgentFinder_ChooseAgent">請輸入名字或從選擇器查找</sys:String>
+                    <sys:String x:Key="Administration_AgentFinder_SearchResult">搜索結果</sys:String>
+                    <sys:String x:Key="Administration_AgentFinder_AgentJoined">加入清單</sys:String>
+                    <sys:String x:Key="Administration_AgentFinder_Save">儲存</sys:String>
+                    <sys:String x:Key="Administration_AgentFinder_EmployeeList">人員列表</sys:String>
+                    <sys:String x:Key="Administration_AgentFinder_RemoveEmployee">移除人員</sys:String>
+                    <sys:String x:Key="Administration_AgentFinder_Employee">人員</sys:String>
+                    <sys:String x:Key="Administration_AgentFinder_SaveSuccess">保存成功</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Administration_LaborRuleDetails">
+                    <sys:String x:Key="Administration_LaborRuleDetails_NewLaborRule">新增工時政策</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_DeleteTip">將同時刪除組織和人員的工時政策,確定要刪除嗎？</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_EnsureDelete">是否刪除</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_DayOffMask">可排休日限制</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_SelectedEmp">選定人員</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_ShiftGroupRule">班務規則</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_BasicRule">基本規則</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_DayOffRule">休假規則</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_GroupByShift">組排班</sys:String>
+                    <sys:String x:Key="Administration_LaborRuleDetails_SelectedOrg">選定組織</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Administration_LaborRule_DayOffMask">
+                    <sys:String x:Key="Administration_DayOffMask_WeekOption">面向週的日期選擇</sys:String>
+                    <sys:String x:Key="Administration_DayOffMask_MonthOption">面向月的日期選擇</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Administration_LaborRule_DayOffRule">
+                    <sys:String x:Key="Administration_DayOffRule_HolidayCondition">休假日數判定原則</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_CustomHolidayCount">自訂休假日數</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_SysStatistic">依照排班期內以下勾選的例假日次數自動累計</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_Custom">自訂</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_Saturday">星期六</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_Sunday">星期日</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_NationalHoliday">國定假日</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_WeekHoliday">休假於例假日的次數設定</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_MinFWTimes">例假日兩日連休之次數上下限</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_Maximum">上限</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_MinPWTimes">例假日一日單休之次數上下限</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_NHAssignRule">國定假日排班規則</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_FreeToAssign">自由安排</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_CoerceAssign">不可排休</sys:String>
+                    <sys:String x:Key="Administration_DayOffRule_CoerceAssignOut">不可排班</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Administration_LaborRule_GroupByShift">
+                    <sys:String x:Key="Administration_GroupByShift_AssginByGroup">分組排班</sys:String>
+                    <sys:String x:Key="Administration_GroupByShift_AsssgnCondition">排班條件</sys:String>
+                    <sys:String x:Key="Administration_GroupByShift_GroupingArrangeShift">班別同進退</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Administration_LaborRule_ShiftGroup">
+                    <sys:String x:Key="Administration_ShiftGroup_ShiftGroupList">班群組列表</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_ShiftGroupDetail">班群組明細</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_ShiftList">班別列表</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_Search">查詢：</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_ShiftGroupName">班群組名稱：</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_ChooseOneShift">班別集合中僅可選擇一種班別排班</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_ShiftGroupCountMinimum">班群組</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_Maximum">上限：</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_SequShiftGroupCountMinimum">連續班群組</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_CoerceAssignOut">跨班群組最小保障休息時長：</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_Choose">已選擇</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_UnChoose">未選擇</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_OrderShiftGroups">優先群組</sys:String>
+                    <sys:String x:Key="Administration_ShiftGroup_NoOrderShiftGroups">效益群組</sys:String>
+
+
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Administration_LoginView">
+                    <sys:String x:Key="Administration_LoginView_LunaLoginScreen">歡迎使用</sys:String>
+                    <sys:String x:Key="Administration_LoginView_Login">確定</sys:String>
+                    <sys:String x:Key="Administration_LoginView_LoginFailed">登錄失敗,用戶名或密碼錯誤</sys:String>
+                    <sys:String x:Key="Administration_LoginView_Sso">SSO登入失敗，請登入SSO後再執行!!</sys:String>
+                    <sys:String x:Key="Administration_LoginView_AgentId">員工代號</sys:String>
+                    <sys:String x:Key="Administration_LoginView_Password">密碼</sys:String>
+                    <sys:String x:Key="Administration_LoginView_Password1">新密碼:</sys:String>
+                    <sys:String x:Key="Administration_LoginView_Password2">確認新密碼：</sys:String>
+                    <sys:String x:Key="Administration_LoginView_NewPasswordNotMached">新密碼輸入不一致</sys:String>
+                    <sys:String x:Key="Administration_LoginView_ChangePassword">修改密碼</sys:String>
+                    <sys:String x:Key="Administration_LoginView_ChooseRole">請選擇角色</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Administration_OrgAndStaffManager">
+                    <sys:String x:Key="Administration_OrgAndStaffManager_Title">組織人員管理</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_EditOrg">編輯組織</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_ExceptOrgEmployee">無組織人員</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_SelectAll">全選</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_Select">選中</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_MoveEmployee">將人員轉移到</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_RemoveEmployee">從組織中移除人員</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_Organization">組織</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_DisplayAllEmployee">顯示所有人員</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_OrganizationList">組織清單</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_EmployeeList">人員列表</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_HintText">輸入名字進行查詢</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_Org">組織：</sys:String>
+                    <sys:String x:Key="Administration_OrganizationDetail_CurrentOrgManager">當前組織管理員</sys:String>
+                    <sys:String x:Key="Administration_OrganizationDetail_SetCurrentOrgManager">設置為當前組織管理員</sys:String>
+
+                    <sys:String x:Key="Administration_OrganizationDetail_ParentOrg">上級組織：</sys:String>
+                    <sys:String x:Key="Administration_OrganizationDetail_CurrentOrg">當前組織：</sys:String>
+
+
+                    <sys:String x:Key="Administration_EmployeeDetail_Skill">技能：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_Name1">姓名：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_Name2">別名：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_Mobile">手機號碼：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_Productivity">生產力：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_Email">Email：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_Address">地址：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_IsAgent">參與排班</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_AgentId">員工編號：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_ACDID">ACDID：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_Rank">職級：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_EmployeeType1">職別類型一：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_EmployeeType2">職別類型二：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_EmployeeType3">職別類型三：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_EnrollmentDate">到職日：</sys:String>
+                    <sys:String x:Key="Administration_EmployeeDetail_LeavingDate">離職日：</sys:String>
+
+                    <sys:String x:Key="Administration_EmployeeDetail_NewEmployee">新增人員</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_SaveToolTip">是否確定離開當前選項？未保存的數據將會丟失！</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_CanCancel">是否取消</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_AgentIdNotEmpty">人員編號不可重複</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_CanDelete">此組織已被引用，不能刪除！</sys:String>
+                    <sys:String x:Key="Administration_OrgAndStaffManager_UnSelected">尚未選中組織</sys:String>
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Importing">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Importing_Tool">
+                    <sys:String x:Key="Importing_IncorrectFileFormate">檔案格式有誤!({0})</sys:String>
+                    <sys:String x:Key="Importing_Restore">匯入</sys:String>
+                    <sys:String x:Key="Importing_RestoreSuccess">匯入成功！</sys:String>
+                    <sys:String x:Key="Importing_RestoreFailed">匯入失敗！</sys:String>
+                    <sys:String x:Key="Importing_Close">正在匯入資料，請勿關閉窗體</sys:String>
+                    <sys:String x:Key="Importing_Cancel">關閉</sys:String>
+                    <sys:String x:Key="Importing_DataRange">匯入日期範圍</sys:String>
+                    <sys:String x:Key="Importing_FilePath">匯入檔案 : {0}</sys:String>
+                    <sys:String x:Key="Importing_AgentNotFound">此員工({0})不存在</sys:String>
+                    <sys:String x:Key="Importing_ShfitNotValid">{0}員工於{2}的班表'{1}'無法辨識</sys:String>
+                    <sys:String x:Key="Importing_Index">正在匯入第{0}筆</sys:String>
+                    <sys:String x:Key="Importing_Count">，共{0}筆</sys:String>
+                    <sys:String x:Key="Importing_RemainSeconds">，還剩{0}秒</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Importing_Menu">
+                    <sys:String x:Key="Importing_Menu_Header">Excel匯入</sys:String>
+                    <sys:String x:Key="Importing_Menu_DataRestore">基礎數據匯入</sys:String>
+                    <sys:String x:Key="Importing_Menu_AssigmentRestore">班表數據匯入</sys:String>
+                    <sys:String x:Key="Importing_Menu_ForecastRestore">預測數據匯入</sys:String>
+                </ResourceDictionary>
+
+
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Infrastructure">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Infrastructure_AgentFinder">
+                    <sys:String x:Key="Infrastructure_AgentFinder_AgentFinderView">人員</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_AgentOnly">僅限定為客服人員</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_EqEmployeeType1">員工類別一</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_EqEmployeeType2">員工類別二</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_EqEmployeeType3">員工類別三</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_SkillMatching">具有技能</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_OrganizationMatching">所屬組織</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_InRank">職級</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_InEnrollDate">到職日</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Name">人員</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Organization">組織</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Rank">職級</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_EmployeeType1">員工類別</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_EnrollmentDate">到職日</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Add">添加</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Replace">替換</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Search2">查詢</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_QueryResult">共查詢出{0}人</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Restriction_Name">姓名</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Restriction_AgentAcdid">員工ACDID</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Restriction_AgentId">員工編號</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Restriction_BornAddress">戶籍地址</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Restriction_HomeAddress">通訊地址</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Restriction_Language">語言專長</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_ShiftName">班名</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Search">搜索</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_EnterShiftName">搜尋班名</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_Choice">勾選</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_CheckAll">全選</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_List">列表</sys:String>
+                    <sys:String x:Key="Infrastructure_AgentFinder_CurrentSelectedShift">當前選中{0}個</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_CustomGroupMenuItem">
+                    <sys:String x:Key="Infrastructure_CustomGroupMenuItem_CustomGroup">自定義群組</sys:String>
+                    <sys:String x:Key="Infrastructure_CustomGroupMenuItem_Load">載入</sys:String>
+                    <sys:String x:Key="Infrastructure_CustomGroupMenuItem_Create">創建</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_SearchMenuItem">
+                    <sys:String x:Key="Infrastructure_SearchMenuItem_Search">搜尋</sys:String>
+                    <sys:String x:Key="Infrastructure_SearchMenuItem_AgentFinder">人員篩選器</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_ShiftSwapingMenuItem">
+                    <sys:String x:Key="Infrastructure_ShiftSwapingMenuItem_ShiftSwaping">代換班</sys:String>
+                    <sys:String x:Key="Infrastructure_ShiftSwapingMenuItem_SingleDaySwapApprove">單日換班批閱</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_ToolsMenuItem">
+                    <sys:String x:Key="Infrastructure_ToolsMenuItem_Header">工具</sys:String>
+                    <sys:String x:Key="Infrastructure_ToolsMenuItem_Publish">公告班表</sys:String>
+
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_NationalHoliday">
+                    <sys:String x:Key="Infrastructure_NationalHoliday_WindowsTitle">國定假日管理</sys:String>
+                    <sys:String x:Key="Infrastructure_NationalHoliday_Title">國定假日</sys:String>
+                    <sys:String x:Key="Infrastructure_NationalHoliday_Name">名稱：</sys:String>
+                    <sys:String x:Key="Infrastructure_NationalHoliday_Description">描述：</sys:String>
+                    <sys:String x:Key="Infrastructure_NationalHoliday_Date">日期：</sys:String>
+                    <sys:String x:Key="Infrastructure_NationalHoliday_NewName">新增</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_AcdQueue">
+                    <sys:String x:Key="Infrastructure_AcdQueue_WindowsTitle">Acd隊列管理</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_Title">Acd隊列</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_Name">名稱：</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_Description">描述：</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_SplitId">外部對應編號：</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_Acd">Acd：</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_NewName">新增</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_CheckMsg">此Acd隊列已被引用，不能刪除！</sys:String>
+                    <sys:String x:Key="Infrastructure_AcdQueue_CheckMsg_Acd">Acd並未被建立，請檢查資料庫配置！</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_Skill">
+                    <sys:String x:Key="Infrastructure_Skill_WindowsTitle">技能管理</sys:String>
+                    <sys:String x:Key="Infrastructure_Skill_Title">技能</sys:String>
+                    <sys:String x:Key="Infrastructure_Skill_Name">名稱：</sys:String>
+                    <sys:String x:Key="Infrastructure_Skill_Description">描述：</sys:String>
+                    <sys:String x:Key="Infrastructure_Skill_NewName">新增</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_ServiceQueue">
+                    <sys:String x:Key="Infrastructure_ServiceQueue_WindowsTitle">服務隊列管理</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_Title">服務隊列</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_Name">名稱：</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_Description">描述：</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_AbandonRate">放棄率：</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_MinimumOnlines">最小值機人頭：</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_Skill">對應技能：</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_AcdQueue">Acd隊列：</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_Campaign">服務編組</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_NewName">新增</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_InclusiveAcdQueues">涵蓋的Acd隊列</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_UsableAcdQueues">可用的Acd隊列</sys:String>
+                    <sys:String x:Key="Infrastructure_ServiceQueue_CheckMsg">此服務隊列已被引用，不能刪除！</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_Campaign">
+                    <sys:String x:Key="Infrastructure_Campaign">服務編組</sys:String>
+                    <sys:String x:Key="Infrastructure_Campaign_Title">服務編組管理</sys:String>
+                    <sys:String x:Key="Infrastructure_Campaign_CannotDelete">{0}已被使用，無法刪除！</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_Acd">
+                    <sys:String x:Key="Infrastructure_Acd_WindowsTitle">Acd管理</sys:String>
+                    <sys:String x:Key="Infrastructure_Acd_Title">Acd</sys:String>
+                    <sys:String x:Key="Infrastructure_Acd_Name">名稱：</sys:String>
+                    <sys:String x:Key="Infrastructure_Acd_Description">描述：</sys:String>
+                    <sys:String x:Key="Infrastructure_Acd_NewName">新增</sys:String>
+                    <sys:String x:Key="Infrastructure_Acd_CheckMsg">此Acd已被引用，不能刪除！</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_UpdateManager">
+                    <sys:String x:Key="Infrastructure_UpdateManager_WindowsTitle">更新應用程序</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_CurrentNewVersion">當前有以下更新</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_Setup">安裝</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_UpdateContent">更新內容：</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_UpdateProgress">更新進度：</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_Details">詳細信息：</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_BeginUpdate">開始更新：</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_BeginCheck">正在檢測新版本</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_EnsureDownNewVersion">有新版本可以下載,是否要下載新版本</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_WarnNoNewVersion">當前為最新版本{0},無需更新</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateManager_Update">下載</sys:String>
+
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_InitialUpdate">正在初始化下載</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_BeginUpdate">開始更新</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_Downloading">下載中...</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_ExternalAppDownloading">正在下載外部程序</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_MainAppDownloading">正在下載主程序</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_DownloadMainAppWhenExternalAppUpdate">外部程序更新成功,開始下載主程序</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_FinishDownload">主程序下載完成,请點擊下一步完成更新</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_BeginUpdateExternalApp">正在更新外部程序</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_UpdateExternalAppSuccess">外部程序更新成功</sys:String>
+                    <sys:String x:Key="Infrastructure_UpdateAppPresenter_UpdateExternalErrorTip">發現有外部程序正在使用,請關閉後再執行更新</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Infrastructure_OptionManager">
+                    <sys:String x:Key="Infrastructure_OptionManager_ModuleName">選項</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ResetDefaultOption">恢復預設值</sys:String>
+                    <!--Begin General-->
+                    <sys:String x:Key="Infrastructure_OptionManager_General">一般</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_StartEndSetting">啓動與退出設置</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_AutoRun">開機後自動運行</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_AutoLogin">啓動時為我自動登錄</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_SoftUpdate">WMS更新</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_AutoUpdate">自動檢測更新</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_MainWindow">主面板</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_CloseProgram">關閉面板時</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_TopProgram">始終保持在其他视窗前端</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_MinProgram">最小化到工作列，但不退出程序</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ExitProgram">退出程序</sys:String>
+                    <!--End General-->
+                    <!--Begin Proxy-->
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxyName">網路連接</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxySetting">代理設置</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxyType">代理類型</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxyServerAddress">伺服器地址</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxyPort">端口</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxyUsername">用戶名</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxyPassword">密碼</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ProxyDomain">域</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_TextProxyDomain">測試代理服務器</sys:String>
+
+                    <sys:String x:Key="Infrastructure_OptionManager_NotUseProxy">不使用代理</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_HttpProxy">Http</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_Socks4">Socks4</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_Socks5">Socks5</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ConnectProxySuccess">代理伺服器連接正常,可以使用</sys:String>
+                    <sys:String x:Key="Infrastructure_OptionManager_ConnectProxyError">無法連接代理伺服器,請檢查設置</sys:String>
+                    <!--End Proxy-->
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Seating">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Seating_AddSeatEvent">
+                    <sys:String x:Key="Seating_AddSeatEvent_Title">新增佔席事件</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SeatEventInfo">佔席事件資訊</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SeatEventType">種類</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SeatOccupyReason">說明</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SeatEventBeginFrom">起於</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SeatEventDuration">長度</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SeatEventTitle">選擇日期</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SeatEventOccurDays">日期</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_SelectSeatEventOccupySeats">請選擇事件佔用席位</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_ChooseSeatArea">選擇話房</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_OccupySeats">佔用的席位</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_Preview">預覽</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_TimeRange">佔席時間</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_Area">話房</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_Seat">席位</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_ConflictSeats">發生衝突的席位</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_Reason">原因</sys:String>
+                    <sys:String x:Key="Seating_AddSeatEvent_ExecuteResult">執行結果</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_PrioritySetup">
+                    <sys:String x:Key="Seating_PrioritySetup_Title">排座規則:{0}</sys:String>
+                    <sys:String x:Key="Seating_PrioritySetup_AreaSequence">可入座之話房順序</sys:String>
+                    <sys:String x:Key="Seating_PrioritySetup_OrganizationSequence">{0} 按以下組織順序排座</sys:String>
+                    <sys:String x:Key="Seating_PrioritySetup_PriorityAgents">優先人員</sys:String>
+                    <sys:String x:Key="Seating_PrioritySetup_PriorityOrganization">優先組織</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SeatConsolidationSetup">
+                    <sys:String x:Key="Seating_SeatConsolidationSetup_ConsolidationSequence">按以下順序時段集中</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SeatConsolidation">
+                    <sys:String x:Key="Seating_SeatConsolidation_ConsolidationTitle">集中名稱</sys:String>
+                    <sys:String x:Key="Seating_SeatConsolidation_AssignmentCoverage">涵蓋班表</sys:String>
+                    <sys:String x:Key="Seating_SeatConsolidation_AppliedWeekdays">套用日</sys:String>
+                    <sys:String x:Key="Seating_SeatConsolidation_TargetArea">要集中的話房</sys:String>
+                    <sys:String x:Key="Seating_SeatConsolidation_ConsolidationOrg">被集中的組織</sys:String>
+                    <sys:String x:Key="Seating_SeatConsolidation_EmployeeRank">被集中的級職</sys:String>
+                    <sys:String x:Key="Seating_SeatConsolidation_ConsolidationSkill">被集中的技能</sys:String>
+                    <sys:String x:Key="Seating_SeatConsolidation_ConsolidationShift">集中的班別</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SeatDispatcher">
+                    <sys:String x:Key="Seating_SeatDispatcher_Title">手動席位配置:{0}</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_AssignmentWithNoSeat">未配置席位班表</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_AssignSeatDirectly">直接指定席位</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_MarkAsNoSeatNeed">標記不需要配席</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_Sort">排序</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_Sort_SortBySeatNo">座位號</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_Refresh">刷新</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_CancelOccupation">重新配席</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_Cut">剪下</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_Paste">貼上</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_SeatNotInUse">停用</sys:String>
+                    <sys:String x:Key="SubmitAllChange">提交所有操作？</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_SubmitFailTitle">席位調度失敗</sys:String>
+                    <sys:String x:Key="Seating_SeatDispatcher_SubmitFailMessage">席位所在的班表已被調度過, 請重新調度</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SeatEventBrowser">
+                    <sys:String x:Key="Seating_SeatEventBrowser_Loading">座位表讀取中...</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_AddNewSeatEvent">新增佔席事件</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_Title">佔席事件檢視及修改</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_View">檢視畫面</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_SearchSeatEventForViewEdit">搜尋並選擇欲檢視或修刪的佔席事件</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_HappenAt">發生於</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_Duration">長度</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_DetailInfo">詳細說明</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_OccupiedSeats">佔用席位總數</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_ChooseModifyOrDelete">選擇修改或刪除</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_ModifyCurrentSeatEvent">修改此佔席事件</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_DeleteCurrentSeatEvent">刪除此佔席事件</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_ModifySeatEventDetail">修改佔席事件資訊</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_SeatEventType">佔席事件種類</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_SeatEventDetailInfo">事件詳細說明</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_SeatEventStartFrom">佔席事件起於</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_SeatEventDuration">佔席時間長度</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_TimeRange">佔席時間</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_Area">話房</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_Seat">席位</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_SureDeleteSeatEvent">確認刪除此佔席事件</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_DeleteSeatEventOnlyOnTargetDate">刪除動作僅就目標日期之個別佔席事件刪除</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_ModifySeatEventOccupiedSeat">事件佔用席位修改</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_ChooseArea">選擇話房</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_SeatOccupied">佔用的席位</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_Preview">預覽</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_ConflictSeat">發生衝突的席位</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_Reason">原因</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_ExecuteResult">執行結果</sys:String>
+                    <sys:String x:Key="Seating_SeatEventBrowser_DeleteSucceed">刪除成功</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SeatingArrangement">
+                    <sys:String x:Key="Seating_SeatingArrangement_Title">啟動排座</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_Campaign">任務編組:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_AssignSeatDirectly">直接指定席位</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_ChooseSiteForSeatArrangement">挑選站點:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_AdjustAreaOrder">話房順位:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_CSDuration">排班期:{0:yyyy/MM/dd} - {1:MM/dd}</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_ArrangeSeatFromDate">排座起始日</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_ArrangeSeatToDate">排座結束日</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_SeatArrangeRule">排座規則設定:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_ForceEmployeeSeatRankMatch">強制座席與人員等級匹配</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_BufferMinutesOfSeatTakeOver">交班緩衝分鐘數</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_AmountAssignmentWithSeat">已配席數:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_AmountAssignmentNoSeat">未配席數:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_AmountAssignmentSameSeat">班表同席數:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_SeatUtilization">席位利用率：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_Consolidation">時段集中：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_TotalPeople">總人數：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_TotalCountOfSeatingRule">總班務數量：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_TotalCountOfSeatingArrangement">總班段數量：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_EmployeePriority1">順位1：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_EmployeePriority2">順位2：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_EmployeePriority3">順位3：</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_PriorityOrganization">優先組織:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_AreaOrganization">話房組織:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_AssignmentHaveNoSeat">未配置席位班表:</sys:String>
+                    <sys:String x:Key="Seating_SeatingArrangement_Exception">排座引擎發生異常</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SeatingMenuItem">
+                    <sys:String x:Key="Seating_SeatingMenuItem_Seating">座席管理</sys:String>
+                    <sys:String x:Key="Seating_SeatingMenuItem_PrioritySetup">順位規則</sys:String>
+                    <sys:String x:Key="Seating_SeatingMenuItem_ConsolidationSetup">集中規則</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SiteExplorer">
+                    <sys:String x:Key="Seating_SiteExplorer_Title">座席</sys:String>
+                    <sys:String x:Key="Seating_SiteExplorer_AddArea">新增話房</sys:String>
+                    <sys:String x:Key="Seating_SiteExplorer_EditArea">編輯話房</sys:String>
+                    <sys:String x:Key="Seating_SiteExplorer_EditSite">編輯站點</sys:String>
+                    <sys:String x:Key="Seating_SiteExplorer_SeatPlanning">話房規劃</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SeatPlanning">
+                    <sys:String x:Key="Seating_SeatPlanning_Title">話房規劃:{0}</sys:String>
+                    <sys:String x:Key="Seating_SeatPlanning_SavingFail_Title">保存失敗</sys:String>
+                    <sys:String x:Key="Seating_SeatPlanning_SavingFail_Context">分機號碼或席位代號發生重複</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_AreaEditor">
+                    <sys:String x:Key="Seating_AreaEditor_Title">話房規劃</sys:String>
+                    <sys:String x:Key="Seating_AreaEditor_BelongSite">所屬站點</sys:String>
+                    <sys:String x:Key="Seating_AreaEditor_BelongGroup">所屬服務編組</sys:String>
+                    <sys:String x:Key="Seating_AreaEditor_AreaName">話房名稱</sys:String>
+                    <sys:String x:Key="Seating_AreaEditor_AreaDimension">席位方陣範圍(排,列)</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Seating_SiteEditor">
+                    <sys:String x:Key="Seating_SiteEditor_Title">站點管理</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Shifts">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Shifts_AgentResources">
+                    <sys:String x:Key="Shifts_AgentResources_Title">人員參與管理:{0}</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_Joined">參與</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_Operations">選項</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_JoinCurrentCS">參加此排班期</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_NotJoin">不參與</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_LaborRuleInfo">政策與班務</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_DayWorkOff">工作(休假)天</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_OffWorkDaySection">例假日</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MaxContinueWorkDay">最多連續上班 {0:0} 天</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MaxContinueDayOff">只能連續休假 {0:0} 天</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_Restriction">限制</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MaxLaborHour">工時上限</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MinIdleGap">最小班距</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_StdDailyLaborHour">每日標準工時</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MinLaborHour">工時下限</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MaxOvertimeThreshold">加班時數上限</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MaxShrinkedThreshold">減班時數上限</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_MaxSwapTimes">最多代換班 {0:0} 次</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_EmployeeName">員工姓名</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_JoinedColumnHeader">參與</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_EnrollmentDateColumnHeader">到職日</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_ParticipateDayCountColumnHeader">參與排班期天數</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_LaborRule">工時政策</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_Score">評分</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_JoinedYesOrNo">不參與;參與</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_OptionalHoliday1Day">一日單休</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_OptionalHoliday2Days">二日連休</sys:String>
+                    <sys:String x:Key="Shifts_AgentResources_AllowedHolidaysInScheduling">排班期可休假 {0:0} 天</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Shifts_BatchDispatcher">
+                    <sys:String x:Key="Shifts_BatchDispatcher_Hint">備註:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AssignmentTypeForTuning">限定欲調度班別</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_SubEventTypeForTuning">限定事件種類</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_SpecifyParentAssignmentType">限定事件依附的班別</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_BeginFrom">{0}開始於</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_EndAt">{0}結束於</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AnyAssignmentExist">該日有任何班務</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_ValidSubEventRange">篩選事件範圍</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AlterStartTime">調整{0}起始時間</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AlterEndTime">調整{0}結束時間</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_LockSelected">鎖定被選中的{0}</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_Delete">刪除{0}</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AllStartFromSameTime">將{0}統一調整開始於</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AllEndAtSameTime">將{0}統一調整結束於</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AllMovingSpecifyLength">所有{0}(移動該時間量)</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AlterStart">改變{0}起始大小</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AlterEnd">改變{0}結束大小</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_ShrinkOrExtendStartTime">對所選{0}之起始時間縮擴</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_ShrinkOrExtendEndTime">對所選{0}之結束時間縮擴</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_BatchTuningWizard">批次調度精靈</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_WelcomeToBatchTuningWizard">歡迎使用批次調度精靈</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_ChooseTuningOption">請選擇欲操作的調度動作</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AssignmentFilter">人員班務篩選</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_TuningTargetDate">調度的目標日期:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_InsertSubEventType">欲插入的事件種類:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AvailableAssignmentType">限定事件插入的班別:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_SubEventBeginFrom">事件開始於:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_SubEventDuration">事件長度:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_InsertAssignmentType">欲增加的班別:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AssignmentBeginFrom">班務開始於:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_AssignmentDuration">班務長度:</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_TuningAdjustmentSetup">調度動作設定</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_TargetDateForTuning">調度目標日期: {0:yyyy/MM/dd}</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_TuningReasonNotes">本次批次調度備注</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_ChooseTargetAgentActivity">勾選目標人員</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_InvalidAssignment">被鎖定或無法調度的班務</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_Employee">人員</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_ActivityName">活動名稱</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_Time">時間</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_InvalidSubEvent">被鎖定或無法調度的事件</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_ExecuteResult">執行結果</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_TuningResult">調度結果</sys:String>
+                    <sys:String x:Key="Shifts_BatchDispatcher_SubmitChangesFail">您所調度的班表已經被其他人調度過, 請重新操作</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskDeleteShift">班表取消確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskDeleteShiftText">是否取消客服員 {0} {1:MM/dd} 的 {2} 班表 ?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskCancelSeat">座位表取消確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskCancelSeatText">是否取消 {0:yyyy/MM/dd} 人員的全部的座位表?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskEditShift">班表調度確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskEditShiftText">是否修改客服員 {0} {1:MM/dd} 的 {2} 班表 ?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskAssignSeat">席位調度確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskAssignSeatText">是否將 {0} 座位號 {1} 安排給客服員 {2} {3:MM/dd} 的 {4} 班表 ?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_DeleteSifts">多天刪除班表</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_View3D">3D模式浏覽班表</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_EditSchedule">
+                    <sys:String x:Key="Shifts_EditSchedule_WizardSampleTitle">建立排班期</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_WizardSample">排班期檢視與修改</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_WelcomeToCSWizard">歡迎進入排班期檢視與修改功能</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_CampaignList">任務編組列表</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_CampaignListDes">請選擇要建立排班期之任務編組</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_CampaignListContinue">單擊下一步繼續</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_InteriorPage">排班期設定</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_InteriorPageTitle">排班期設定與修改</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_Range">由</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_to">至</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_Alias">名稱</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_General">一般設定</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_Shrinkage">損耗率</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_Name">服務隊列名稱</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_MaxSeats">最大席位數</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_ChooseServiceQueue">勾選服務隊列</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_ChooseOrganization">勾選參與的組織</sys:String>
+                    <sys:String x:Key="Shifts_EditSchedule_MinOnLineStaff">最小值機人力</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_ScheduleExplorer">
+                    <sys:String x:Key="Shifts_ScheduleExplorer_Title">任務編組</sys:String>
+                    <sys:String x:Key="Shifts_ScheduleExplorer_NewCSToolTip">創建排班期</sys:String>
+                    <sys:String x:Key="Shifts_ScheduleExplorer_EditCSToolTip">編輯排班期</sys:String>
+                    <sys:String x:Key="Shifts_ScheduleExplorer_JoinedAgentManageToolTip">參與人員管理</sys:String>
+                    <sys:String x:Key="Shifts_ScheduleExplorer_Shift">班務檢視與調度</sys:String>
+                    <sys:String x:Key="Shifts_ScheduleExplorer_SeattingToolTip">啟動排座</sys:String>
+                    <sys:String x:Key="Shifts_ScheduleExplorer_SchedulingEngineToolTip">啟動排班</sys:String>
+                    <sys:String x:Key="Shifts_ScheduleExplorer_SeatToolTip">手動席位調度</sys:String>
+                    <sys:String x:Key="Filter_3months">顯示最近3個月的排班期</sys:String>
+                    <sys:String x:Key="Filter_6months">顯示最近6個月的排班期</sys:String>
+                    <sys:String x:Key="Filter_All">顯示所有排班期</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_RTAAPrefix">
+                    <sys:String x:Key="Shifts_RTAAPrefix_Title">異常撫平</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_ShiftComposer">
+                    <sys:String x:Key="Shifts_ShiftComposer_Title">排班秘書</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_ShiftDispatcher">
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Title">班務調度:{0}</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_LaborHour">工時政策</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_LaborHourTotals">標準工時</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_OvertimeTotals">加班工時</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_ShrinkedTotals">減班工時</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_PW">一日單休次數</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_FW">二日連休次數</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Exception">異常信息</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AddEvent">增加事件</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AddShift">增加班務</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Lock">鎖定</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Unlock">解鎖</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Delete">刪除</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Absent">請假</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Fully">整個班</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Shortly">部份班</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_RescheduleSeat">重新配席</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_CancelSeat">無需配席</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Sort">排序</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Reload">重新整理</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Reading">正在開啟班表...</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Name2">姓名2:</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_EmployeeType1">類型1:</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_EmployeeType2">類型2:</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_EmployeeType3">類型3:</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_Mobile">手機:</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_SortByDateTime">按照時間</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_SortByAgentName">按照姓名</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_SortByLaborRuleHasError">按照工時異常</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_SortByShiftName">按照班名</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_ShowShiftText">顯示活動名稱</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_SubmitChangesFail">您所調度的班表已經被其他人調度過, 請重新操作</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_StaffingCalculator">人力觀察</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_RescheduleSeatByDate">當天所有班表重新配席</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskDeleteShift">班表取消確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskDeleteShiftText">是否取消客服員 {0} {1:MM/dd} 的 {2} 班表 ?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskCancelSeat">座位表取消確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskCancelSeatText">是否取消 {0:yyyy/MM/dd} 人員的全部的座位表?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskEditShift">班表調度確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskEditShiftText">是否修改客服員 {0} {1:MM/dd} 的 {2} 班表 ?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskAssignSeat">席位調度確認</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_AskAssignSeatText">是否將 {0} 座位號 {1} 安排給客服員 {2} {3:MM/dd} 的 {4} 班表 ?</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_SelectAll">全選</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_UnSelectAll">無</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_FindCount">{1}/{0}人</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDispatcher_RTAAPrefix">異常撫平</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_AddingEvent">
+                    <sys:String x:Key="Shifts_AddingEvent_Title">增加事件</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_EmployeeSelectionHeader">請選擇要插入的人員範圍</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_EventStart">開始</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_EventEnd">結束</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ApplyToCurrentSelectedEmployee">插入活動到({0}, {1})</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ApplyToSelectedEmployees">插入活動到勾選人員({0})</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnHeader_Name">名稱</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnHeader_Type">類型</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnHeader_Start">開始時間</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnHeader_Length">長度</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnHeader_Online">上線</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnHeader_Occupied">席位</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnHeader_InUse">狀態</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnValueYesOrNo">否;是</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnValueOnlineOrOffline">;是</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnValueOccupiedOrNot">不占;</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_ColumnValueInUseOrDisable">停用;</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_Add">加入</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_Close">關閉</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_Successes">成功:</sys:String>
+                    <sys:String x:Key="Shifts_AddingEvent_Fails">失敗:</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_AddingShift">
+                    <sys:String x:Key="Shifts_AddingShift_Title">增加班務</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_EmployeeSelectionHeader">請選擇要插入的人員範圍</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ShiftStart">開始時間</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ShiftEnd">結束時間</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ApplyToCurrentSelectedEmployee">插入活動到此人({0}, {1})</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ApplyToSelectedEmployees">插入活動到勾選人員({0})</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ColumnHeader_Name">名稱</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ColumnHeader_Type">類型</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ColumnHeader_Start">開始時間</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ColumnHeader_Length">長度</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ColumnHeader_Online">上線</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ColumnHeader_Occupied">佔席</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_ColumnValueYesOrNo">否;是</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_Add">加入</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_Close">關閉</sys:String>
+                    <sys:String x:Key="Shifts_AddingShift_NavigateTo">跳轉至開始時間</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_MaintenanceSchedule">
+                    <sys:String x:Key="Shifts_MaintenanceSchedule_Title">多天刪除班表</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_ShfitDetail">
+                    <sys:String x:Key="Shifts_ShiftDetail_Title">{0}於{1:yyyy/MM/dd HH:mm}至{2:yyyy/MM/dd HH:mm}的座位表</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDetail_Area">話房</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDetail_Seat">席位</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDetail_Start">開始</sys:String>
+                    <sys:String x:Key="Shifts_ShiftDetail_End">結束</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_ShiftsMenuItem">
+                    <sys:String x:Key="Shifts_ShiftsMenuItem_Header">調加減班</sys:String>
+                    <sys:String x:Key="Shifts_ShiftsMenuItem_OpenBatchDispatcher">開啟批次調度</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_AssignmentTypeMaster">
+                    <sys:String x:Key="Shifts_AssignmentTypeMaster_Title">活動型態管理</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeMaster_Module">活動型態</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeMaster_NewAssignment">正常班</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeMaster_NewOvertimeAssignment">加班</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_AssignmentTypeDetail">
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_Name">名稱</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_Misc">作用</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_Legend">可視化編輯區</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_BgColor">顏色</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_ShiftDetail">班表風格</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_InsertRuleDetail">離線事件規則</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_InsertRuleStep">密集度</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_Category">類型</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_InUse">啟用</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_AsAWork">視為當天有班</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_GapGuaranteed">班距保證</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_Occupied">佔席</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_AsARest">視為休息</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_IgnoreAdherence">不列入考勤</sys:String>
+
+
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_RemoveInsertRule">刪除</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_NewName">新班型</sys:String>
+                    <sys:String x:Key="Shifts_AssignmentTypeDetail_DragSubEventTypeToCreateNewInsertRule">離線規則選區</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_AbsentEventTypeMaster">
+                    <sys:String x:Key="Shifts_AbsentEventTypeMaster_Title">請假類型管理</sys:String>
+                    <sys:String x:Key="Shifts_AbsentEventTypeMaster_Type">請假類型</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_AbsentEventTypeDetail">
+                    <sys:String x:Key="Shifts_AbsentEventTypeDetail_NotUse">未啟用</sys:String>
+                    <sys:String x:Key="Shifts_AbsentEventTypeDetail_IsInUse">是否啟用 :</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_SubEventTypeDetail">
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_Title">事件</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_NewName">新事件</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_Name">名稱 :</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_Category">類型</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_PrepareLength">長度(分鐘)</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_Style">顏色 :</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_OnService">在線</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_Occupied">佔席</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_AsARest">視為休息</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_IsInUse">是否</sys:String>
+                    <sys:String x:Key="Shifts_SubEventTypeDetail_InUse">啟用</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_BoxPairSwap">
+                    <sys:String x:Key="Shifts_BoxPairSwap_Success">Success</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_Applier">申請方</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_Replier">回覆方</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_Message">信息:</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_SetTimeOff">TimeOff移動失敗</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_CreateTermFail">交換失敗，班表信息：</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_Shiftprint">班表已發生變化</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_EventHasExist">事件不存在</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_TermGapHasMatched">班距不符</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_HasTimeOff">存在TimeOff</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_HasAbsentEvent">存在事件</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_HasLocked">存在有鎖定的事件和班</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_BackAssignment">前半</sys:String>
+                    <sys:String x:Key="Shifts_BoxPairSwap_ForwardAssignment">後半</sys:String>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Uid="Shifts_LaborRuleException">
+                    <sys:String x:Key="Shifts_ShiftGapException">{0:0.## 小時} 休息品質不佳</sys:String>
+                    <sys:String x:Key="Shifts_OvertimeWorkingException">已連續上班 {0}天{1}时{2}分</sys:String>
+                    <sys:String x:Key="Shifts_DayOffException">已連續休假 {0} 天</sys:String>
+                    <sys:String x:Key="Shifts_FWException">FW: 實際{0}天，介於{1} ~ {2}天之間</sys:String>
+                    <sys:String x:Key="Shifts_PWException">PW: 實際{0}天，介於{1} ~ {2}天之間</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Statistic">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Statistic_SelectServiceQueueDialogView">
+                    <sys:String x:Key="Statistic_SelectServiceQueueDialogView_Title">SQ人力觀察</sys:String>
+                    <sys:String x:Key="Statistic_SelectServiceQueueDialogView_PleaseSelectSQ">請選擇需要觀察的Service Queue</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Statistic_StaffingCalculatorView">
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_Loading">正在排定人力, 請稍等...</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_RefreshCurrentScreen">局部刷新</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_RefreshAll">全部刷新</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_Close">關閉人力</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_ActualServiceLevel">SL%實際</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_ForecastServiceLevel">SL%排定</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_ActualCallVolume">CV實際</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_ForecastCallVolume">CV預測</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_ActualMaxStaffing">MS實際</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_ForecastMaxStaffing">MS排定</sys:String>
+                    <sys:String x:Key="Statistic_StaffingCalculatorView_ForecastStaffing">人力排定</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Actripro">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Actripro_Docking">
+                    <sys:String x:Key="Actripro_Docking_UICommandActivateNextDocumentText">下一頁</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandActivatePreviousDocumentText">上一頁</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandActivatePrimaryDocumentText">首頁</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandAutoHideWindowText">自動隱藏</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandClosePrimaryDocumentText">關閉首頁</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandCloseWindowText">關閉</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMakeDockedWindowText">可停靠</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMakeDocumentWindowText">文檔</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMakeFloatingWindowText">浮動</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMaximizeWindowText">最大化</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMinimizeWindowText">最小化</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMoveToNewHorizontalContainerText">新建水平選項卡</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMoveToNewVerticalContainerText">新建垂直選項卡</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMoveToNextContainerText">移動到下一個選項卡</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandMoveToPreviousContainerText">移動到上一個選項卡</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandOpenDocumentsMenuText">活動文件</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandOpenOptionsMenuText">選項</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandOpenWindowText">打開</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandRestoreWindowText">恢復</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UICommandToggleWindowAutoHideStateText">自動隱藏</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIStandardSwitcherDocumentsText">活動文件</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIStandardSwitcherToolWindowsText">活動工具窗體</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UITabbedMdiContainerDocumentsButtonToolTip">活動文件</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UITabbedMdiContainerCloseButtonToolTip">關閉</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIToolWindowContainerAutoHideButtonToolTip">自動隱藏</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIToolWindowContainerCloseButtonToolTip">關閉</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIToolWindowContainerOptionsButtonToolTip">選項</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIWindowControlCloseButtonToolTip">關閉</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIWindowControlMaximizeButtonToolTip">最大化</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIWindowControlMinimizeButtonToolTip">最小化</sys:String>
+                    <sys:String x:Key="Actripro_Docking_UIWindowControlRestoreButtonToolTip">恢複</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Actripro_Editors">
+                    <sys:String x:Key="Actripro_Editors_UICalendarTodayButtonFormat">今天: {0:D}</sys:String>
+                    <sys:String x:Key="Actripro_Editors_UICommandClosePopup">關閉</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="Actripro_Wizard">
+                    <sys:String x:Key="Actripro_Wizard_NextButtonText">下一步</sys:String>
+                    <sys:String x:Key="Actripro_Wizard_BackButtonText">上一步</sys:String>
+                    <sys:String x:Key="Actripro_Wizard_CancelButtonText">取消</sys:String>
+                    <sys:String x:Key="Actripro_Wizard_FinishButtonText">完成</sys:String>
+                    <sys:String x:Key="Actripro_Wizard_HelpButtonText">說明</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="ApplicationFramework">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="ApplicationFramework_MenuPresenter">
+                    <sys:String x:Key="ApplicationFramework_MenuPresenter_ExDialogTitle">發生錯誤</sys:String>
+                    <sys:String x:Key="ApplicationFramework_MenuPresenter_ExFilePathCannotBeNull">執行程式不能為空</sys:String>
+                    <sys:String x:Key="ApplicationFramework_MenuPresenter_ExFileDonotExist">{0}檔案不存在</sys:String>
+                    <sys:String x:Key="ApplicationFramework_MenuPresenter_ExCannotFindFile">找不到執行程式</sys:String>
+                    <sys:String x:Key="ApplicationFramework_MenuPresenter_ExNotInstallModule">您的系統尚未安裝{0}模組</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="ApplicationFramework_Controls_PopupButtonBehavior">
+                    <sys:String x:Key="ApplicationFramework_Controls_PopupButtonBehavior_Text">請選擇...</sys:String>
+                </ResourceDictionary>
+                <ResourceDictionary x:Uid="ApplicationFramework_Controls_MasterPresenter">
+                    <sys:String x:Key="ApplicationFramework_MasterPresenter_DialogTitle">是否保存？</sys:String>
+                    <sys:String x:Key="ApplicationFramework_MasterPresenter_NeedSave">當前有{0}個未儲存,確定儲存?</sys:String>
+                    <sys:String x:Key="ApplicationFramework_MasterPresenter_DeleteException">刪除不成功!</sys:String>
+                    <sys:String x:Key="ApplicationFramework_MasterPresenter_SaveException">儲存不成功!</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="UserControls">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="UserControls_DateRangeSelector">
+                    <sys:String x:Key="UserControls_DateRangeSelector_D">天</sys:String>
+                    <sys:String x:Key="UserControls_DateRangeSelector_W">週</sys:String>
+                    <sys:String x:Key="UserControls_DateRangeSelector_M">月</sys:String>
+                    <sys:String x:Key="UserControls_DateRangeSelector_Y">年</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Logging">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Logging_Admin">
+                    <sys:String x:Key="Logging_Admin_Login">登錄</sys:String>
+                    <sys:String x:Key="Logging_Admin_Logout">登出</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Exception">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Ado">
+                    <sys:String x:Key="ConstraintViolationException">提交班表過程中發生錯誤...可能原因：數據庫約束，造成提交失敗。請查看日誌</sys:String>
+                    <sys:String x:Key="StaleObjectStateException">班表已發生變化...可能原因：多人同時操作了同一人的班表。請重新申請代換班</sys:String>
+                    <sys:String x:Key="GenericADOException">提交班表過程中發生錯誤...可能原因：數據庫約束，造成提交失敗。請查看日誌</sys:String>
+                    <sys:String x:Key="ADOException">查詢班表過程中發生錯誤...可能原因：數據庫架構不匹配，造成查詢失敗。請查看日誌</sys:String>
+                    <sys:String x:Key="Exception">未知異常。請查看日誌</sys:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Uid="Scheduling">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="Scheduling_EngineView">
+                    <sys:String x:Key="Scheduling_EngineView_SchedulingDetail">班表詳細</sys:String>                
+                    <sys:String x:Key="Scheduling_EngineView_AdvanceSetting">進階設定</sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_StartEngine">啟動引擎</sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_Optima">最佳化</sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_Cancel">取消</sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_SaveResult">儲存班表</sys:String>
+                    
+                    <sys:String x:Key="Scheduling_EngineView_AgentAmount">專員總數 : </sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_CurrentAgent">目前排定專員 : </sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_Score">目前班表分數 : </sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_Progress">目前進度 : </sys:String>
+
+                    <sys:String x:Key="Scheduling_EngineView_NonSchedulingEmployeeStr1">未成功排班人員 : </sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_NonSchedulingEmployeeStr2">...等,共{0}人 </sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_SchedulingFinished">排班完成</sys:String>
+                    <sys:String x:Key="Scheduling_EngineView_SaveCompleted">儲存完成</sys:String>
+                    
+                    <sys:String x:Key="Scheduling_EngineView_FailAgentList">排班失敗人員:</sys:String>
+
+                    <sys:String x:Key="Scheduling_EngineView_Legend">圖例:</sys:String>
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </ResourceDictionary.MergedDictionaries>
+    <!--Common-->
+    <sys:String x:Key="Assignment">班務</sys:String>
+    <sys:String x:Key="SubEvent">事件</sys:String>
+    <sys:String x:Key="to">到</sys:String>
+    <sys:String x:Key="Refresh">刷新</sys:String>
+    <sys:String x:Key="NetWork_Error">網絡出錯,請檢查網絡再試</sys:String>
+    <sys:String x:Key="BatchAlterExistsOfAssignemnt">調度既有班務</sys:String>
+    <sys:String x:Key="BatchInsertEvent">安插事件於既有班務</sys:String>
+    <sys:String x:Key="BatchAlterExistsOfSubEvent">調度既有事件</sys:String>
+    <sys:String x:Key="BatchInsertAssignment">安插新的班務</sys:String>
+
+    <sys:String x:Key="ProductTitle">中華電信 WMS</sys:String>
+    <sys:String x:Key="CompanyName">中華電信</sys:String>
+    <sys:String x:Key="ProductName">WMS</sys:String>
+    <sys:String x:Key="EnableNHProfiler">啟用效能檢測</sys:String>
+
+    <sys:String x:Key="Id">Id</sys:String>
+    <sys:String x:Key="Name">名稱</sys:String>
+    <sys:String x:Key="Organization">組織</sys:String>
+    <sys:String x:Key="LaborHours">工時</sys:String>
+    <sys:String x:Key="MinRestTime">班距</sys:String>
+    <sys:String x:Key="Daily">每日</sys:String>
+    <sys:String x:Key="MaxValue">上限</sys:String>
+    <sys:String x:Key="MinValue">下限</sys:String>
+    <sys:String x:Key="Overtime">加班</sys:String>
+    <sys:String x:Key="Shrinkage">減班</sys:String>
+    <sys:String x:Key="MaxSwapTimes">換班</sys:String>
+    <sys:String x:Key="Description">描述</sys:String>
+
+    <sys:String x:Key="Save">保存</sys:String>
+    <sys:String x:Key="Apply">套用</sys:String>
+    <sys:String x:Key="OK">確定</sys:String>
+    <sys:String x:Key="Cancel">取消</sys:String>
+    <sys:String x:Key="New">新建</sys:String>
+    <sys:String x:Key="Delete">刪除</sys:String>
+    <sys:String x:Key="Edit">編輯</sys:String>
+    <sys:String x:Key="Rename">重命名</sys:String>
+    <sys:String x:Key="Disable">停用</sys:String>
+    <sys:String x:Key="Activate">啟用</sys:String>
+    <sys:String x:Key="Second">秒</sys:String>
+    <sys:String x:Key="Move">轉移</sys:String>
+    <sys:String x:Key="PleaseSelectFile">請選擇文件：</sys:String>
+    <sys:String x:Key="Close">關閉</sys:String>
+    <sys:String x:Key="ZoomOut">縮小</sys:String>
+    <sys:String x:Key="ZoomIn">放大</sys:String>
+    <sys:String x:Key="ZoomUnit">以{0}分鍾為基准</sys:String>
+
+    <!--Menu-->
+    <sys:String x:Key="Search">搜索</sys:String>
+    <sys:String x:Key="ShiftSwaping">代換班</sys:String>
+    <sys:String x:Key="Setting">設置</sys:String>
+    <sys:String x:Key="Report">報表</sys:String>
+    <sys:String x:Key="Announcement">公告</sys:String>
+    <sys:String x:Key="EventBook">考核</sys:String>
+    <sys:String x:Key="AgentAdherenceExceptionRecognize">出缺勤管理</sys:String>
+    <sys:String x:Key="Help">說明</sys:String>
+    <sys:String x:Key="Training">訓練管理</sys:String>
+    <sys:String x:Key="HR">人力資源管理</sys:String>
+    <sys:String x:Key="Forecast">預測</sys:String>
+    <sys:String x:Key="Scheduling">排班</sys:String>
+    <sys:String x:Key="Permission">權限設定</sys:String>
+    <sys:String x:Key="Logout">登出</sys:String>
+    <sys:String x:Key="Processing">處理中……</sys:String>
+
+    <!-- TermStyleType  -->
+    <sys:String x:Key="Luna.Shifts.Domain.RegularSubEvent">一般薪</sys:String>
+    <sys:String x:Key="Luna.Shifts.Domain.UnlaboredSubEvent">不給薪</sys:String>
+    <sys:String x:Key="Luna.Shifts.Domain.OvertimeSubEvent">加班薪</sys:String>
+    <sys:String x:Key="Luna.Shifts.Domain.Shrink">減班</sys:String>    
+    <sys:String x:Key="Luna.Shifts.Domain.AbsentEvent">休假</sys:String>
+
+    <sys:String x:Key="Luna.Shifts.Domain.Assignment">正常班</sys:String>
+    <sys:String x:Key="Luna.Shifts.Domain.OvertimeAssignment">加班</sys:String>
+
+    <sys:String x:Key="Luna.Shifts.Domain.BasicAssignmentType">adjustment</sys:String>
+    <sys:String x:Key="Luna.Shifts.Domain.AssignmentType">scheduling</sys:String>
+
+    <!--Application-->
+    <sys:String x:Key="ApplicationErrorTitle">系統異常</sys:String>
+    <sys:String x:Key="ApplicationErrorInfo">系統發生未知異常，請問是否關閉當前程式？</sys:String>
+    <sys:String x:Key="ApplicationMultiThreadError">多線程異常\r\n，異常信息是{0}</sys:String>
+    <sys:String x:Key="HideDetailedInfo">隱藏詳細信息</sys:String>
+    <sys:String x:Key="ShowDetailedInfo">顯示詳細信息</sys:String>
+
+    <sys:String x:Key="AbbreviatedDayNames">日,一,二,三,四,五,六</sys:String>
+</ResourceDictionary>

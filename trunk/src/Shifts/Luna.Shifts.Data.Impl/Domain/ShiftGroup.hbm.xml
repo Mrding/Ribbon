@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+    <class name ="ShiftGroup">
+        <id name="Id" column="ShiftGroupId" >
+            <generator class ="guid.comb"/>
+        </id>
+        <property name ="Name"/>
+        
+        <component name="WorkingDayMask" class="Luna.Infrastructure.Domain.MaskOfDay,Luna.Infrastructure.Domain">
+            <property name="Weekdays" column ="ValidDayOffWeekdayFromSun2Sat"/>
+            <property name ="Monthdays" column="ValidDayOffMonthday"/>
+        </component>
+
+        <property name ="IsOneAssignmentTypeOnly"/>
+        <property name ="MaxGroupTimes"/>
+        <property name ="MinGroupTimes" />
+        <property name ="MaxContinueGroupTimes"/>
+        <property name ="MinContinueGroupTimes"/>
+        <property name ="MinDayOffTimeSpan"/>
+        <property name ="Priority"/>
+        <property name ="InUse"/>
+
+        <set name="AssignmentTypes" table="ShiftGroupAssignmentType" inverse="false" cascade="save-update">
+            <key column="ShiftGroupId" foreign-key="FK_AssignmentType_ShiftGroup"/>
+            <many-to-many column="AssignmentTypeId" class="AssignmentType" foreign-key="FK_ShiftGroup_AssignmentType"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

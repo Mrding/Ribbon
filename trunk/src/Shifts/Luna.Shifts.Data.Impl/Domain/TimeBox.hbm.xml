@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name ="TimeBox">
+    <id name="Id" column="TimeBoxId">
+      <generator class="foreign">
+        <param name="property">Agent</param>
+      </generator>
+    </id>
+    <!--<version name="Version" type="Int64" />
+    <property name="Operator"/>-->
+    <one-to-one name="Agent" class="Luna.Infrastructure.Domain.Employee, Luna.Infrastructure.Domain" foreign-key="FK_TimeBox_Employee" constrained="true" />
+    <set name="TermSet" cascade="all, delete-orphan" inverse="true" batch-size="50"
+          lazy="false" collection-type="TermSetType" 
+         order-by="LevelColumn asc,StartTime asc">
+      <key column="TimeBoxId" foreign-key="FK_TermSet_TimeBox" />
+      <one-to-many class="Term"/>
+      <filter name="Range" >
+        <![CDATA[((StartTime < :end  AND FinishTime >:start) OR ( StartTime = :start and FinishTime=:end))]]>
+      </filter>      
+      <filter name="MiddleRange">
+        <![CDATA[(StartTime >=:start  AND FinishTime <=:end)]]>
+      </filter>
+      <filter name="CurrentDate">
+        <![CDATA[DATEDIFF(day,StartTime, :start)=0]]>
+      </filter>
+      <filter name="ByStyle">
+        <![CDATA[ TermStyleId = :typeId]]>
+      </filter>
+      <filter name="LargeRange" >
+        <![CDATA[(StartTime >= :start AND StartTime <:end) ]]>
+      </filter>
+    </set>  
+  </class>
+
+
+  <filter-def name="Range">
+    <filter-param name="start" type="DateTime"/>
+    <filter-param name="end" type="DateTime"/>
+  </filter-def>
+  <filter-def name="LargeRange">
+    <filter-param name="start" type="DateTime"/>
+    <filter-param name="end" type="DateTime"/>
+  </filter-def>
+  <filter-def name="MiddleRange">
+    <filter-param name="start" type="DateTime"/>
+    <filter-param name="end" type="DateTime"/>
+  </filter-def>
+  <filter-def name="CurrentDate">
+    <filter-param name="start" type="DateTime"/>
+  </filter-def>
+  <filter-def name="ByStyle">
+    <filter-param name="typeId" type="Guid"/>
+  </filter-def>
+</hibernate-mapping>

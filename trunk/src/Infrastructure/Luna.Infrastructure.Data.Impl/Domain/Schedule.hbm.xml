@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Infrastructure.Domain" namespace="Luna.Infrastructure.Domain">
+  <class name ="Schedule" table="CampaignSchedule" select-before-update="true">
+    <id name="Id" column="CampaignScheduleId">
+      <generator class="guid.comb"/>
+    </id>
+    <many-to-one name="Campaign" class="Campaign" update="false" foreign-key="FK_Schedule_Campaign" fetch="join"/>
+    <property name="Name" />
+    <property name="Start" column ="StartTime" type="DateTime" />
+    <property name ="End" column="EndTime" type="DateTime"  />
+    <!--<property name="Progress" type="ProgressEnumType"/>-->
+    <property name="SeatCapacity"/>
+    <property name="MaxSeat"/>
+    <map name="ServiceQueues" table="CSSQ" cascade="all">
+      <!--<cache usage="read-write"/>-->
+      <key column="CampaignScheduleId" foreign-key="FK_ServiceQueue_Schedule"/>
+      <index-many-to-many column="ServiceQueueId" class="ServiceQueue" foreign-key="FK_Schedule_ServiceQueue"/>
+      <element type="int" column="MinOnlines"/>
+    </map>
+    <set name="Organizations" table="CSOrg" cascade="all">
+      <key column="CampaignScheduleId" foreign-key="FK_Organization_Schedule"/>
+      <many-to-many column="OrganizationId" class="Organization" foreign-key="FK_Schedule_Organization"/>
+    </set>
+
+    <bag name="Shrinkages" access="field.camelcase-underscore" cascade="all,delete-orphan" order-by="Day">
+      <key column="CampaignScheduleId" foreign-key="FK_Shrinkage_Schedule"/>
+      <one-to-many class="Shrinkage"/>
+    </bag>
+  </class>
+
+  <class name="Shrinkage" lazy="false">
+    <id type="int">
+      <generator class="hilo"/>
+    </id>
+    <property name="Day"/>
+    <property name="H0"/>
+    <property name="H1"/>
+    <property name="H2"/>
+    <property name="H3"/>
+    <property name="H4"/>
+    <property name="H5"/>
+    <property name="H6"/>
+    <property name="H7"/>
+    <property name="H8"/>
+    <property name="H9"/>
+    <property name="H10"/>
+    <property name="H11"/>
+    <property name="H12"/>
+    <property name="H13"/>
+    <property name="H14"/>
+    <property name="H15"/>
+    <property name="H16"/>
+    <property name="H17"/>
+    <property name="H18"/>
+    <property name="H19"/>
+    <property name="H20"/>
+    <property name="H21"/>
+    <property name="H22"/>
+    <property name="H23"/>
+  </class>
+  
+</hibernate-mapping>
+
+
+
+
+
+

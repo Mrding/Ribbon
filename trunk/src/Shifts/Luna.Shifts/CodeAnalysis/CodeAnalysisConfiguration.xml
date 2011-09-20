@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeAnalysisConfiguration Version="1.3.0" Enable="true">
+  <EnableSearchGAC Override="true" Value="true" />
+  <IgnoreGeneratedCode Override="true" Value="true" />
+  <Timeout Override="true" Value="60" />
+  <RuleSet Override="true" />
+  <EnableCodeAnalysisOnBuild Override="false" Value="false" />
+</CodeAnalysisConfiguration>

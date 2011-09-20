@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Luna.Shifts.Domain" namespace="Luna.Shifts.Domain">
+  <class name ="BackupTerm" lazy="false">
+    <id name="Id" type="Int64">
+      <generator class ="assigned"/>
+    </id>
+    <property name="Start" not-null="true">
+      <column  name ="StartTime" sql-type="smalldatetime"/>
+    </property>
+    <property name ="End" not-null="true">
+      <column name ="FinishTime" sql-type="smalldatetime"/>
+    </property>
+    <property name="ParentTermId" column="ParentBackupTermId"/>
+    <property name="Background"/>
+    <property name="Text"/>
+    <property name ="EmployeeId"/>
+    <property name ="WorkingTotals"/>
+    <property name="Level"/>
+    <property name="HrDate">
+      <column  name ="HrDate" sql-type="smalldatetime"/>
+    </property>
+  </class>
+</hibernate-mapping>

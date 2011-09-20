@@ -1,0 +1,215 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"   
+                    xmlns:brick="http://www.grandsys.com/luna/brick"
+                    xmlns:cell="http://www.grandsys.com/luna/cell"
+                     xmlns:inf="http://www.grandsys.com/luna"
+                   xmlns:presentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    >
+
+    <brick:ZoomToTimeConverter x:Key="ZoomToTimeConverter"/>
+    <brick:DateTimeToDayConverter x:Key="DateTimeToDayConverter" />
+
+    <sys:Double x:Key="BlockZoomingHourWidth">40</sys:Double>
+
+    <sys:Double x:Key="LeftWidth">90</sys:Double>
+
+    <sys:Double x:Key="LeftHeaderWidth">72</sys:Double>
+
+    <SolidColorBrush x:Key="LeftContentBackground" Color="#FFF8F8F8"/>
+
+    <SolidColorBrush x:Key="RowLineColor" Color="#FFF2EADA"/>
+
+    <SolidColorBrush x:Key="HolidayTextColor" Color="#FFFF5050" />
+
+    <!--#FFFFC0CB-->
+    <SolidColorBrush x:Key="DirtyCellColor" Color="LightGray" Opacity="0.4"/> 
+
+    <sys:Double x:Key="RowHeight">25</sys:Double>
+
+    <Style TargetType="{x:Type inf:AxisControl}">
+        <Setter Property="brick:SelectedBlocksLayer.SelectedBorder">
+            <Setter.Value>
+                <Pen Brush="White" presentationOptions:Freeze="true">
+                    <Pen.DashStyle>
+                        <DashStyle Dashes="1,3" Offset="30" />
+                    </Pen.DashStyle>
+                </Pen>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CommonScheduleGridStyle" TargetType="{x:Type inf:ScheduleGrid}">
+        <Setter Property="ZoomArray" Value="1,2,4"/>
+        <Setter Property="RowHeight" Value="{StaticResource RowHeight}"/>
+        <Setter Property="CanContentScroll" Value="True"/>
+        <!--<Setter Property="HourWidth" Value="{StaticResource BlockZoomingHourWidth}"/>-->
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+    </Style>
+
+    <Style x:Key="CommonCellScheduleGridStyle" TargetType="{x:Type inf:ScheduleGrid}">
+        <Setter Property="LeftWidth" Value="90"/>
+        <Setter Property="ZoomArray" Value="1"/>
+        <Setter Property="RowHeight" Value="{StaticResource RowHeight}"/>
+        <Setter Property="CanContentScroll" Value="True"/>
+        <Setter Property="HourWidth" Value="3"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="inf:ScrollViewerUtilities.HorizontalOffset" Value="72" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
+
+    <LinearGradientBrush x:Key="ColumnBg" StartPoint="0.484873,0.0161241" EndPoint="0.484873,0.975803">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFA8A8A8"/>
+            <GradientStop Color="#FFD8D8D8" Offset="0.08"/>
+            <GradientStop Color="#FFA5A5A5" Offset="1"/>
+            <GradientStop Color="#FFE7E7E7" Offset="0.99"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <Style TargetType="inf:RowLineControl">
+        <Setter Property="RowHeight" Value="{Binding RowHeight,RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+        <Setter Property="RowCount" Value="{Binding RowCount,RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+        <Setter Property="LinePen">
+            <Setter.Value>
+                <Pen Brush="{StaticResource RowLineColor}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ImageBrush x:Key="LeftItemsBackground" ImageSource="/Resources/Images/nameTitle3.png" ViewportUnits="Absolute" Viewport="0,0,72,100" TileMode="Tile" Stretch="None" />
+
+    <Style TargetType="{x:Type inf:BlockGridLayerContainer}" x:Key="CellBlockGridLayerContainerStyle">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type inf:BlockGridLayerContainer}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <ContentPresenter x:Name="PART_Header" ContentSource="Header"/>
+                        <!--DO NOT Change or Revome x:Name:PART_Header-->
+                        <ContentPresenter Grid.Row="1"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="CellMode" Value="false">
+                            <Setter TargetName="PART_Header" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="DateTermListBoxItemStyle">
+        <Grid>
+            <TextBlock Margin="0 1 0 0" x:Name="PART_DayOfWeek" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed" 
+                                                       Foreground="Black" Text="{Binding Date,StringFormat='\{0:ddd\}'}"/>
+            <TextBlock x:Name="PART_Date" 
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Bottom"
+                                                       FontSize="12" Margin="0 0 0 5"
+                                                       Text="{Binding Text,FallbackValue=10}" />
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected,RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="true">
+                <Setter TargetName="PART_Date" Property="FontWeight" Value="Bold"/>
+                <Setter TargetName="PART_Date" Property="Text" Value="{Binding Date,StringFormat='{}{0:M/d}'}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsWeekend}" Value="true">
+                <Setter TargetName="PART_DayOfWeek" Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsHoliday}" Value="true">
+                <Setter TargetName="PART_Date" Property="Foreground" Value="{StaticResource HolidayTextColor}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+
+    <!--排班秘书页面和excel汇入页面的第一行都是时间的Header-->
+    <Style x:Key="DateColumnHeaderListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Height" Value="31"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="inf:FrameworkElementService.HandleRequestBringIntoView" Value="True"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="ItemTemplate" Value="{StaticResource DateTermListBoxItemStyle}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ScrollViewer CanContentScroll="True" Focusable="False">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LeftListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="inf:FrameworkElementService.HandleRequestBringIntoView" Value="True"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+
+                    <DockPanel>
+                        <Border DockPanel.Dock="Bottom">
+                            <Border.Height>
+                                <MultiBinding Converter="{StaticResource MultiplicationConveter}">
+                                    <Binding Path="RowHeight" RelativeSource="{RelativeSource FindAncestor,AncestorType={x:Type inf:ScheduleGrid}}"/>
+                                    <Binding Path="ExtendedRowCount" RelativeSource="{RelativeSource FindAncestor,AncestorType={x:Type inf:ScheduleGrid}}"/>
+                                </MultiBinding>
+                            </Border.Height>
+                        </Border>
+
+                        <ItemsPresenter />
+                    </DockPanel>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Vertical" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>                
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Height" Value="{StaticResource RowHeight}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                
+                                
+                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>                
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
+    
